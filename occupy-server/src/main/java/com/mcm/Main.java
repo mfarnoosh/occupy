@@ -24,7 +24,7 @@ public class Main {
 //        log.info("login service is running.");
 //
 
-        new NetworkManager().initializeServer(4444);
+        new NetworkManager().initializeServer(1254);
 
     }
 

@@ -44,7 +44,7 @@ public class ClientService implements Runnable {
     public void run() {
         try {
             readClientData();
-            client.getOutputStream().write(clientData.getBytes("UTF-8"));
+            client.getOutputStream().write((clientData + " from server").getBytes("UTF-8"));
             client.getOutputStream().flush();
             client.getOutputStream().close();
         } catch (IOException e) {

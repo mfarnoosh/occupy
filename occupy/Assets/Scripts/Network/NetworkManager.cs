@@ -4,14 +4,22 @@ using UnityToolbag;
 using System.Net.Sockets;
 using System.Text;
 using System.IO;
-public class ClientManager {
-	private string Ip = "192.168.1.10";
-	private int Port = 4444;
+
+public class NetworkManager : MonoBehaviour{
+	public string ServerAddress = "192.168.1.5";
+	public int ServerPort = 4444;
+
+	public static NetworkManager Current = null; 
+
+	public NetworkManager(){
+		Current = this;
+	}
 
 	public Future<string> SendToServer (string command) {
+		Debug.Log ("we are here");
 		Future<string> future = new Future<string> ();
 		future.Process (() => {
-			TcpClient client = new TcpClient (Ip, Port);
+			TcpClient client = new TcpClient (ServerAddress, ServerPort);
 			byte[] bytes = Encoding.UTF8.GetBytes (command);
 			byte[] finished = Encoding.UTF8.GetBytes ("__FIN__");
 			client.GetStream ().Write (bytes, 0, bytes.Length);
@@ -22,4 +30,5 @@ public class ClientManager {
 		});
 		return future;	
 	}
+
 }
