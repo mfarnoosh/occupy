@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using Lean.Touch;
 
-public class TouchManager : MonoBehaviour {
+public class TouchManager : MonoBehaviour{
 	public Text InfoText;
-	private List<int> fingerDownList = new List<int>();
+
+	public List<GameObject> BuildingPrefabs;
+	public List<GameObject> GhostBuildingPrefabs;
+
+	public Collider MapCollider = null;
 
 	[Tooltip("The minimum field of view angle we want to zoom to")]
 	public float Minimum = 10.0f;
@@ -13,6 +18,38 @@ public class TouchManager : MonoBehaviour {
 	[Tooltip("The maximum field of view angle we want to zoom to")]
 	public float Maximum = 30.0f;
 
+	bool _touched = false;
+
+	public static TouchManager Current;
+	public TouchManager(){
+		Current = this;
+	}
+
+	void Update(){
+
+	}
+
+	public void OnFingerDown(LeanFinger finger)
+	{
+		//		var ray = finger.GetRay (Camera.main);
+		//		RaycastHit hit;
+		//		if (!Physics.Raycast (ray, out hit)) {
+		//			Debug.Log ("nothing found");
+		//			return;
+		//		}
+		//		Debug.Log ("sth found: " + hit.transform.name) ;
+		_touched = true;
+		if (finger.IsOverGui) {
+			Debug.Log ("Touched ON GUI");
+		}
+	}
+	public void OnFingerUp(LeanFinger finger)
+	{
+		_touched = false;
+		if(finger.IsOverGui)
+			Debug.Log("This is UI");
+		Debug.Log("Touched UP");
+	}
 	public void OnFingerPinch(float pinchScale){
 		
 		if (pinchScale <= 0.0f || Camera.main == null)
@@ -25,8 +62,10 @@ public class TouchManager : MonoBehaviour {
 
 		Camera.main.fieldOfView = fieldOfView;
 
+
 		if(InfoText != null)
 			InfoText.text = "Pinching";
+
 
 		//Orthographic camera
 //		var orthographicSize = Camera.main.orthographicSize;
@@ -38,8 +77,6 @@ public class TouchManager : MonoBehaviour {
 	}
 	public void OnFingerSwipe(LeanFinger finger)
 	{
-		if (fingerDownList.Count > 0)
-			return;
 		InfoText.text = finger.Index.ToString ();
 		// Make sure the info text exists
 		if (InfoText != null)
@@ -105,16 +142,7 @@ public class TouchManager : MonoBehaviour {
 		return dot >= limit;
 	}
 
-	public void OnFingerDown(LeanFinger finger)
-	{
-		Debug.Log("Finger " + finger.Index + " began touching the screen");
-		fingerDownList.Add (finger.Index);
-	}
-	public void OnFingerUp(LeanFinger finger)
-	{
-		Debug.Log("Finger " + finger.Index + " finished touching the screen");
-		fingerDownList.Remove(finger.Index);
-	}
+
 
 	protected virtual void OnEnable()
 	{
