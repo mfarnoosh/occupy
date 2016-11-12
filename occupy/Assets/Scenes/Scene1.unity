@@ -193,7 +193,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 4, y: 4}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 320, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &524184311
 MonoBehaviour:
@@ -216,7 +216,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cee533bdaf5c01a4091b972ae1bbb654, type: 3}
-    m_FontSize: 28
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 2
@@ -732,6 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1000013648477692, guid: ff7abbb2aaa032348803e837d8c2ecd5, type: 2}
   Ghost: {fileID: 1000010546865034, guid: b7a40b3996f919e4d9b6f62fe6289e5b, type: 2}
+  IsCreatingBuilding: 1
 --- !u!1 &1801419169
 GameObject:
   m_ObjectHideFlags: 0
@@ -829,6 +830,7 @@ GameObject:
   - 4: {fileID: 1943568807}
   - 114: {fileID: 1943568806}
   - 114: {fileID: 1943568805}
+  - 114: {fileID: 1943568808}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -847,7 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a1fd05cd16df946b0faf7eff7a5e06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapCollider: {fileID: 563569339}
+  Map: {fileID: 563569337}
 --- !u!114 &1943568806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -872,6 +874,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1943568808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943568804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 151a1d0ea90c08444885af96b824a1b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InfoText: {fileID: 524184311}
+  Minimum: 10
+  Maximum: 30
 --- !u!1 &1955719171
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1000013533946248, guid: ecc1c924ba6eeeb4f921e098e37d2e0b, type: 2}
   Ghost: {fileID: 1000012108901704, guid: 8c77ee75e4349bf4b96b887ebe4a4283, type: 2}
+  IsCreatingBuilding: 1
 --- !u!114 &2096706993
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,48 +7,81 @@ using Lean.Touch;
 public class TouchManager : MonoBehaviour{
 	public Text InfoText;
 
-	public List<GameObject> BuildingPrefabs;
-	public List<GameObject> GhostBuildingPrefabs;
-
-	public Collider MapCollider = null;
-
 	[Tooltip("The minimum field of view angle we want to zoom to")]
 	public float Minimum = 10.0f;
 
 	[Tooltip("The maximum field of view angle we want to zoom to")]
 	public float Maximum = 30.0f;
 
-	bool _touched = false;
+	private Interactive Selected;
 
 	public static TouchManager Current;
 	public TouchManager(){
 		Current = this;
 	}
 
-	void Update(){
 
-	}
+	public void OnFingerDown(LeanFinger finger) { }
+	public void OnFingerUp(LeanFinger finger) {	}
 
-	public void OnFingerDown(LeanFinger finger)
-	{
-		//		var ray = finger.GetRay (Camera.main);
-		//		RaycastHit hit;
-		//		if (!Physics.Raycast (ray, out hit)) {
-		//			Debug.Log ("nothing found");
-		//			return;
-		//		}
-		//		Debug.Log ("sth found: " + hit.transform.name) ;
-		_touched = true;
-		if (finger.IsOverGui) {
-			Debug.Log ("Touched ON GUI");
+	public void OnFingerHeldUp(LeanFinger finger){
+		//use leantouch GetRay function instead
+//		var ray = Camera.main.ScreenPointToRay (finger.ScreenPosition);
+		RaycastHit hit;
+		if (!Physics.Raycast (finger.GetRay(Camera.main), out hit))
+			return;
+		
+		var interact = hit.transform.GetComponent<Interactive> ();
+		if (interact == null) {
+			if (Selected != null) {
+				Selected.Deselect ();
+				Selected = null;
+			}
+			return;
 		}
+		
+		if (interact == Selected)
+			return;
+
+
+		RaycastHit startedHit;
+		if (!Physics.Raycast (finger.GetStartRay(Camera.main), out startedHit))
+			return;
+		var startInteract = startedHit.transform.GetComponent<Interactive> ();
+		if (startInteract == null || startInteract != interact)
+			return;
+
+		if (Selected != null) {
+			Selected.Deselect ();
+			Selected = null;
+		}
+		Selected = interact;
+		interact.SecondSelect ();
 	}
-	public void OnFingerUp(LeanFinger finger)
-	{
-		_touched = false;
-		if(finger.IsOverGui)
-			Debug.Log("This is UI");
-		Debug.Log("Touched UP");
+	void OnFingerTap(LeanFinger finger){
+		var ray = Camera.main.ScreenPointToRay (finger.ScreenPosition);
+		RaycastHit hit;
+		if (!Physics.Raycast (ray, out hit))
+			return;
+
+		var interact = hit.transform.GetComponent<Interactive> ();
+		if (interact == null) {
+			if (Selected != null) {
+				Selected.Deselect ();
+				Selected = null;
+			}
+			return;
+		}
+		if (interact == Selected)
+			return;
+		if (Selected != null) {
+			Selected.Deselect ();
+			Selected = null;
+		}
+
+		Selected = interact;
+
+		interact.Select ();
 	}
 	public void OnFingerPinch(float pinchScale){
 		
@@ -151,6 +184,8 @@ public class TouchManager : MonoBehaviour{
 		LeanTouch.OnPinch += OnFingerPinch;
 		LeanTouch.OnFingerDown += OnFingerDown;
 		LeanTouch.OnFingerUp += OnFingerUp;
+		LeanTouch.OnFingerTap += OnFingerTap;
+		LeanTouch.OnFingerHeldSet += OnFingerHeldUp;
 	}
 
 	protected virtual void OnDisable()
@@ -160,5 +195,7 @@ public class TouchManager : MonoBehaviour{
 		LeanTouch.OnPinch -= OnFingerPinch;
 		LeanTouch.OnFingerDown -= OnFingerDown;
 		LeanTouch.OnFingerUp -= OnFingerUp;
+		LeanTouch.OnFingerTap -= OnFingerTap;
+		LeanTouch.OnFingerHeldSet -= OnFingerHeldUp;
 	}
 }
