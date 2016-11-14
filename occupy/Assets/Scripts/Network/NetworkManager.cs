@@ -5,14 +5,19 @@ using System.Net.Sockets;
 using System.Text;
 using System.IO;
 
-public class ClientManager {
-	private static string Ip = "192.168.1.5";
-	private static int Port = 4444;
+public class NetworkManager : MonoBehaviour{
+	public string ServerIp = "192.168.1.5";
+	public int ServerPort = 4444;
+
+	public static NetworkManager Current;
+	public NetworkManager(){
+		Current = this;
+	}
 
 	public Future<SocketMessage> SendToServer (SocketMessage message) {
 		Future<SocketMessage> future = new Future<SocketMessage> ();
 		future.Process (() => {
-			TcpClient client = new TcpClient (Ip, Port);
+			TcpClient client = new TcpClient (ServerIp, ServerPort);
 			string json = JsonUtility.ToJson(message);
 			byte[] bytes = Encoding.UTF8.GetBytes (json);
 			byte[] finished = Encoding.UTF8.GetBytes ("__FIN__");

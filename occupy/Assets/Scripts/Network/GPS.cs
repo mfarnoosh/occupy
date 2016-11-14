@@ -60,7 +60,7 @@ public class GPS : MonoBehaviour {
 				sm.Params.Add (alt.ToString());
 				sm.Params.Add (accuracy.ToString());
 				sm.Params.Add (timeStamp.ToString());
-				new ClientManager().SendToServer (sm).OnSuccess((data)=>{});
+				NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{});
 			}
 
 		}

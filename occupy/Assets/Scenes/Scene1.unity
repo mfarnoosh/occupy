@@ -831,6 +831,7 @@ GameObject:
   - 114: {fileID: 1943568806}
   - 114: {fileID: 1943568805}
   - 114: {fileID: 1943568808}
+  - 114: {fileID: 1943568809}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -888,6 +889,19 @@ MonoBehaviour:
   InfoText: {fileID: 524184311}
   Minimum: 10
   Maximum: 30
+--- !u!114 &1943568809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943568804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548d089629d154f589edf8c1f2f572e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ip: 192.168.1.5
+  Port: 4444
 --- !u!1 &1955719171
 GameObject:
   m_ObjectHideFlags: 0
