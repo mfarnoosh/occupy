@@ -2,7 +2,11 @@ package com.mcm;
 
 
 import com.mcm.network.NetworkManager;
+import com.mcm.util.GeoUtil;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.apache.axis.encoding.Base64;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.security.KeyManagementException;
@@ -24,7 +28,7 @@ public class Main {
 //        log.info("login service is running.");
 //
 
-        new NetworkManager().initializeServer(1254);
+        new NetworkManager().initializeServer(4444);
 
     }
 

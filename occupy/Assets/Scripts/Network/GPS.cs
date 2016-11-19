@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+
 public class GPS : MonoBehaviour {
 	private float lat = 0;
 	private float lon = 0;
@@ -54,13 +55,20 @@ public class GPS : MonoBehaviour {
 				accuracy = Input.location.lastData.horizontalAccuracy;
 				timeStamp = Input.location.lastData.timestamp;
 				SocketMessage sm = new SocketMessage ();
-				sm.Cmd = "updateLoc";
+				sm.Cmd = "getTile";
 				sm.Params.Add (lat.ToString());
 				sm.Params.Add (lon.ToString());
-				sm.Params.Add (alt.ToString());
-				sm.Params.Add (accuracy.ToString());
-				sm.Params.Add (timeStamp.ToString());
-				NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{});
+//				sm.Params.Add (alt.ToString());
+//				sm.Params.Add (accuracy.ToString());
+//				sm.Params.Add (timeStamp.ToString());
+				NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+					string tileString = data.value.Params[0];
+					byte[] tile = Convert.FromBase64String(tileString);
+					Texture2D texture = new Texture2D(256, 256);
+					texture.LoadImage(tile);
+					// do whatever you want with texture
+					String debug = "";
+				});
 			}
 
 		}

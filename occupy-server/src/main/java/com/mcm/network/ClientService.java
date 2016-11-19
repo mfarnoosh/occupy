@@ -1,12 +1,21 @@
 package com.mcm.network;
 
 import com.google.gson.Gson;
+import com.mcm.util.GeoUtil;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.apache.axis.encoding.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Date;
 
 /**
@@ -17,10 +26,12 @@ public class ClientService implements Runnable {
     private Socket client;
     private String clientData = "";
     private String clientOutData = "";
+
     public ClientService(Socket client) throws IOException {
         this.client = client;
         this.client.setSoTimeout(45000);
     }
+
     private void readClientData() throws IOException {
         DataInputStream dis = new DataInputStream(client.getInputStream());
         byte[] data = new byte[1024];
@@ -44,11 +55,15 @@ public class ClientService implements Runnable {
             clientData = clientData.substring(0, clientData.length() - 7);
         }
     }
+
     @Override
     public void run() {
         try {
             readClientData();
-            clientOutData = handleCommand();
+            SocketMessage socketMessage = handleCommand();
+            if (socketMessage == null)
+                clientOutData = "";
+            else clientOutData = new Gson().toJson(socketMessage);
             client.getOutputStream().write(clientOutData.getBytes("UTF-8"));
             client.getOutputStream().flush();
             client.getOutputStream().close();
@@ -57,25 +72,72 @@ public class ClientService implements Runnable {
         }
     }
 
-    private String handleCommand() {
+    private SocketMessage handleCommand() {
         SocketMessage socketMessage = new Gson().fromJson(clientData, SocketMessage.class);
         switch (socketMessage.Cmd) {
             case "echo":
-                return new Gson().toJson(socketMessage);
+                return socketMessage;
             case "updateLoc":
-                logger.info(socketMessage);
-                float lat = Float.parseFloat(socketMessage.Params.get(0));
-                float lon = Float.parseFloat(socketMessage.Params.get(1));
-                float alt = Float.parseFloat(socketMessage.Params.get(2));
-                float accuracy = Float.parseFloat(socketMessage.Params.get(3));
-                double timeStamp = Double.parseDouble(socketMessage.Params.get(4));
-                Date date = new Date((long)timeStamp * 1000);
-
-                return "";
+                return handleUpdateLoc(socketMessage);
+            case "getTile":
+                return handleTile(socketMessage);
             default:
-                return "";
+                return null;
         }
 
 
+    }
+
+    private SocketMessage handleTile(SocketMessage socketMessage) {
+        logger.info(socketMessage);
+        float lat = Float.parseFloat(socketMessage.Params.get(0));
+        float lon = Float.parseFloat(socketMessage.Params.get(1));
+        String tileNumber = GeoUtil.getTileNumber(lat, lon, 18);
+        File cacheDir = new File("cache/" + tileNumber);
+        cacheDir.mkdirs();
+        File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");
+        if (cache.exists()) {
+            try {
+                byte[] tile = FileUtils.readFileToByteArray(cache);
+
+                socketMessage.Params.clear();
+                socketMessage.Params.add(Base64.encode(tile));
+                return socketMessage;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String url = "http://tile.openstreetmap.org/" + tileNumber + ".png";
+        try {
+            URLConnection connection = new URL(url).openConnection();
+            DataInputStream dis = new DataInputStream(connection.getInputStream());
+            int count = 0;
+            byte[] data = new byte[1024];
+            ByteOutputStream bos = new ByteOutputStream();
+            while ((count = dis.read(data)) != -1) {
+                bos.write(data, 0, count);
+            }
+            bos.flush();
+            byte[] tile = bos.getBytes();
+            FileUtils.writeByteArrayToFile(cache, tile);
+            socketMessage.Params.clear();
+            socketMessage.Params.add(Base64.encode(tile));
+            return socketMessage;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private SocketMessage handleUpdateLoc(SocketMessage socketMessage) {
+        logger.info(socketMessage);
+        float lat = Float.parseFloat(socketMessage.Params.get(0));
+        float lon = Float.parseFloat(socketMessage.Params.get(1));
+        float alt = Float.parseFloat(socketMessage.Params.get(2));
+        float accuracy = Float.parseFloat(socketMessage.Params.get(3));
+        double timeStamp = Double.parseDouble(socketMessage.Params.get(4));
+        Date date = new Date((long) timeStamp * 1000);
+        return null;
     }
 }
