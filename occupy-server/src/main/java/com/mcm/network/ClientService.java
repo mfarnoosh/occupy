@@ -96,7 +96,7 @@ public class ClientService implements Runnable {
         logger.info(socketMessage);
         float lat = Float.parseFloat(socketMessage.Params.get(0));
         float lon = Float.parseFloat(socketMessage.Params.get(1));
-        String tileNumber = GeoUtil.getTileNumber(lat, lon, 17);
+        String tileNumber = GeoUtil.getTileNumber(lat, lon, 18);
         File cacheDir = new File("cache/" + tileNumber);
         cacheDir.mkdirs();
         File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");

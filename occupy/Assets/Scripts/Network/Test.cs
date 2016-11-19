@@ -5,8 +5,8 @@ public class Test : MonoBehaviour {
 	public GameObject Map;
 	// Use this for initialization
 	void Start () {
-		float lat = 35.70167f;
-		float lon = 51.40097f;
+		float lat = 35.72083f;
+		float lon = 51.44816f;
 		SocketMessage sm = new SocketMessage ();
 		sm.Cmd = "getTile";
 		sm.Params.Add (lat.ToString());
