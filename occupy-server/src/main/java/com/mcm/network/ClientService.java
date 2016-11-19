@@ -63,10 +63,14 @@ public class ClientService implements Runnable {
             SocketMessage socketMessage = handleCommand();
             if (socketMessage == null)
                 clientOutData = "";
-            else clientOutData = new Gson().toJson(socketMessage);
-            client.getOutputStream().write(clientOutData.getBytes("UTF-8"));
+            else {
+                clientOutData = new Gson().toJson(socketMessage);
+            }
+            byte[] bytes = clientOutData.getBytes("UTF-8");
+            client.getOutputStream().write(bytes);
             client.getOutputStream().flush();
             client.getOutputStream().close();
+            logger.info("sent -> " + bytes.length + " byte");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +96,7 @@ public class ClientService implements Runnable {
         logger.info(socketMessage);
         float lat = Float.parseFloat(socketMessage.Params.get(0));
         float lon = Float.parseFloat(socketMessage.Params.get(1));
-        String tileNumber = GeoUtil.getTileNumber(lat, lon, 18);
+        String tileNumber = GeoUtil.getTileNumber(lat, lon, 17);
         File cacheDir = new File("cache/" + tileNumber);
         cacheDir.mkdirs();
         File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");
