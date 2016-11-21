@@ -1,5 +1,11 @@
 package com.mcm.util;
 
+import org.springframework.data.geo.Point;
+
+import javax.persistence.Tuple;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by alirezaghias on 10/18/2016 AD.
  */
@@ -42,7 +48,7 @@ public class GeoUtil {
         return (rad * 180 / Math.PI);
     }
 
-    public static String getTileNumber(final double lat, final double lon, final int zoom) {
+    public static List<Integer> getTileNumber(final double lat, final double lon, final int zoom) {
         int xtile = (int)Math.floor( (lon + 180) / 360 * (1<<zoom) ) ;
         int ytile = (int)Math.floor( (1 - Math.log(Math.tan(Math.toRadians(lat)) + 1 / Math.cos(Math.toRadians(lat))) / Math.PI) / 2 * (1<<zoom) ) ;
         if (xtile < 0)
@@ -53,6 +59,19 @@ public class GeoUtil {
             ytile=0;
         if (ytile >= (1<<zoom))
             ytile=((1<<zoom)-1);
-        return("" + zoom + "/" + xtile + "/" + ytile);
+        List<Integer> rez = new ArrayList<>();
+        rez.add(xtile);
+        rez.add(ytile);
+        return rez;
+    }
+    public static String getTileNumberUrl(int xTile,int yTile,int zoom){
+        return("" + zoom + "/" + xTile + "/" + yTile);
+    }
+    public static Point getTileCenter(int xTile,int yTile , int zoom){
+        double lon = xTile / Math.pow(2.0, zoom) * 360.0 - 180;
+        double n = Math.PI - (2.0 * Math.PI * yTile) / Math.pow(2.0, zoom);
+        double lat = Math.toDegrees(Math.atan(Math.sinh(n)));
+
+        return new Point(lat,lon);
     }
 }

@@ -7,6 +7,7 @@ import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.springframework.data.geo.Point;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by alirezaghias on 11/3/2016 AD.
@@ -99,8 +101,13 @@ public class ClientService implements Runnable {
         float lon = Float.parseFloat(socketMessage.Params.get(1));
         int zoomLevel = Integer.parseInt(SharedPreference.get("map.default_zoom_level"));
 
-        String tileNumber = GeoUtil.getTileNumber(lat, lon, zoomLevel);
-        File cacheDir = new File("cache/" + tileNumber);
+        List<Integer> tileNumber = GeoUtil.getTileNumber(lat, lon, zoomLevel);
+        int xTile = tileNumber.get(0);
+        int yTile = tileNumber.get(1);
+        String tileNumberUrl = GeoUtil.getTileNumberUrl(xTile,yTile,zoomLevel);
+        Point tileCenter = GeoUtil.getTileCenter(xTile,yTile,zoomLevel);
+
+        File cacheDir = new File("cache/" + tileNumberUrl);
         cacheDir.mkdirs();
         File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");
         if (cache.exists()) {
@@ -109,12 +116,28 @@ public class ClientService implements Runnable {
 
                 socketMessage.Params.clear();
                 socketMessage.Params.add(Base64.encode(tile));
+
+                socketMessage.Params.add(String.valueOf(tileCenter.getX()));
+                socketMessage.Params.add(String.valueOf(tileCenter.getY()));
+
+                socketMessage.Params.add(String.valueOf(35.70283f));
+                socketMessage.Params.add(String.valueOf(51.40641f));
+                socketMessage.Params.add(String.valueOf(35.72403f));
+                socketMessage.Params.add(String.valueOf(51.44572f));
+                socketMessage.Params.add(String.valueOf(35.72215f));
+                socketMessage.Params.add(String.valueOf(51.44447f));
+                socketMessage.Params.add(String.valueOf(35.72046f));
+                socketMessage.Params.add(String.valueOf(51.44354f));
+                socketMessage.Params.add(String.valueOf(35.71995f));
+                socketMessage.Params.add(String.valueOf(51.44778f));
+
+
                 return socketMessage;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        String url = "http://tile.openstreetmap.org/" + tileNumber + ".png";
+        String url = "http://tile.openstreetmap.org/" + tileNumberUrl + ".png";
         try {
             URLConnection connection = new URL(url).openConnection();
             DataInputStream dis = new DataInputStream(connection.getInputStream());
@@ -129,6 +152,21 @@ public class ClientService implements Runnable {
             FileUtils.writeByteArrayToFile(cache, tile);
             socketMessage.Params.clear();
             socketMessage.Params.add(Base64.encode(tile));
+
+            socketMessage.Params.add(String.valueOf(tileCenter.getX()));
+            socketMessage.Params.add(String.valueOf(tileCenter.getY()));
+
+            socketMessage.Params.add(String.valueOf(35.70283f));
+            socketMessage.Params.add(String.valueOf(51.40641f));
+            socketMessage.Params.add(String.valueOf(35.72403f));
+            socketMessage.Params.add(String.valueOf(51.44572f));
+            socketMessage.Params.add(String.valueOf(35.72215f));
+            socketMessage.Params.add(String.valueOf(51.44447f));
+            socketMessage.Params.add(String.valueOf(35.72046f));
+            socketMessage.Params.add(String.valueOf(51.44354f));
+            socketMessage.Params.add(String.valueOf(35.71995f));
+            socketMessage.Params.add(String.valueOf(51.44778f));
+
             return socketMessage;
         } catch (IOException e) {
             e.printStackTrace();

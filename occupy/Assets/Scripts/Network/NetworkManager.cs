@@ -26,6 +26,7 @@ public class NetworkManager : MonoBehaviour{
 			client.GetStream().Flush();
 			StreamReader sr = new StreamReader(client.GetStream());
 			string data = sr.ReadToEnd();
+
 			return JsonUtility.FromJson<SocketMessage>(data);;
 		});
 		return future;	
