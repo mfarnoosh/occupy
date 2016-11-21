@@ -6,6 +6,7 @@ using Lean.Touch;
 
 public class TouchManager : MonoBehaviour{
 	public Text InfoText;
+	public GameObject Player;
 
 	[Tooltip("The minimum field of view angle we want to zoom to")]
 	public float Minimum = 10.0f;
@@ -14,6 +15,8 @@ public class TouchManager : MonoBehaviour{
 	public float Maximum = 30.0f;
 
 	private Interactive Selected;
+	private Vector3 targetInteractivePosition = Vector3.zero;
+
 
 	public static TouchManager Current;
 	public TouchManager(){
@@ -21,8 +24,19 @@ public class TouchManager : MonoBehaviour{
 	}
 
 
-	public void OnFingerDown(LeanFinger finger) { }
-	public void OnFingerUp(LeanFinger finger) {	}
+	public void OnFingerDown(LeanFinger finger) { 
+		RaycastHit hit;
+		if (!Physics.Raycast (finger.GetStartRay(Camera.main), out hit))
+			return;
+		var interact = hit.transform.GetComponent<Interactive> ();
+		if (interact == null) {
+			return;
+		}
+		targetInteractivePosition = interact.transform.position;
+	}
+	public void OnFingerUp(LeanFinger finger) {	
+		targetInteractivePosition = Vector3.zero;
+	}
 
 	public void OnFingerHeldUp(LeanFinger finger){
 		//use leantouch GetRay function instead
@@ -108,8 +122,14 @@ public class TouchManager : MonoBehaviour{
 //		Camera.main.orthographicSize = orthographicSize;
 
 	}
+
 	public void OnFingerSwipe(LeanFinger finger)
 	{
+		Vector3 newPos = finger.GetWorldPosition (10000, Camera.main);
+		Player.transform.position = new Vector3(newPos.x,0,newPos.z);
+		MapManager.Current.MoveMap (finger.SwipeDelta,1.0f);
+		return;
+
 		InfoText.text = finger.Index.ToString ();
 		// Make sure the info text exists
 		if (InfoText != null)
