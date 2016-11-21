@@ -8,3 +8,13 @@
  INFO [2016-11-21 20:47:52,588] (ClientService.java:73) - sent -> 21933 byte
  INFO [2016-11-21 20:48:19,270] (ClientService.java:96) - SocketMessage{Id='ecee74de-c9bf-4121-8506-ca1947d9e797', Cmd='getTile', Params=[35.72083, 51.44816]}
  INFO [2016-11-21 20:48:19,273] (ClientService.java:73) - sent -> 21933 byte
+ INFO [2016-11-21 20:56:30,990] (ClientService.java:96) - SocketMessage{Id='1a45bf77-a989-49c1-a7fd-a089fbbfbe5f', Cmd='getTile', Params=[35.72083, 51.44816]}
+ INFO [2016-11-21 20:56:30,993] (ClientService.java:73) - sent -> 21933 byte
+ INFO [2016-11-21 20:59:12,443] (ClientService.java:96) - SocketMessage{Id='8b53955e-f30a-49c3-846c-ba1869fd4643', Cmd='getTile', Params=[35.72083, 51.44816]}
+ INFO [2016-11-21 20:59:12,446] (ClientService.java:73) - sent -> 21933 byte
+ INFO [2016-11-21 21:00:10,476] (ClientService.java:96) - SocketMessage{Id='f747a7cf-cad0-46e7-9f30-6728b3d26c6b', Cmd='getTile', Params=[35.72083, 51.44816]}
+ INFO [2016-11-21 21:00:12,583] (ClientService.java:73) - sent -> 21933 byte
+ INFO [2016-11-21 21:02:39,568] (ClientService.java:97) - SocketMessage{Id='3ae99cb6-bf90-4757-b19b-e60a1debfd0b', Cmd='getTile', Params=[35.72083, 51.44816]}
+ INFO [2016-11-21 21:02:45,645] (ClientService.java:74) - sent -> 21933 byte
+ INFO [2016-11-21 21:04:08,551] (ClientService.java:97) - SocketMessage{Id='abc8113f-e842-4851-ab68-98cbe9dbc676', Cmd='getTile', Params=[35.72083, 51.44816]}
+ INFO [2016-11-21 21:04:09,435] (ClientService.java:74) - sent -> 21933 byte

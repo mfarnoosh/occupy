@@ -2,6 +2,7 @@ package com.mcm.network;
 
 import com.google.gson.Gson;
 import com.mcm.util.GeoUtil;
+import com.mcm.util.SharedPreference;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.axis.encoding.Base64;
 import org.apache.commons.io.FileUtils;
@@ -96,7 +97,9 @@ public class ClientService implements Runnable {
         logger.info(socketMessage);
         float lat = Float.parseFloat(socketMessage.Params.get(0));
         float lon = Float.parseFloat(socketMessage.Params.get(1));
-        String tileNumber = GeoUtil.getTileNumber(lat, lon, 18);
+        int zoomLevel = Integer.parseInt(SharedPreference.get("map.default_zoom_level"));
+
+        String tileNumber = GeoUtil.getTileNumber(lat, lon, zoomLevel);
         File cacheDir = new File("cache/" + tileNumber);
         cacheDir.mkdirs();
         File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");
