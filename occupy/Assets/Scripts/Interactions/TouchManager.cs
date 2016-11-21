@@ -125,6 +125,10 @@ public class TouchManager : MonoBehaviour{
 
 	public void OnFingerSwipe(LeanFinger finger)
 	{
+		if (finger == null) {
+			Debug.Log ("null");
+			return;
+		}
 		Vector3 newPos = finger.GetWorldPosition (10000, Camera.main);
 		Player.transform.position = new Vector3(newPos.x,0,newPos.z);
 		MapManager.Current.MoveMap (finger.SwipeDelta,1.0f);
