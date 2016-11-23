@@ -60,6 +60,9 @@ public class ActionReplaceBuilding : TouchAction {
 			transform.position = originalPosition;
 		isMoving = false;
 		rend.material.color = originalColor;
+		var highlight = GetComponent<ActionHighlight> ();
+		if (highlight != null)
+			highlight.Select ();
 		TouchManager.Current.enabled = true;
 	}
 }

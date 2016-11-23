@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class PlayerManager : MonoBehaviour {
-	public GameObject Map;
-	private Collider MapCollider;
+	public Location WorldCenter = new Location(35.70423f,51.40570f);
+
+	public Collider MapCollider;
 //	private Bounds MapBounds;
 
 	public static PlayerManager Current;
@@ -12,12 +13,12 @@ public class PlayerManager : MonoBehaviour {
 		Current = this;
 	}
 	void Start(){
-		if (Map != null) {
-			MapCollider = Map.GetComponent<Collider> ();
-//			Mesh MapMesh = Map.GetComponent<MeshFilter> ().mesh;
-//			MapMesh.RecalculateBounds ();
-//			MapBounds = MapMesh.bounds;
-		}
+//		if (Map != null) {
+//			MapCollider = Map.GetComponent<Collider> ();
+////			Mesh MapMesh = Map.GetComponent<MeshFilter> ().mesh;
+////			MapMesh.RecalculateBounds ();
+////			MapBounds = MapMesh.bounds;
+//		}
 	}
 	public Vector3? ScreenPointToMapPosition(Vector2 point){
 		var ray = Camera.main.ScreenPointToRay (point);

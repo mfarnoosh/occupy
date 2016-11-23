@@ -1,6 +1,7 @@
 package com.mcm.network;
 
 import com.google.gson.Gson;
+import com.mcm.service.Tile;
 import com.mcm.util.GeoUtil;
 import com.mcm.util.SharedPreference;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
@@ -88,6 +89,8 @@ public class ClientService implements Runnable {
                 return handleUpdateLoc(socketMessage);
             case "getTile":
                 return handleTile(socketMessage);
+            case "getTileByNumber":
+                return handleTileByTileNo(socketMessage);
             default:
                 return null;
         }
@@ -99,80 +102,45 @@ public class ClientService implements Runnable {
         logger.info(socketMessage);
         float lat = Float.parseFloat(socketMessage.Params.get(0));
         float lon = Float.parseFloat(socketMessage.Params.get(1));
-        int zoomLevel = Integer.parseInt(SharedPreference.get("map.default_zoom_level"));
+        Tile tile = new Tile(lat,lon);
 
-        List<Integer> tileNumber = GeoUtil.getTileNumber(lat, lon, zoomLevel);
-        int xTile = tileNumber.get(0);
-        int yTile = tileNumber.get(1);
-        String tileNumberUrl = GeoUtil.getTileNumberUrl(xTile,yTile,zoomLevel);
-        Point tileCenter = GeoUtil.getTileCenter(xTile,yTile,zoomLevel);
+        socketMessage.Params.clear();
+        socketMessage.Params.add(Base64.encode(tile.getImage()));
 
-        File cacheDir = new File("cache/" + tileNumberUrl);
-        cacheDir.mkdirs();
-        File cache = new File(cacheDir.getAbsolutePath() + "/tile.png");
-        if (cache.exists()) {
-            try {
-                byte[] tile = FileUtils.readFileToByteArray(cache);
+        socketMessage.Params.add(String.valueOf(tile.getCenter().getX()));
+        socketMessage.Params.add(String.valueOf(tile.getCenter().getY()));
 
-                socketMessage.Params.clear();
-                socketMessage.Params.add(Base64.encode(tile));
+        socketMessage.Params.add(String.valueOf(tile.getTileX()));
+        socketMessage.Params.add(String.valueOf(tile.getTileY()));
 
-                socketMessage.Params.add(String.valueOf(tileCenter.getX()));
-                socketMessage.Params.add(String.valueOf(tileCenter.getY()));
+//        socketMessage.Params.add(String.valueOf(35.70283f));
+//        socketMessage.Params.add(String.valueOf(51.40641f));
+//        socketMessage.Params.add(String.valueOf(35.72403f));
+//        socketMessage.Params.add(String.valueOf(51.44572f));
+//        socketMessage.Params.add(String.valueOf(35.72215f));
+//        socketMessage.Params.add(String.valueOf(51.44447f));
+//        socketMessage.Params.add(String.valueOf(35.72046f));
+//        socketMessage.Params.add(String.valueOf(51.44354f));
+//        socketMessage.Params.add(String.valueOf(35.71995f));
+//        socketMessage.Params.add(String.valueOf(51.44778f));
 
-                socketMessage.Params.add(String.valueOf(35.70283f));
-                socketMessage.Params.add(String.valueOf(51.40641f));
-                socketMessage.Params.add(String.valueOf(35.72403f));
-                socketMessage.Params.add(String.valueOf(51.44572f));
-                socketMessage.Params.add(String.valueOf(35.72215f));
-                socketMessage.Params.add(String.valueOf(51.44447f));
-                socketMessage.Params.add(String.valueOf(35.72046f));
-                socketMessage.Params.add(String.valueOf(51.44354f));
-                socketMessage.Params.add(String.valueOf(35.71995f));
-                socketMessage.Params.add(String.valueOf(51.44778f));
+        return socketMessage;
+    }
 
+    private SocketMessage handleTileByTileNo(SocketMessage socketMessage) {
+        logger.info(socketMessage);
+        int tileX = Integer.parseInt(socketMessage.Params.get(0));
+        int tileY = Integer.parseInt(socketMessage.Params.get(1));
 
-                return socketMessage;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        String url = "http://tile.openstreetmap.org/" + tileNumberUrl + ".png";
-        try {
-            URLConnection connection = new URL(url).openConnection();
-            DataInputStream dis = new DataInputStream(connection.getInputStream());
-            int count = 0;
-            byte[] data = new byte[1024];
-            ByteOutputStream bos = new ByteOutputStream();
-            while ((count = dis.read(data)) != -1) {
-                bos.write(data, 0, count);
-            }
-            bos.flush();
-            byte[] tile = bos.getBytes();
-            FileUtils.writeByteArrayToFile(cache, tile);
-            socketMessage.Params.clear();
-            socketMessage.Params.add(Base64.encode(tile));
+        Tile tile = new Tile(tileX,tileY);
 
-            socketMessage.Params.add(String.valueOf(tileCenter.getX()));
-            socketMessage.Params.add(String.valueOf(tileCenter.getY()));
+        socketMessage.Params.clear();
+        socketMessage.Params.add(Base64.encode(tile.getImage()));
 
-            socketMessage.Params.add(String.valueOf(35.70283f));
-            socketMessage.Params.add(String.valueOf(51.40641f));
-            socketMessage.Params.add(String.valueOf(35.72403f));
-            socketMessage.Params.add(String.valueOf(51.44572f));
-            socketMessage.Params.add(String.valueOf(35.72215f));
-            socketMessage.Params.add(String.valueOf(51.44447f));
-            socketMessage.Params.add(String.valueOf(35.72046f));
-            socketMessage.Params.add(String.valueOf(51.44354f));
-            socketMessage.Params.add(String.valueOf(35.71995f));
-            socketMessage.Params.add(String.valueOf(51.44778f));
+        socketMessage.Params.add(String.valueOf(tile.getCenter().getX()));
+        socketMessage.Params.add(String.valueOf(tile.getCenter().getY()));
 
-            return socketMessage;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return socketMessage;
     }
 
     private SocketMessage handleUpdateLoc(SocketMessage socketMessage) {
