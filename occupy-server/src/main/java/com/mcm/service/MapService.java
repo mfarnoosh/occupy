@@ -19,7 +19,7 @@ public class MapService {
     public MapService(){}
 
 
-    public byte[] getTileImage(String tileUrl){
+    public static byte[] getTileImage(String tileUrl){
         File cacheDir = new File("cache/" + tileUrl);
         //cacheDir.mkdirs();
         File cache = new File(cacheDir.getAbsolutePath() + ".png");
