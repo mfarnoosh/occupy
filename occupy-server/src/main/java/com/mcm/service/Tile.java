@@ -47,8 +47,7 @@ public class Tile {
     }
 
     private void loadImage() {
-        MapService mapService = new MapService();
-        byte[] tileImage = mapService.getTileImage(getTileUrl());
+        byte[] tileImage = MapService.getTileImage(getTileUrl());
         setImage(tileImage);
     }
 
