@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
 
 	private Tile[,] tiles = new Tile[3, 3];
 
-	private Vector3 TileSize;
+	public Vector3 TileSize;
 	private bool InitCenterFinished = false;
 	private static float moveSpeed = 20.0f;
 	public static MapManager Current;
@@ -62,6 +62,21 @@ public class MapManager : MonoBehaviour
 		});
 
 	}
+	public Tile GetTile(Vector3 targetPosition){
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (targetPosition.x >= (tiles [i, j].transform.position.x - TileSize.x / 2) &&
+					targetPosition.x <= (tiles [i, j].transform.position.x + TileSize.x / 2) &&
+					targetPosition.z >= (tiles [i, j].transform.position.z - TileSize.z / 2) &&
+					targetPosition.z <= (tiles [i, j].transform.position.z + TileSize.z / 2)) {
+					return tiles [i, j];
+				}
+			}
+		}
+		return null;
+	}
+
+	#region Move Tiles
 	private void AdjustTiles(){
 		if (!InitCenterFinished)
 			return;
@@ -150,9 +165,5 @@ public class MapManager : MonoBehaviour
 			t.LoadTileByXY ();
 		}
 	}
-	public void LateUpdate ()
-	{
-		if (!InitCenterFinished)
-			return;
-	}
+	#endregion
 }

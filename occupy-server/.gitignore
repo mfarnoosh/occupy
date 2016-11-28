@@ -17,6 +17,11 @@ cache/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+# logs:
+*.log
+*.log.*
+
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries

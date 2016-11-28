@@ -91,6 +91,8 @@ public class ClientService implements Runnable {
                 return handleTile(socketMessage);
             case "getTileByNumber":
                 return handleTileByTileNo(socketMessage);
+            case "saveBuilding":
+                return handleSaveBuilding(socketMessage);
             default:
                 return null;
         }
@@ -142,7 +144,17 @@ public class ClientService implements Runnable {
 
         return socketMessage;
     }
+    private SocketMessage handleSaveBuilding(SocketMessage socketMessage){
+        logger.info(socketMessage);
+        double lat = Double.parseDouble(socketMessage.Params.get(0));
+        double lon = Double.parseDouble(socketMessage.Params.get(1));
 
+        socketMessage.Params.clear();
+        socketMessage.Params.add(String.valueOf(35.70283f));
+        socketMessage.Params.add(String.valueOf(51.40641f));
+
+        return socketMessage;
+    }
     private SocketMessage handleUpdateLoc(SocketMessage socketMessage) {
         logger.info(socketMessage);
         float lat = Float.parseFloat(socketMessage.Params.get(0));

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Lean.Touch;
 using System.Collections;
 
@@ -6,6 +7,7 @@ public class ActionReplaceBuilding : TouchAction {
 
 	private Vector3 originalPosition;
 	private bool isMoving = false;
+	private Tile currentTile = null;
 
 	Renderer rend;
 	Color originalColor;
@@ -33,18 +35,25 @@ public class ActionReplaceBuilding : TouchAction {
 		isMoving = false;
 	}
 
-	void Update(){
+	void LateUpdate(){
 		if (!isMoving)
 			return;
 		if (LeanTouch.Fingers == null || LeanTouch.Fingers.Count != 1) {
-			Finish ();
+			Finish (currentTile);
 			return;
 		}
+		RaycastHit hit;
+		if (!Physics.Raycast (LeanTouch.Fingers[0].GetRay (Camera.main), out hit))
+			return;
+		var tile = hit.transform.GetComponent<Tile> ();
+		if (tile != null)
+			currentTile = tile;
+
 		var screenPosition = LeanTouch.Fingers [0].ScreenPosition;
 
 		var tempTarget = PlayerManager.Current.ScreenPointToMapPosition (screenPosition);
 		if (tempTarget.HasValue == false) {
-			Finish ();
+			Finish (currentTile);
 			return;
 		}
 		transform.position = tempTarget.Value;
@@ -55,12 +64,28 @@ public class ActionReplaceBuilding : TouchAction {
 			rend.material.color = Red;
 		}
 	}
-	public void Finish(){	
-		if (!PlayerManager.Current.CanPlaceBuildingHere (gameObject))
+	public void Finish(Tile tile){
+		if (!PlayerManager.Current.CanPlaceBuildingHere (gameObject) || currentTile == null)
 			transform.position = originalPosition;
 		isMoving = false;
 		rend.material.color = originalColor;
 		var highlight = GetComponent<ActionHighlight> ();
+
+		//Send Position to server
+		Location loc = GeoUtils.XYZToLocation(tile,transform.position);
+	
+		SocketMessage sm = new SocketMessage ();
+		sm.Cmd = "saveBuilding";
+		sm.Params.Add (loc.Latitude.ToString());
+		sm.Params.Add (loc.Longitude.ToString());
+		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+			string lat = data.value.Params[0];
+			string lon = data.value.Params[1];
+			Debug.Log("Building Moved: " + lat + "," + lon);
+
+		});
+
+		//End Sending position to server
 		if (highlight != null)
 			highlight.Select ();
 		TouchManager.Current.enabled = true;
