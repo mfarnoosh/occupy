@@ -1746,3 +1746,23 @@
  INFO [2016-11-29 20:09:21,191] (ClientService.java:77) - sent -> 21981 byte
  INFO [2016-11-29 20:09:23,122] (ClientService.java:154) - SocketMessage{Id='0642207c-d0e1-4e01-a589-c669e8a2109b', Cmd='saveBuilding', Params=[35.70423, 51.4057]}
  INFO [2016-11-29 20:09:23,124] (ClientService.java:77) - sent -> 165 byte
+ INFO [2016-11-29 20:10:43,902] (ClientService.java:104) - SocketMessage{Id='c8b7ea02-610a-43fb-b0b3-ec5a22c9dbe7', Cmd='getTile', Params=[35.70423, 51.4057]}
+ INFO [2016-11-29 20:10:43,905] (ClientService.java:77) - sent -> 22067 byte
+ INFO [2016-11-29 20:10:43,931] (ClientService.java:139) - SocketMessage{Id='caf2dd06-18cc-4bb6-987c-5430cf5563ea', Cmd='getTileByNumber', Params=[42125, 25800]}
+ INFO [2016-11-29 20:10:43,933] (ClientService.java:139) - SocketMessage{Id='86a340b6-2b1e-4e65-bf4d-083bcf54eadd', Cmd='getTileByNumber', Params=[42125, 25801]}
+ INFO [2016-11-29 20:10:43,933] (ClientService.java:139) - SocketMessage{Id='f708afc9-e441-4be0-baa7-b9e56dc4706c', Cmd='getTileByNumber', Params=[42126, 25802]}
+ INFO [2016-11-29 20:10:43,933] (ClientService.java:139) - SocketMessage{Id='af903cac-464e-456c-a666-c2f4f594b6c2', Cmd='getTileByNumber', Params=[42126, 25800]}
+ INFO [2016-11-29 20:10:43,940] (ClientService.java:139) - SocketMessage{Id='215688ba-7e3e-4f23-87c6-848e531c6639', Cmd='getTileByNumber', Params=[42125, 25802]}
+ INFO [2016-11-29 20:10:43,942] (ClientService.java:139) - SocketMessage{Id='e1845092-a6fc-4d36-a45b-74935cd2f80d', Cmd='getTileByNumber', Params=[42127, 25801]}
+ INFO [2016-11-29 20:10:43,943] (ClientService.java:139) - SocketMessage{Id='6b429a04-f64f-430a-a2dc-2e22729fe890', Cmd='getTileByNumber', Params=[42127, 25800]}
+ INFO [2016-11-29 20:10:43,944] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,944] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,945] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,946] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,946] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,947] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,948] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:43,949] (ClientService.java:139) - SocketMessage{Id='7a1972f4-1039-4eb1-a45b-c31ae05c85ad', Cmd='getTileByNumber', Params=[42127, 25802]}
+ INFO [2016-11-29 20:10:43,951] (ClientService.java:77) - sent -> 21981 byte
+ INFO [2016-11-29 20:10:46,065] (ClientService.java:154) - SocketMessage{Id='24ad0e44-dd02-4946-8b16-21930ffbd3e1', Cmd='saveBuilding', Params=[35.70423, 51.4057]}
+ INFO [2016-11-29 20:10:46,067] (ClientService.java:77) - sent -> 165 byte

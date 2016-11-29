@@ -90,7 +90,7 @@ public class DragHandler : MonoBehaviour {
 		var pos = GeoUtils.LocationToXYZ(tile,loc);
 		Debug.Log(pos.x + " | " + pos.z);
 		go.transform.position = pos;
-//		go.transform.parent = tile.transform;
+		go.transform.parent = tile.transform;
 
 	}
 	//TODO
