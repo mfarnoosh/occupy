@@ -173,8 +173,8 @@ public class ClientService implements Runnable {
 //        socketMessage.Params.add(String.valueOf(35.70374f));
 //        socketMessage.Params.add(String.valueOf(51.40529f));
 
-        socketMessage.Params.add(String.valueOf(35.70260f));
-        socketMessage.Params.add(String.valueOf(51.40428f));
+        socketMessage.Params.add(String.valueOf(35.702305));
+        socketMessage.Params.add(String.valueOf(51.400487));
 
 
         return socketMessage;
