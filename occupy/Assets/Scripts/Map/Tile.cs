@@ -10,6 +10,11 @@ public class Tile : MonoBehaviour
 	private int _tileY;
 
 	public Location Center { get { return _center; } set { _center = value; } }
+	public float North;
+	public float East;
+	public float South;
+	public float West;
+	public Location BottomRight { get { return _center; } set { _center = value; } }
 
 	public int TileX { get { return _tileX; } set { _tileX = value; } }
 
@@ -29,9 +34,13 @@ public class Tile : MonoBehaviour
 
 			Center.Latitude = float.Parse(data.value.Params[1]);
 			Center.Longitude = float.Parse(data.value.Params[2]);
+			North = float.Parse(data.value.Params[3]);
+			East = float.Parse(data.value.Params[4]);
+			South = float.Parse(data.value.Params[5]);
+			West = float.Parse(data.value.Params[6]);
 
-			TileX = int.Parse(data.value.Params[3]);
-			TileY = int.Parse(data.value.Params[4]);
+			TileX = int.Parse(data.value.Params[7]);
+			TileY = int.Parse(data.value.Params[8]);
 
 			//TODO: Farnoosh - load and create buildings
 			//CreateBuilding(float.Parse(data.value.Params[3]),float.Parse(data.value.Params[4]),Color.red);

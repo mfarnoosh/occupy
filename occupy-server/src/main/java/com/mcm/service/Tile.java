@@ -13,7 +13,7 @@ public class Tile {
     private int tileX;
     private int tileY;
     private int zoom;
-
+    private GeoUtil.BoundingBox boundingBox;
     private Point center;
 
     private byte[] image;
@@ -28,7 +28,16 @@ public class Tile {
         setZoom(zoom);
 
         setCenter(GeoUtil.getTileCenter(getTileX(), getTileY(), getZoom()));
+        setBoundingBox(GeoUtil.tile2boundingBox(getTileX(), getTileY(), getZoom()));
         loadImage();
+    }
+
+    public GeoUtil.BoundingBox getBoundingBox() {
+        return boundingBox;
+    }
+
+    public void setBoundingBox(GeoUtil.BoundingBox boundingBox) {
+        this.boundingBox = boundingBox;
     }
 
     public Tile(double lat, double lon) {
@@ -43,6 +52,7 @@ public class Tile {
         setTileY(tileNumbers.get(1));
 
         setCenter(GeoUtil.getTileCenter(getTileX(), getTileY(), getZoom()));
+        setBoundingBox(GeoUtil.tile2boundingBox(getTileX(), getTileY(), getZoom()));
         loadImage();
     }
 

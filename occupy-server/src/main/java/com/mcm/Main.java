@@ -16,7 +16,7 @@ import java.security.NoSuchAlgorithmException;
  * Created by Cross on 7/5/2015.
  */
 public class Main {
-    final static int port = 1234;
+    final static int port = 4444;
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 //        final Logger log=Logger.getLogger(Main.class);
@@ -28,7 +28,7 @@ public class Main {
 //        log.info("login service is running.");
 //
 
-        new NetworkManager().initializeServer(4444);
+        new NetworkManager().initializeServer(port);
 
     }
 

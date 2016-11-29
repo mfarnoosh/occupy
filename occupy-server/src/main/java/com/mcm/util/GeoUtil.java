@@ -68,10 +68,29 @@ public class GeoUtil {
         return("" + zoom + "/" + xTile + "/" + yTile);
     }
     public static Point getTileCenter(int xTile,int yTile , int zoom){
-        double lon = xTile / Math.pow(2.0, zoom) * 360.0 - 180;
-        double n = Math.PI - (2.0 * Math.PI * yTile) / Math.pow(2.0, zoom);
-        double lat = Math.toDegrees(Math.atan(Math.sinh(n)));
+        BoundingBox box = tile2boundingBox(xTile, yTile, zoom);
+        return new Point(box.north - Math.abs(box.north - box.south)/2,box.west + Math.abs(box.east - box.west)/2);
+    }
+    public static BoundingBox tile2boundingBox(final int x, final int y, final int zoom) {
+        BoundingBox bb = new BoundingBox();
+        bb.north = tile2lat(y, zoom);
+        bb.south = tile2lat(y + 1, zoom);
+        bb.west = tile2lon(x, zoom);
+        bb.east = tile2lon(x + 1, zoom);
+        return bb;
+    }
+    static double tile2lon(int x, int z) {
+        return x / Math.pow(2.0, z) * 360.0 - 180;
+    }
 
-        return new Point(lat,lon);
+    static double tile2lat(int y, int z) {
+        double n = Math.PI - (2.0 * Math.PI * y) / Math.pow(2.0, z);
+        return Math.toDegrees(Math.atan(Math.sinh(n)));
+    }
+    public static class BoundingBox {
+        public double north;
+        public double south;
+        public double east;
+        public double west;
     }
 }
