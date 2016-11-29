@@ -17,6 +17,8 @@ public class MapManager : MonoBehaviour
 	 */
 	public GameObject TilePrefab;
 	public GameObject MapObject;
+	public Vector3 WorldCenter = new Vector3 (0, 0, 0);
+
 
 	private Tile[,] tiles = new Tile[3, 3];
 
@@ -33,6 +35,7 @@ public class MapManager : MonoBehaviour
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
 		MapObject.transform.position += new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
+		WorldCenter = MapObject.transform.position;
 		AdjustTiles ();
 	}
 

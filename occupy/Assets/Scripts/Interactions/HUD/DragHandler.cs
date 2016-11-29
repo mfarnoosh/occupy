@@ -52,6 +52,22 @@ public class DragHandler : MonoBehaviour {
 			Location sLoc2 = new Location(float.Parse(lat2),float.Parse(lon2));
 
 			CreateBuilding(tile,sLoc2,Color.red);
+
+			string lat3 = data.value.Params[4];
+			string lon3 = data.value.Params[5];
+			Debug.Log("Building Moved: " + lat3 + "," + lon3);
+			Location sLoc3 = new Location(float.Parse(lat3),float.Parse(lon3));
+
+			CreateBuilding(tile,sLoc3,Color.gray);
+
+
+			string lat4 = data.value.Params[6];
+			string lon4 = data.value.Params[7];
+			Debug.Log("Building Moved: " + lat4 + "," + lon4);
+			Location sLoc4 = new Location(float.Parse(lat4),float.Parse(lon4));
+
+			CreateBuilding(tile,sLoc4,Color.yellow);
+
 		});
 
 		//End Sending position to server
@@ -74,7 +90,7 @@ public class DragHandler : MonoBehaviour {
 		var pos = GeoUtils.LocationToXYZ(tile,loc);
 		Debug.Log(pos.x + " | " + pos.z);
 		go.transform.position = pos;
-//		go.transform.parent = tile.transform;
+		go.transform.parent = tile.transform;
 
 	}
 	//TODO

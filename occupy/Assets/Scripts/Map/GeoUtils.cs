@@ -54,7 +54,7 @@ public static class GeoUtils {
 		float y = (rad * C + h) * cosLat * sinLon;
 		float z = (rad * S + h) * sinLat;
 
-		return new Vector3 (x, y, z);
+		return new Vector3 (x + MapManager.Current.WorldCenter.x, y + MapManager.Current.WorldCenter.y, z + MapManager.Current.WorldCenter.z);
 	}
 
 	public static Location XYZToLocation (Tile tile,Vector3 position){

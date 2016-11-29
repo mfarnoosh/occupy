@@ -156,11 +156,26 @@ public class ClientService implements Runnable {
         double lon = Double.parseDouble(socketMessage.Params.get(1));
 
         socketMessage.Params.clear();
+
+
         socketMessage.Params.add(String.valueOf(35.70283f));
         socketMessage.Params.add(String.valueOf(51.40641f));
 
-        socketMessage.Params.add(String.valueOf(35.70548f));
-        socketMessage.Params.add(String.valueOf(51.40804f));
+
+        socketMessage.Params.add(String.valueOf(35.70200f));
+        socketMessage.Params.add(String.valueOf(51.40987f));
+
+
+        socketMessage.Params.add(String.valueOf(35.70536f));
+        socketMessage.Params.add(String.valueOf(51.40976f));
+
+
+//        socketMessage.Params.add(String.valueOf(35.70374f));
+//        socketMessage.Params.add(String.valueOf(51.40529f));
+
+        socketMessage.Params.add(String.valueOf(35.70260f));
+        socketMessage.Params.add(String.valueOf(51.40428f));
+
 
         return socketMessage;
     }
