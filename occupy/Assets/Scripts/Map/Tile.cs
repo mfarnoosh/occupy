@@ -6,8 +6,8 @@ public class Tile : MonoBehaviour
 {
 	private Location _center = new Location(35.72083f,51.44816f);
 
-	private int _tileX;
-	private int _tileY;
+	public int _tileX;
+	public int _tileY;
 
 	public Location Center { get { return _center; } set { _center = value; } }
 	public float North;
@@ -16,9 +16,27 @@ public class Tile : MonoBehaviour
 	public float West;
 	public Location BottomRight { get { return _center; } set { _center = value; } }
 
-	public int TileX { get { return _tileX; } set { _tileX = value; } }
+	public int TileX { 
+		get { return _tileX; } 
+		set { 
+			if (value != _tileX) {
+				GetComponent<Renderer>().material.mainTexture = null;
+				DataLoaded = false;
+			}
+			_tileX = value; 
+		} 
+	}
 
-	public int TileY { get { return _tileY; } set { _tileY = value; } }
+	public int TileY { 
+		get { return _tileY; } 
+		set { 
+			if (value != _tileY) {
+				GetComponent<Renderer>().material.mainTexture = null;
+				DataLoaded = false;
+			}
+			_tileY = value; 
+		} 
+	}
 
 	public bool DataLoaded = false;
 	public Tile(){}
