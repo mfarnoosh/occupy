@@ -71,6 +71,11 @@ public class Tile : MonoBehaviour
 			Center.Latitude = float.Parse(data.value.Params[1]);
 			Center.Longitude = float.Parse(data.value.Params[2]);
 
+			North = float.Parse(data.value.Params[3]);
+			East = float.Parse(data.value.Params[4]);
+			South = float.Parse(data.value.Params[5]);
+			West = float.Parse(data.value.Params[6]);
+
 			//TODO: Farnoosh - load and create buildings
 			//CreateBuilding(float.Parse(data.value.Params[3]),float.Parse(data.value.Params[4]),Color.red);
 

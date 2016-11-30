@@ -148,6 +148,11 @@ public class ClientService implements Runnable {
         socketMessage.Params.add(String.valueOf(tile.getCenter().getX()));
         socketMessage.Params.add(String.valueOf(tile.getCenter().getY()));
 
+        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().north));
+        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().east));
+        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().south));
+        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().west));
+
         return socketMessage;
     }
     private SocketMessage handleSaveBuilding(SocketMessage socketMessage){

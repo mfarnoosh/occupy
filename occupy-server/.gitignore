@@ -1,4 +1,10 @@
 cache/
+
+# logs:
+occupy.log 
+*.log.*
+
+
 # Created by https://www.gitignore.io/api/intellij,maven
 
 ### Intellij ###
@@ -16,11 +22,6 @@ cache/
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
-
-# logs:
-*.log
-*.log.*
-
 
 # Gradle:
 .idea/gradle.xml
