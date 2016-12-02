@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 using System;
 public class ScrollButton : MonoBehaviour {
 	private bool open = false;
@@ -42,7 +42,7 @@ public class ScrollButton : MonoBehaviour {
 
 
 		Image image = buttonGO.AddComponent<Image> ();
-		image.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
+//		image.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
 
 
 

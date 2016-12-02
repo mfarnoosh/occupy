@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+//using UnityEditor;
 
 public class OnScreenManager : MonoBehaviour {
 	public GameObject buildingPrefab;
@@ -193,7 +193,7 @@ public class OnScreenManager : MonoBehaviour {
 		buttonGO.tag = tag;
 		buttonGO.transform.localScale = new Vector3 (1, 1, 1);
 		Image image = buttonGO.AddComponent<Image> ();
-		image.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
+//		image.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
 
 
 

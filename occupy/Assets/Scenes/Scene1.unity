@@ -397,7 +397,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1 &699547539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,6 +1455,7 @@ GameObject:
   - 114: {fileID: 1943568809}
   - 114: {fileID: 1943568810}
   - 114: {fileID: 1943568811}
+  - 114: {fileID: 1943568812}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1523,7 +1524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548d089629d154f589edf8c1f2f572e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerIp: 127.0.0.1
+  ServerIp: 192.168.43.23
   ServerPort: 4444
 --- !u!114 &1943568810
 MonoBehaviour:
@@ -1551,6 +1552,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TilePrefab: {fileID: 1000011944241706, guid: 6047ea9a5f10ba44199759876676eb23, type: 2}
   MapObject: {fileID: 601476140}
+--- !u!114 &1943568812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943568804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152dddd00a54449499924775a57f45ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
+    type: 2}
+  profile: {fileID: 1447947450}
+  units: {fileID: 1849366605}
+  buildings: {fileID: 1216576249}
+  giant: {fileID: 466515896}
+  myLocation: {fileID: 699547541}
+  myHome: {fileID: 1818442874}
+  closeScrollView: {fileID: 1930262331}
+  scrollRect: {fileID: 97149001}
 --- !u!1 &1955719171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1614,53 +1636,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!1 &2014724340
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2014724342}
-  - 114: {fileID: 2014724341}
-  m_Layer: 0
-  m_Name: OnScreenManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2014724341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2014724340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 152dddd00a54449499924775a57f45ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
-    type: 2}
-  profile: {fileID: 1447947450}
-  units: {fileID: 1849366605}
-  buildings: {fileID: 1216576249}
-  giant: {fileID: 466515896}
-  myLocation: {fileID: 699547541}
-  myHome: {fileID: 1818442874}
-  closeScrollView: {fileID: 1930262331}
-  scrollRect: {fileID: 97149001}
---- !u!4 &2014724342
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2014724340}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 788.9812, y: -49.513916, z: 1999.6045}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
