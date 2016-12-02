@@ -25,7 +25,10 @@ public class DragHandler : MonoBehaviour {
 
 	public void Finish(Vector2 screenPosition){	
 		var go = GameObject.Instantiate (Prefab);
-
+		go.transform.localScale = new Vector3(
+			go.transform.localScale.x * PlayerManager.Current.ObjectScaleMultiplier.x,
+			go.transform.localScale.y * PlayerManager.Current.ObjectScaleMultiplier.y,
+			go.transform.localScale.z * PlayerManager.Current.ObjectScaleMultiplier.z);
 
 		//Send Position to server
 		Tile tile = MapManager.Current.GetTile(transform.position);
@@ -84,7 +87,11 @@ public class DragHandler : MonoBehaviour {
 	//TODO: Farnoosh remove these lines. just for test getting data from server
 	private void CreateBuilding(Tile tile,Location loc,Color col){
 		var go = GameObject.Instantiate(Prefab);
-		go.transform.localScale = new Vector3(5,5,5);
+		go.transform.localScale = new Vector3(
+			go.transform.localScale.x * PlayerManager.Current.ObjectScaleMultiplier.x,
+			go.transform.localScale.y * PlayerManager.Current.ObjectScaleMultiplier.y,
+			go.transform.localScale.z * PlayerManager.Current.ObjectScaleMultiplier.z);
+		
 		go.GetComponent<Renderer> ().material.color = col;
 		//TODO: Convert Latitude,Longitude to X,Y
 		var pos = GeoUtils.LocationToXYZ(tile,loc);

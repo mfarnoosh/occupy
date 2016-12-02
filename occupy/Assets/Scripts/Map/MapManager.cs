@@ -10,7 +10,7 @@ public class MapManager : MonoBehaviour
 {
 	private static int tilesGrid = 5; //means e.g. grid 3 X 3 of tiles
 	private static float moveSpeed = 20.0f;
-
+	private Vector3 _tileSize;
 	//TODO: Farnoosh
 	/*
 	 * http://tile.mapzen.com/mapzen/vector/v1/{layers}/{z}/{x}/{y}.{format}?api_key={api_key}
@@ -20,10 +20,10 @@ public class MapManager : MonoBehaviour
 	public GameObject TilePrefab;
 	public GameObject MapObject;
 
-
 	private Tile[,] tiles = new Tile[tilesGrid, tilesGrid];
 
-	public Vector3 TileSize;
+
+	public Vector3 TileSize{get { return _tileSize;}}
 	private bool InitCenterFinished = false;
 
 	public static MapManager Current;
@@ -34,13 +34,13 @@ public class MapManager : MonoBehaviour
 
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
-		MapObject.transform.position += new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
+		MapObject.transform.position = new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
 		AdjustTiles ();
 	}
 
 	public void Start ()
 	{
-		TileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
+		_tileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
 		//(tilesGrid - 1) / 2 ==> center tile
 		int centerTileX = (tilesGrid - 1) / 2;
 

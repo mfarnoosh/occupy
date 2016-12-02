@@ -4,8 +4,9 @@ using System.Linq;
 
 public class PlayerManager : MonoBehaviour {
 	public Location WorldCenter = new Location(35.70423f,51.40570f);
+	public Vector3 ObjectScaleMultiplier = new Vector3(4,4,4);
 
-	public Collider MapCollider;
+	//public Collider MapCollider;
 //	private Bounds MapBounds;
 
 	public static PlayerManager Current;
@@ -24,12 +25,10 @@ public class PlayerManager : MonoBehaviour {
 		var ray = Camera.main.ScreenPointToRay (point);
 		RaycastHit hit;
 
-		if (!MapCollider.Raycast (ray, out hit, Mathf.Infinity))
+		if (!MapManager.Current.MapObject.GetComponent<Collider>().Raycast(ray, out hit, Mathf.Infinity))
 			return null;
-		float finalYPosition = MapCollider.transform.position.y + MapCollider.transform.localScale.z;
-		Vector3 finalPosition = new Vector3 (hit.point.x, 1.01f,hit.point.z);
-			
-		return finalPosition;
+//		float finalYPosition = MapCollider.transform.position.y + MapCollider.transform.localScale.z;
+		return new Vector3 (hit.point.x, 0.01f,hit.point.z);
 	}
 
 	public bool CanPlaceBuildingHere(GameObject go){

@@ -17,6 +17,11 @@ public class UIEventHandler : MonoBehaviour,IPointerDownHandler, IPointerUpHandl
 			if (Prefab == null || Ghost == null)
 				return;
 			var go = GameObject.Instantiate (Ghost);
+			go.transform.localScale = new Vector3(
+				go.transform.localScale.x * PlayerManager.Current.ObjectScaleMultiplier.x,
+				go.transform.localScale.y * PlayerManager.Current.ObjectScaleMultiplier.y,
+				go.transform.localScale.z * PlayerManager.Current.ObjectScaleMultiplier.z);
+			
 			var dragHandler = go.AddComponent<DragHandler> ();
 			dragHandler.Prefab = Prefab;
 			dragHandler.Ghost = Ghost;

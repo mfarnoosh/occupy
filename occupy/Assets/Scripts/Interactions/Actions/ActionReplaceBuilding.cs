@@ -26,6 +26,10 @@ public class ActionReplaceBuilding : TouchAction {
 		originalPosition = transform.position;
 		originalColor = rend.material.color;
 
+		var tile =  gameObject.transform.GetComponentInParent<Tile> ();
+		if (tile != null)
+			currentTile = tile;
+
 		isMoving = true;
 		rend.material.color = Yellow;
 	}
