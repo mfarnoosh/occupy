@@ -6,8 +6,6 @@ using Lean.Touch;
 
 public class TouchManager : MonoBehaviour
 {
-	public Text InfoText;
-
 	[Tooltip ("The minimum field of view angle we want to zoom to")]
 	public float MinimumCameraFOV = 10.0f;
 
@@ -140,7 +138,8 @@ public class TouchManager : MonoBehaviour
 			// Get the world delta of all the fingers
 			var worldDelta = LeanTouch.GetDeltaWorldPosition(Distance); // Distance doesn't matter with an orthographic camera
 			//Map.transform.position += new Vector3 (worldDelta.x * 20, 0, worldDelta.z * 20);
-			MapManager.Current.MoveMap(worldDelta, 1.0f);
+			if(worldDelta.x != 0 || worldDelta.y != 0 || worldDelta.z != 0)
+				MapManager.Current.MoveMap(worldDelta, 1.0f);
 		}
 	}
 	public void OnFingerSwipe (LeanFinger finger)
@@ -157,61 +156,60 @@ public class TouchManager : MonoBehaviour
 		}
 		*/
 
-		InfoText.text = finger.Index.ToString ();
 		// Make sure the info text exists
-		if (InfoText != null) {
-			// Store the swipe delta in a temp variable
-			var swipe = finger.SwipeDelta;
-			var left = new Vector2 (-1.0f, 0.0f);
-			var right = new Vector2 (1.0f, 0.0f);
-			var down = new Vector2 (0.0f, -1.0f);
-			var up = new Vector2 (0.0f, 1.0f);
-
-			if (SwipedInThisDirection (swipe, left) == true) {
-				InfoText.text = "You swiped left!";
-			}
-
-			if (SwipedInThisDirection (swipe, right) == true) {
-				InfoText.text = "You swiped right!";
-			}
-
-			if (SwipedInThisDirection (swipe, down) == true) {
-				InfoText.text = "You swiped down!";
-			}
-
-			if (SwipedInThisDirection (swipe, up) == true) {
-				InfoText.text = "You swiped up!";
-			}
-
-			if (SwipedInThisDirection (swipe, left + up) == true) {
-				InfoText.text = "You swiped left and up!";
-			}
-
-			if (SwipedInThisDirection (swipe, left + down) == true) {
-				InfoText.text = "You swiped left and down!";
-			}
-
-			if (SwipedInThisDirection (swipe, right + up) == true) {
-				InfoText.text = "You swiped right and up!";
-			}
-
-			if (SwipedInThisDirection (swipe, right + down) == true) {
-				InfoText.text = "You swiped right and down!";
-			}
-		}
+//		if (InfoText != null) {
+//			// Store the swipe delta in a temp variable
+//			var swipe = finger.SwipeDelta;
+//			var left = new Vector2 (-1.0f, 0.0f);
+//			var right = new Vector2 (1.0f, 0.0f);
+//			var down = new Vector2 (0.0f, -1.0f);
+//			var up = new Vector2 (0.0f, 1.0f);
+//
+//			if (SwipedInThisDirection (swipe, left) == true) {
+//				InfoText.text = "You swiped left!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, right) == true) {
+//				InfoText.text = "You swiped right!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, down) == true) {
+//				InfoText.text = "You swiped down!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, up) == true) {
+//				InfoText.text = "You swiped up!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, left + up) == true) {
+//				InfoText.text = "You swiped left and up!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, left + down) == true) {
+//				InfoText.text = "You swiped left and down!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, right + up) == true) {
+//				InfoText.text = "You swiped right and up!";
+//			}
+//
+//			if (SwipedInThisDirection (swipe, right + down) == true) {
+//				InfoText.text = "You swiped right and down!";
+//			}
+//		}
 	}
 
-	private bool SwipedInThisDirection (Vector2 swipe, Vector2 direction)
-	{
-		// Find the normalized dot product between the swipe and our desired angle (this will return the acos between the vectors)
-		var dot = Vector2.Dot (swipe.normalized, direction.normalized);
-
-		// With 8 directions, each direction takes up 45 degrees (360/8), but we're comparing against dot product, so we need to halve it
-		var limit = Mathf.Cos (22.5f * Mathf.Deg2Rad);
-
-		// Return true if this swipe is within the limit of this direction
-		return dot >= limit;
-	}
+//	private bool SwipedInThisDirection (Vector2 swipe, Vector2 direction)
+//	{
+//		// Find the normalized dot product between the swipe and our desired angle (this will return the acos between the vectors)
+//		var dot = Vector2.Dot (swipe.normalized, direction.normalized);
+//
+//		// With 8 directions, each direction takes up 45 degrees (360/8), but we're comparing against dot product, so we need to halve it
+//		var limit = Mathf.Cos (22.5f * Mathf.Deg2Rad);
+//
+//		// Return true if this swipe is within the limit of this direction
+//		return dot >= limit;
+//	}
 
 
 

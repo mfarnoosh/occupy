@@ -16,7 +16,7 @@ public class DragHandler : MonoBehaviour {
 
 		var screenPosition = LeanTouch.Fingers [0].ScreenPosition;
 
-		var tempTarget = PlayerManager.Current.ScreenPointToMapPosition (screenPosition);
+		var tempTarget = MapManager.Current.ScreenPointToMapPosition (screenPosition);
 		if (tempTarget.HasValue == false)
 			return;
 
@@ -33,7 +33,6 @@ public class DragHandler : MonoBehaviour {
 		//Send Position to server
 		Tile tile = MapManager.Current.GetTile(transform.position);
 
-		Debug.Log(tile);
 		Location loc = GeoUtils.XYZToLocation(tile,transform.position);
 
 		SocketMessage sm = new SocketMessage ();
@@ -43,7 +42,6 @@ public class DragHandler : MonoBehaviour {
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
 			string lat = data.value.Params[0];
 			string lon = data.value.Params[1];
-			Debug.Log("Building Moved: " + lat + "," + lon);
 			Location sLoc = new Location(float.Parse(lat),float.Parse(lon));
 
 			CreateBuilding(tile,sLoc,Color.green);
@@ -51,14 +49,14 @@ public class DragHandler : MonoBehaviour {
 
 			string lat2 = data.value.Params[2];
 			string lon2 = data.value.Params[3];
-			Debug.Log("Building Moved: " + lat2 + "," + lon2);
+
 			Location sLoc2 = new Location(float.Parse(lat2),float.Parse(lon2));
 
 			CreateBuilding(tile,sLoc2,Color.red);
 
 			string lat3 = data.value.Params[4];
 			string lon3 = data.value.Params[5];
-			Debug.Log("Building Moved: " + lat3 + "," + lon3);
+
 			Location sLoc3 = new Location(float.Parse(lat3),float.Parse(lon3));
 
 			CreateBuilding(tile,sLoc3,Color.gray);
@@ -66,7 +64,7 @@ public class DragHandler : MonoBehaviour {
 
 			string lat4 = data.value.Params[6];
 			string lon4 = data.value.Params[7];
-			Debug.Log("Building Moved: " + lat4 + "," + lon4);
+
 			Location sLoc4 = new Location(float.Parse(lat4),float.Parse(lon4));
 
 			CreateBuilding(tile,sLoc4,Color.yellow);
@@ -95,7 +93,7 @@ public class DragHandler : MonoBehaviour {
 		go.GetComponent<Renderer> ().material.color = col;
 		//TODO: Convert Latitude,Longitude to X,Y
 		var pos = GeoUtils.LocationToXYZ(tile,loc);
-		Debug.Log(pos.x + " | " + pos.z);
+
 		go.transform.position = pos;
 		go.transform.parent = tile.transform;
 

@@ -8,7 +8,6 @@ public class ActionHighlight : TouchAction {
 	{
 		if (HighlightObject != null)
 			HighlightObject.SetActive (true);
-		Debug.Log ("Highlight Select");
 	}
 	public override void SecondSelect ()
 	{
@@ -20,7 +19,6 @@ public class ActionHighlight : TouchAction {
 	{
 		if (HighlightObject != null)
 			HighlightObject.SetActive (false);
-		Debug.Log ("Highlight Deselect");
 	}
 
 	void Start(){

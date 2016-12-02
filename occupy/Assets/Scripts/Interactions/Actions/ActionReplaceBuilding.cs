@@ -55,7 +55,7 @@ public class ActionReplaceBuilding : TouchAction {
 
 		var screenPosition = LeanTouch.Fingers [0].ScreenPosition;
 
-		var tempTarget = PlayerManager.Current.ScreenPointToMapPosition (screenPosition);
+		var tempTarget = MapManager.Current.ScreenPointToMapPosition (screenPosition);
 		if (tempTarget.HasValue == false) {
 			Finish (currentTile);
 			return;
@@ -85,8 +85,6 @@ public class ActionReplaceBuilding : TouchAction {
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
 			string lat = data.value.Params[0];
 			string lon = data.value.Params[1];
-			Debug.Log("Building Moved: " + lat + "," + lon);
-
 		});
 
 		//End Sending position to server

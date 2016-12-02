@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEditor;
 
 public class OnScreenManager : MonoBehaviour {
+	public GameObject buildingPrefab;
+
 	public Button profile;
 	public Button units;
 	public Button buildings;
@@ -23,51 +25,7 @@ public class OnScreenManager : MonoBehaviour {
 		unitObjects.Add(new GameObjects.Unit());
 		unitObjects.Add(new GameObjects.Unit());
 		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
-		unitObjects.Add(new GameObjects.Unit());
+
 		buildingObjects.Add (new GameObjects.Building());
 		buildingObjects.Add (new GameObjects.Building());
 		buildingObjects.Add (new GameObjects.Building());
@@ -249,6 +207,12 @@ public class OnScreenManager : MonoBehaviour {
 		rectTransform.position = new Vector3 (x, y, 0);
 		rectTransform.localScale = new Vector3 (1, 1, 1);
 		rectTransform.sizeDelta = new Vector2 (width, height);
+
+		var eventHandler = buttonGO.AddComponent<UIEventHandler> ();
+		eventHandler.Prefab = buildingPrefab;
+		eventHandler.Ghost = buildingPrefab;
+		eventHandler.IsCreatingBuilding = true;
+
 		return buttonGO;
 	}
 }

@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
 
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
-		MapObject.transform.position = new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
+		MapObject.transform.position += new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
 		AdjustTiles ();
 	}
 
@@ -80,6 +80,23 @@ public class MapManager : MonoBehaviour
 			}
 		}
 		return null;
+	}
+
+	public Vector3? ScreenPointToMapPosition(Vector2 point){
+		var ray = Camera.main.ScreenPointToRay (point);
+		RaycastHit hit;
+
+		foreach (var item in tiles) {
+			if (item.GetComponent<Collider> ().Raycast (ray, out hit, Mathf.Infinity)) {
+				return new Vector3 (hit.point.x, 0.01f, hit.point.z);
+			}
+		}
+		return null;
+//		if (!MapManager.Current.MapObject.GetComponent<Collider>().Raycast(ray, out hit, Mathf.Infinity))
+//			return null;
+//		//		float finalYPosition = MapCollider.transform.position.y + MapCollider.transform.localScale.z;
+//		return new Vector3 (hit.point.x, 0.01f,hit.point.z);
+
 	}
 
 	#region Move Tiles

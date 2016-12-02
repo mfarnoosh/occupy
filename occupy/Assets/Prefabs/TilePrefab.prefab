@@ -22,6 +22,7 @@ GameObject:
   - 33: {fileID: 33000011611117054}
   - 23: {fileID: 23000011996612234}
   - 114: {fileID: 114000013664512760}
+  - 65: {fileID: 65000012104978982}
   m_Layer: 0
   m_Name: TilePrefab
   m_TagString: Untagged
@@ -78,6 +79,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011944241706}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65000012104978982
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011944241706}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114000013664512760
 MonoBehaviour:
   m_ObjectHideFlags: 1

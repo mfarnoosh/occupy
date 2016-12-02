@@ -21,15 +21,6 @@ public class PlayerManager : MonoBehaviour {
 ////			MapBounds = MapMesh.bounds;
 //		}
 	}
-	public Vector3? ScreenPointToMapPosition(Vector2 point){
-		var ray = Camera.main.ScreenPointToRay (point);
-		RaycastHit hit;
-
-		if (!MapManager.Current.MapObject.GetComponent<Collider>().Raycast(ray, out hit, Mathf.Infinity))
-			return null;
-//		float finalYPosition = MapCollider.transform.position.y + MapCollider.transform.localScale.z;
-		return new Vector3 (hit.point.x, 0.01f,hit.point.z);
-	}
 
 	public bool CanPlaceBuildingHere(GameObject go){
 //		var verts = go.GetComponent<MeshFilter> ().mesh.vertices;
