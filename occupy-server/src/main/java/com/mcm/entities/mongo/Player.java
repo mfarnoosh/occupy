@@ -6,11 +6,11 @@ import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 /**
  * Created by alirezaghias on 10/18/2016 AD.
  */
-public class User extends BaseDocument {
+public class Player extends BaseDocument {
     private MultilingualValue name;
     private MultilingualValue lastName;
     @GeoSpatialIndexed
-    private double[] location;
+    private double[] lastLocation;
     private String email;
     private String username;
     private String password;
@@ -32,12 +32,12 @@ public class User extends BaseDocument {
         this.lastName = lastName;
     }
 
-    public double[] getLocation() {
-        return location;
+    public double[] getLastLocation() {
+        return lastLocation;
     }
 
-    public void setLocation(double[] location) {
-        this.location = location;
+    public void setLastLocation(double[] lastLocation) {
+        this.lastLocation = lastLocation;
     }
 
     public String getEmail() {

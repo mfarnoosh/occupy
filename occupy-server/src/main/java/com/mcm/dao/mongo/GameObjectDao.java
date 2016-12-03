@@ -2,6 +2,7 @@ package com.mcm.dao.mongo;
 
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.entities.mongo.GameObject;
+import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -33,13 +34,14 @@ public class GameObjectDao implements IGameObjectDao {
     public void deleteAll() {
         mongoTemplate.findAllAndRemove(new Query(), GameObject.class);
     }
-    public LinkedHashSet<GameObject> gameObjectsNear(GameObject gameObject) {
+
+    public LinkedHashSet<GameObject> gameObjectsNear(BasePlayerObject playerObject) {
         final LinkedHashSet<GameObject> res = new LinkedHashSet<>();
-        if (gameObject.getLocation() == null || gameObject.getLocation().length != 2) {
+        if (playerObject.getLocation() == null || playerObject.getLocation().length != 2) {
             return res;
         }
-        final List<GeoResult<GameObject>> results = getMongoOperations().geoNear(NearQuery.near(gameObject.getLocation()[0], gameObject.getLocation()[1])
-                .inKilometers().maxDistance(gameObject.getRange()), GameObject.class).getContent();
+        final List<GeoResult<GameObject>> results = getMongoOperations().geoNear(NearQuery.near(playerObject.getLocation()[0], playerObject.getLocation()[1])
+                .inKilometers().maxDistance(playerObject.getRange()), GameObject.class).getContent();
         for (GeoResult<GameObject> geoResult : results) {
             res.add(geoResult.getContent());
         }

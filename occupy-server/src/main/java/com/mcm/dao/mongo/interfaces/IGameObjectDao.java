@@ -1,6 +1,7 @@
 package com.mcm.dao.mongo.interfaces;
 
 import com.mcm.entities.mongo.GameObject;
+import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.NearQuery;
@@ -14,5 +15,5 @@ import java.util.List;
  */
 @Repository
 public interface IGameObjectDao extends IBaseMongoDao<GameObject> {
-    LinkedHashSet<GameObject> gameObjectsNear(GameObject gameObject);
+    LinkedHashSet<GameObject> gameObjectsNear(BasePlayerObject playerObject);
 }
