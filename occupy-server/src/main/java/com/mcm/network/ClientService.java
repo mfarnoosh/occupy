@@ -93,6 +93,8 @@ public class ClientService implements Runnable {
                 return handleTileByTileNo(socketMessage);
             case "saveBuilding":
                 return handleSaveBuilding(socketMessage);
+            case "moveUnit":
+                return handleMoveUnit(socketMessage);
             default:
                 return null;
         }
@@ -183,6 +185,12 @@ public class ClientService implements Runnable {
 
 
         return socketMessage;
+    }
+    private SocketMessage handleMoveUnit(SocketMessage socketMessage){
+        logger.info(socketMessage);
+        int buildingType = Integer.parseInt(socketMessage.Params.get(0));
+
+        return null;
     }
     private SocketMessage handleUpdateLoc(SocketMessage socketMessage) {
         logger.info(socketMessage);

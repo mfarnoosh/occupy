@@ -1122,6 +1122,7 @@ GameObject:
   - 222: {fileID: 1818442876}
   - 114: {fileID: 1818442875}
   - 114: {fileID: 1818442874}
+  - 114: {fileID: 1818442877}
   m_Layer: 5
   m_Name: MyHome
   m_TagString: Untagged
@@ -1221,6 +1222,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1818442872}
+--- !u!114 &1818442877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1818442872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab: {fileID: 1000014129183928, guid: 3273f65bdc8550a4d8a23b2a16671742, type: 2}
+  Ghost: {fileID: 1000014129183928, guid: 3273f65bdc8550a4d8a23b2a16671742, type: 2}
+  IsCreatingBuilding: 0
 --- !u!1 &1849366603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,7 +1539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548d089629d154f589edf8c1f2f572e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerIp: 192.168.43.23
+  ServerIp: 127.0.0.1
   ServerPort: 4444
 --- !u!114 &1943568810
 MonoBehaviour:

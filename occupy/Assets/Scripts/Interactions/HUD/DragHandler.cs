@@ -6,24 +6,58 @@ using System.Collections;
 public class DragHandler : MonoBehaviour {
 	public GameObject Prefab;
 	public GameObject Ghost;
+	public bool IsCreatingBuilding;
 
+	private Renderer rend;
 	void Start(){
 		TouchManager.Current.enabled = false;
+		rend = GetComponent<Renderer> ();
 	}
 	void LateUpdate(){
 		if (LeanTouch.Fingers == null || LeanTouch.Fingers.Count != 1)
 			return;
 
 		var screenPosition = LeanTouch.Fingers [0].ScreenPosition;
+		Vector3? tempTarget = MapManager.Current.ScreenPointToMapPosition (screenPosition);
 
-		var tempTarget = MapManager.Current.ScreenPointToMapPosition (screenPosition);
 		if (tempTarget.HasValue == false)
 			return;
-
 		transform.position = tempTarget.Value;
-	}
 
-	public void Finish(Vector2 screenPosition){	
+
+		if (IsCreatingBuilding) {
+			if (PlayerManager.Current.CanPlaceBuildingHere (gameObject)) {
+				rend.material.color = Color.green;
+			} else {
+				rend.material.color = Color.red;
+			}
+		} else {
+			//dragging unit
+			var building = GetTargetBuilding(screenPosition);
+			if(rend != null){
+				if (building == null) {
+					rend.material.color = Color.red;
+				} else {
+					rend.material.color = Color.green;
+				}
+			}
+		}
+	}
+	public GameObjects.Building GetTargetBuilding(Vector2 screenPosition){
+		var ray = Camera.main.ScreenPointToRay (screenPosition);
+		RaycastHit hit;
+		if (!Physics.Raycast (ray, out hit))
+			return null;
+		var building = hit.transform.GetComponent<GameObjects.Building> ();
+		return building;
+	}
+	public void Finish(Vector2 screenPosition){
+		if (IsCreatingBuilding)
+			FinishSavingBuilding ();
+		else
+			FinishMovingUnit (screenPosition);
+	}
+	private void FinishSavingBuilding(){
 		var go = GameObject.Instantiate (Prefab);
 		go.transform.localScale = new Vector3(
 			go.transform.localScale.x * PlayerManager.Current.ObjectScaleMultiplier.x,
@@ -78,7 +112,20 @@ public class DragHandler : MonoBehaviour {
 		go.transform.parent = tile.transform;
 		Destroy (this.gameObject);
 	}
-		
+	private void FinishMovingUnit(Vector2 screenPosition){
+		var targetBuilding = GetTargetBuilding (screenPosition);
+		if (targetBuilding != null) {
+			SocketMessage sm = new SocketMessage ();
+			sm.Cmd = "moveUnit";
+			//TODO: change to building id
+			sm.Params.Add (targetBuilding.type.ToString());
+
+			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+
+			});
+		}
+		Destroy (this.gameObject);
+	}
 	void OnDestroy(){
 		TouchManager.Current.enabled = true;
 	}

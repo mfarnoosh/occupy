@@ -207,12 +207,6 @@ public class OnScreenManager : MonoBehaviour {
 		rectTransform.position = new Vector3 (x, y, 0);
 		rectTransform.localScale = new Vector3 (1, 1, 1);
 		rectTransform.sizeDelta = new Vector2 (width, height);
-
-		var eventHandler = buttonGO.AddComponent<UIEventHandler> ();
-		eventHandler.Prefab = buildingPrefab;
-		eventHandler.Ghost = buildingPrefab;
-		eventHandler.IsCreatingBuilding = true;
-
 		return buttonGO;
 	}
 }
