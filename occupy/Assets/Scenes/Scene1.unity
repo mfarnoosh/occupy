@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44692528, g: 0.4967872, b: 0.5750856, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692534, g: 0.49678737, b: 0.57508594, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1588,6 +1588,8 @@ MonoBehaviour:
   myHome: {fileID: 1818442874}
   closeScrollView: {fileID: 1930262331}
   scrollRect: {fileID: 97149001}
+  buildingObjects: []
+  unitObjects: []
 --- !u!1 &1955719171
 GameObject:
   m_ObjectHideFlags: 0
