@@ -317,7 +317,7 @@ GameObject:
   - 114: {fileID: 114000011963030206}
   - 114: {fileID: 114000010554310900}
   m_Layer: 0
-  m_Name: TowerInfantry 2
+  m_Name: RocketLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

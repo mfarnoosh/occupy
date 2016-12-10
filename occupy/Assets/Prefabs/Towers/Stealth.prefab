@@ -830,7 +830,7 @@ GameObject:
   - 114: {fileID: 114000012397990554}
   - 114: {fileID: 114000011036948100}
   m_Layer: 0
-  m_Name: TowerInfantry 4
+  m_Name: Stealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

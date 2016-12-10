@@ -263,7 +263,7 @@ GameObject:
   - 95: {fileID: 95000011653061220}
   - 23: {fileID: 23000011599394656}
   m_Layer: 0
-  m_Name: BazookaMan
+  m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

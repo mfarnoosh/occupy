@@ -168,7 +168,7 @@ GameObject:
   - 114: {fileID: 114000014059004704}
   - 114: {fileID: 114000010291399390}
   m_Layer: 0
-  m_Name: TowerInfantry
+  m_Name: Sentry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

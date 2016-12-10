@@ -604,7 +604,7 @@ GameObject:
   - 114: {fileID: 114000011328727562}
   - 114: {fileID: 114000011851211762}
   m_Layer: 0
-  m_Name: TowerInfantry 1
+  m_Name: MachineGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

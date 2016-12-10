@@ -559,7 +559,7 @@ GameObject:
   - 114: {fileID: 114000011048762984}
   - 114: {fileID: 114000013641392450}
   m_Layer: 0
-  m_Name: TowerInfantry 3
+  m_Name: AntiAircraft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
