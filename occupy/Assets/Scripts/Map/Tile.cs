@@ -70,6 +70,8 @@ public class Tile : MonoBehaviour
 			GetComponent<Renderer>().material.mainTexture = texture;
 			DataLoaded = true;
 			onComplete(TileX,TileY);
+		}).OnError((callback) => {
+			Debug.Log("Exception occured in getTile: " + callback.error.Message);
 		});
 	}
 

@@ -15,6 +15,8 @@ public class NetworkManager : MonoBehaviour{
 	}
 
 	public Future<SocketMessage> SendToServer (SocketMessage message) {
+		message.PlayerKey = PlayerManager.Current.PlayerKey;
+
 		Future<SocketMessage> future = new Future<SocketMessage> ();
 		future.Process (() => {
 			TcpClient client = new TcpClient (ServerIp, ServerPort);
@@ -27,8 +29,16 @@ public class NetworkManager : MonoBehaviour{
 			StreamReader sr = new StreamReader(client.GetStream());
 			string data = sr.ReadToEnd();
 
-			return JsonUtility.FromJson<SocketMessage>(data);;
+			SocketMessage result = JsonUtility.FromJson<SocketMessage>(data);
+			if(string.IsNullOrEmpty(result.PlayerKey)){
+				throw new InvalidPlayerKeyException("-");
+			}
+			if(!result.PlayerKey.Equals(PlayerManager.Current.PlayerKey,System.StringComparison.CurrentCultureIgnoreCase)){
+				throw new InvalidPlayerKeyException(result.PlayerKey);
+			}
+			return result;
 		});
 		return future;	
 	}
+
 }

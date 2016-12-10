@@ -31,22 +31,29 @@ public class MapManager : MonoBehaviour
 	{
 		Current = this;
 	}
+	public void Start ()
+	{
+		_tileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
+		MoveTo(PlayerManager.Current.WorldCenter);
+	}
 
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
 		MapObject.transform.position += new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
 		AdjustTiles ();
 	}
+	public void MoveTo(Location newLocation){
+		InitCenterFinished = false;
 
-	public void Start ()
-	{
-		_tileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
 		//(tilesGrid - 1) / 2 ==> center tile
 		int centerTileX = (tilesGrid - 1) / 2;
 
 
 		for (int i = 0; i < tilesGrid; i++) {
 			for (int j = 0; j < tilesGrid; j++) {
+				if(tiles[i,j] != null && tiles[i,j].transform.gameObject != null)
+					Destroy (tiles [i, j].transform.gameObject);
+
 				var go = GameObject.Instantiate (TilePrefab);
 				go.transform.parent = MapObject.transform;
 				go.transform.position = new Vector3 ((i - centerTileX) * TileSize.x, 0, (centerTileX - j) * TileSize.z);
@@ -54,7 +61,7 @@ public class MapManager : MonoBehaviour
 				tiles [i, j] = go.GetComponent<Tile> ();
 			}
 		}
-		tiles [centerTileX, centerTileX].initWithLatLon (PlayerManager.Current.WorldCenter, (x, y) => {
+		tiles [centerTileX, centerTileX].initWithLatLon (newLocation, (x, y) => {
 			for (int i = 0; i < tilesGrid; i++) {
 				for (int j = 0; j < tilesGrid; j++) {
 					if (i == centerTileX && j == centerTileX)
@@ -66,7 +73,6 @@ public class MapManager : MonoBehaviour
 			}
 			InitCenterFinished = true;
 		});
-
 	}
 	public Tile GetTile(Vector3 targetPosition){
 		for (int i = 0; i < tilesGrid; i++) {

@@ -4,7 +4,8 @@ using System.Linq;
 
 public class PlayerManager : MonoBehaviour {
 	public Location WorldCenter = new Location(35.70423f,51.40570f);
-	public Vector3 ObjectScaleMultiplier = new Vector3(4,4,4);
+	public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
+	public string PlayerKey;
 
 	//public Collider MapCollider;
 //	private Bounds MapBounds;
