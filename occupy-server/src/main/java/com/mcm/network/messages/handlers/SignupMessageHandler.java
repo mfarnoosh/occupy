@@ -10,6 +10,7 @@ import com.mcm.service.Tile;
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -17,11 +18,12 @@ import org.springframework.stereotype.Controller;
  * Created by Mehrdad on 16/12/11.
  */
 @Component
+@Scope("singleton")
 public class SignupMessageHandler extends BaseMessageHandler {
     private Logger logger = Logger.getLogger(SignupMessageHandler.class);
 
     @Autowired
-    IPlayerDao playerDao;
+    protected IPlayerDao playerDao;
 
     @Override
     public SocketMessage handle(SocketMessage message) {
@@ -47,7 +49,7 @@ public class SignupMessageHandler extends BaseMessageHandler {
         }
 
         message.Params.clear();
-        message.Params.add(player.getId());
+        message.PlayerKey = player.getId();
 
         return message;
     }

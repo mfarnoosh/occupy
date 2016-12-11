@@ -3,12 +3,16 @@ package com.mcm.network.messages.handlers;
 import com.mcm.network.SocketMessage;
 import com.mcm.network.messages.BaseMessageHandler;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 /**
  * Created by Mehrdad on 16/12/11.
  */
+@Component
+@Scope("singleton")
 public class UpdateLocMessageHandler extends BaseMessageHandler {
     private Logger logger = Logger.getLogger(UpdateLocMessageHandler.class);
 

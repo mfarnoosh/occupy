@@ -5,10 +5,14 @@ import com.mcm.network.messages.BaseMessageHandler;
 import com.mcm.service.Tile;
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Mehrdad on 16/12/11.
  */
+@Component
+@Scope("singleton")
 public class GetTileByNoMessageHandler extends BaseMessageHandler {
     private Logger logger = Logger.getLogger(GetTileByNoMessageHandler.class);
     @Override

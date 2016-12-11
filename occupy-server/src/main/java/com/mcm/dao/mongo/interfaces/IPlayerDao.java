@@ -10,7 +10,6 @@ import java.util.LinkedHashSet;
 /**
  * Created by mehrdad on 11/12/2016 AD.
  */
-@Repository
 public interface IPlayerDao extends IBaseMongoDao<Player> {
     Player findByEmail(String email);
 }

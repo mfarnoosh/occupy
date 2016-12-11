@@ -24,21 +24,21 @@ public abstract class MessageFactory {
             case "echo":
                 return (EchoMessageHandler)Spring.context.getBean("echoMessageHandler");
             case "updateLoc":
-                return new UpdateLocMessageHandler();
+                return (UpdateLocMessageHandler)Spring.context.getBean("updateLocMessageHandler");
             case "getTile":
-                return new GetTileMessageHandler();
+                return (GetTileMessageHandler)Spring.context.getBean("getTileMessageHandler");
             case "getTileByNumber":
-                return new GetTileByNoMessageHandler();
+                return (GetTileByNoMessageHandler)Spring.context.getBean("getTileByNoMessageHandler");
             case "createTower":
-                return new CreateTowerMessageHandler();
+                return (CreateTowerMessageHandler)Spring.context.getBean("createTowerMessageHandler");
             case "moveTower":
-                return new MoveTowerMessageHandler();
+                return (MoveTowerMessageHandler)Spring.context.getBean("moveTowerMessageHandler");
             case "sendUnit":
-                return new SendUnitMessageHandler();
+                return (SendUnitMessageHandler)Spring.context.getBean("sendUnitMessageHandler");
             case "login":
-                return new LoginMessageHandler();
+                return (LoginMessageHandler)Spring.context.getBean("loginMessageHandler");
             case "signup":
-                return new SignupMessageHandler();
+                return (SignupMessageHandler)Spring.context.getBean("signupMessageHandler");
         }
         return null;
     }
