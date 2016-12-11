@@ -1,26 +1,13 @@
 package com.mcm.network;
 
 import com.google.gson.Gson;
-import com.mcm.service.Tile;
-import com.mcm.util.GeoUtil;
-import com.mcm.util.SharedPreference;
+import com.mcm.network.messages.MessageFactory;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
-import org.apache.axis.encoding.Base64;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.springframework.data.geo.Point;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by alirezaghias on 11/3/2016 AD.
@@ -40,7 +27,7 @@ public class ClientService implements Runnable {
         DataInputStream dis = new DataInputStream(client.getInputStream());
         byte[] data = new byte[1024];
         ByteOutputStream bos = new ByteOutputStream();
-        int count = 0;
+        int count;
         int length = 0;
         while ((count = dis.read(data)) != -1) {
             bos.write(data, 0, count);
@@ -74,7 +61,7 @@ public class ClientService implements Runnable {
             client.getOutputStream().write(bytes);
             client.getOutputStream().flush();
             client.getOutputStream().close();
-            logger.info("sent -> " + bytes.length + " byte");
+            //logger.info("sent -> " + bytes.length + " byte");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,124 +69,7 @@ public class ClientService implements Runnable {
 
     private SocketMessage handleCommand() {
         SocketMessage socketMessage = new Gson().fromJson(clientData, SocketMessage.class);
-        switch (socketMessage.Cmd) {
-            case "echo":
-                return socketMessage;
-            case "updateLoc":
-                return handleUpdateLoc(socketMessage);
-            case "getTile":
-                return handleTile(socketMessage);
-            case "getTileByNumber":
-                return handleTileByTileNo(socketMessage);
-            case "saveBuilding":
-                return handleSaveBuilding(socketMessage);
-            case "moveUnit":
-                return handleMoveUnit(socketMessage);
-            default:
-                return null;
-        }
 
-
-    }
-
-    private SocketMessage handleTile(SocketMessage socketMessage) {
-        logger.info(socketMessage);
-        float lat = Float.parseFloat(socketMessage.Params.get(0));
-        float lon = Float.parseFloat(socketMessage.Params.get(1));
-        Tile tile = new Tile(lat,lon);
-
-        socketMessage.Params.clear();
-        socketMessage.Params.add(Base64.encode(tile.getImage()));
-
-        socketMessage.Params.add(String.valueOf(tile.getCenter().getX()));
-        socketMessage.Params.add(String.valueOf(tile.getCenter().getY()));
-
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().north));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().east));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().south));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().west));
-
-
-        socketMessage.Params.add(String.valueOf(tile.getTileX()));
-        socketMessage.Params.add(String.valueOf(tile.getTileY()));
-
-//        socketMessage.Params.add(String.valueOf(35.70283f));
-//        socketMessage.Params.add(String.valueOf(51.40641f));
-//        socketMessage.Params.add(String.valueOf(35.72403f));
-//        socketMessage.Params.add(String.valueOf(51.44572f));
-//        socketMessage.Params.add(String.valueOf(35.72215f));
-//        socketMessage.Params.add(String.valueOf(51.44447f));
-//        socketMessage.Params.add(String.valueOf(35.72046f));
-//        socketMessage.Params.add(String.valueOf(51.44354f));
-//        socketMessage.Params.add(String.valueOf(35.71995f));
-//        socketMessage.Params.add(String.valueOf(51.44778f));
-
-        return socketMessage;
-    }
-
-    private SocketMessage handleTileByTileNo(SocketMessage socketMessage) {
-        logger.info(socketMessage);
-        int tileX = Integer.parseInt(socketMessage.Params.get(0));
-        int tileY = Integer.parseInt(socketMessage.Params.get(1));
-
-        Tile tile = new Tile(tileX,tileY);
-
-        socketMessage.Params.clear();
-        socketMessage.Params.add(Base64.encode(tile.getImage()));
-
-        socketMessage.Params.add(String.valueOf(tile.getCenter().getX()));
-        socketMessage.Params.add(String.valueOf(tile.getCenter().getY()));
-
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().north));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().east));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().south));
-        socketMessage.Params.add(String.valueOf(tile.getBoundingBox().west));
-
-        return socketMessage;
-    }
-    private SocketMessage handleSaveBuilding(SocketMessage socketMessage){
-        logger.info(socketMessage);
-        double lat = Double.parseDouble(socketMessage.Params.get(0));
-        double lon = Double.parseDouble(socketMessage.Params.get(1));
-
-        socketMessage.Params.clear();
-
-
-        socketMessage.Params.add(String.valueOf(35.70283f));
-        socketMessage.Params.add(String.valueOf(51.40641f));
-
-
-        socketMessage.Params.add(String.valueOf(35.70200f));
-        socketMessage.Params.add(String.valueOf(51.40987f));
-
-
-        socketMessage.Params.add(String.valueOf(35.70536f));
-        socketMessage.Params.add(String.valueOf(51.40976f));
-
-
-//        socketMessage.Params.add(String.valueOf(35.70374f));
-//        socketMessage.Params.add(String.valueOf(51.40529f));
-
-        socketMessage.Params.add(String.valueOf(35.702305));
-        socketMessage.Params.add(String.valueOf(51.400487));
-
-
-        return socketMessage;
-    }
-    private SocketMessage handleMoveUnit(SocketMessage socketMessage){
-        logger.info(socketMessage);
-        int buildingType = Integer.parseInt(socketMessage.Params.get(0));
-
-        return null;
-    }
-    private SocketMessage handleUpdateLoc(SocketMessage socketMessage) {
-        logger.info(socketMessage);
-        float lat = Float.parseFloat(socketMessage.Params.get(0));
-        float lon = Float.parseFloat(socketMessage.Params.get(1));
-        float alt = Float.parseFloat(socketMessage.Params.get(2));
-        float accuracy = Float.parseFloat(socketMessage.Params.get(3));
-        double timeStamp = Double.parseDouble(socketMessage.Params.get(4));
-        Date date = new Date((long) timeStamp * 1000);
-        return null;
+        return MessageFactory.handleMessage(socketMessage);
     }
 }

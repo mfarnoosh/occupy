@@ -7,49 +7,48 @@ public class PlayerManager : MonoBehaviour {
 	public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
 	public string PlayerKey;
 
-	//public Collider MapCollider;
-//	private Bounds MapBounds;
+	private bool _loggedIn = false;
+	public bool LoggedIn{ get { return _loggedIn; } }
 
 	public static PlayerManager Current;
 	public PlayerManager(){
 		Current = this;
 	}
 	void Start(){
-//		if (Map != null) {
-//			MapCollider = Map.GetComponent<Collider> ();
-////			Mesh MapMesh = Map.GetComponent<MeshFilter> ().mesh;
-////			MapMesh.RecalculateBounds ();
-////			MapBounds = MapMesh.bounds;
-//		}
-	}
-
-	public bool CanPlaceBuildingHere(GameObject go){
-//		var verts = go.GetComponent<MeshFilter> ().mesh.vertices;
-//		var obstacles = GameObject.FindObjectsOfType<NavMeshObstacle> ();
-//		var cols = new List<Collider> ();
-//		foreach (var o in obstacles) {
-//			if (o.gameObject != go) {
-//				cols.Add (o.gameObject.GetComponent<Collider> ());
-//			}
-//		}
-//
-//		foreach (var v in verts) {
-//			NavMeshHit hit;
-//			var vReal = go.transform.TransformPoint (v);
-//			NavMesh.SamplePosition( vReal, out hit, 0.5f, NavMesh.AllAreas);
-//
-//			bool onXAxis = Mathf.Abs (hit.position.x - vReal.x) < 2f;
-//			bool onZAxis = Mathf.Abs (hit.position.z - vReal.z) < 0.5f;
-//			bool hitCollider = cols.Any (c => c.bounds.Contains (vReal));
-//
-//			Debug.Log (vReal.x  + "|" + Mathf.Abs (hit.position.z - vReal.z) + "|" + hitCollider);
-//
-//
-//			if (!onXAxis || !onZAxis || hitCollider)
-//				return false;
-//		}
+		string key = PlayerPrefs.GetString ("player-key");
+		if (string.IsNullOrEmpty (key)) {
+			//TODO: Farnoosh - Sign up process
+			string email = "m.h.farnoosh88@gmail.com";
+			string name = "mehrdad";
+			string lastName = "farnoosh";
 
 
-		return true;
+
+			SocketMessage sm = new SocketMessage ();
+			sm.Cmd = "signup";
+			sm.Params.Add (email);
+			sm.Params.Add (name);
+			sm.Params.Add (lastName);
+
+			NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+				Debug.Log("Signned up successfully");
+			}).OnError((callback) => {
+				Debug.Log("Exception occured in signup: " + callback.error.Message);
+			});
+		} else {
+			string configVersion = PlayerPrefs.GetString ("config-version");
+			if (string.IsNullOrEmpty (configVersion))
+				configVersion = "";
+
+			SocketMessage sm = new SocketMessage ();
+			sm.Cmd = "login";
+			sm.Params.Add (key);
+			sm.Params.Add (configVersion);
+			NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+				Debug.Log("logged in successfully");
+			}).OnError((callback) => {
+				Debug.Log("Exception occured in login: " + callback.error.Message);
+			});
+		}
 	}
 }

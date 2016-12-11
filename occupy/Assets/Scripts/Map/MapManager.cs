@@ -88,6 +88,36 @@ public class MapManager : MonoBehaviour
 		return null;
 	}
 
+	public bool CanPlaceBuildingHere(GameObject go){
+		//		var verts = go.GetComponent<MeshFilter> ().mesh.vertices;
+		//		var obstacles = GameObject.FindObjectsOfType<NavMeshObstacle> ();
+		//		var cols = new List<Collider> ();
+		//		foreach (var o in obstacles) {
+		//			if (o.gameObject != go) {
+		//				cols.Add (o.gameObject.GetComponent<Collider> ());
+		//			}
+		//		}
+		//
+		//		foreach (var v in verts) {
+		//			NavMeshHit hit;
+		//			var vReal = go.transform.TransformPoint (v);
+		//			NavMesh.SamplePosition( vReal, out hit, 0.5f, NavMesh.AllAreas);
+		//
+		//			bool onXAxis = Mathf.Abs (hit.position.x - vReal.x) < 2f;
+		//			bool onZAxis = Mathf.Abs (hit.position.z - vReal.z) < 0.5f;
+		//			bool hitCollider = cols.Any (c => c.bounds.Contains (vReal));
+		//
+		//			Debug.Log (vReal.x  + "|" + Mathf.Abs (hit.position.z - vReal.z) + "|" + hitCollider);
+		//
+		//
+		//			if (!onXAxis || !onZAxis || hitCollider)
+		//				return false;
+		//		}
+
+
+		return true;
+	}
+
 	public Vector3? ScreenPointToMapPosition(Vector2 point){
 		var ray = Camera.main.ScreenPointToRay (point);
 		RaycastHit hit;

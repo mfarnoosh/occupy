@@ -62,14 +62,14 @@ public class ActionReplaceBuilding : TouchAction {
 		}
 		transform.position = tempTarget.Value;
 
-		if (PlayerManager.Current.CanPlaceBuildingHere (gameObject)) {
+		if (MapManager.Current.CanPlaceBuildingHere (gameObject)) {
 			rend.material.color = Yellow;
 		} else {
 			rend.material.color = Red;
 		}
 	}
 	public void Finish(Tile tile){
-		if (!PlayerManager.Current.CanPlaceBuildingHere (gameObject) || currentTile == null)
+		if (!MapManager.Current.CanPlaceBuildingHere (gameObject) || currentTile == null)
 			transform.position = originalPosition;
 		isMoving = false;
 		rend.material.color = originalColor;
@@ -79,7 +79,7 @@ public class ActionReplaceBuilding : TouchAction {
 		Location loc = GeoUtils.XYZToLocation(tile,transform.position);
 	
 		SocketMessage sm = new SocketMessage ();
-		sm.Cmd = "saveBuilding";
+		sm.Cmd = "moveTower";
 		sm.Params.Add (loc.Latitude.ToString());
 		sm.Params.Add (loc.Longitude.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{

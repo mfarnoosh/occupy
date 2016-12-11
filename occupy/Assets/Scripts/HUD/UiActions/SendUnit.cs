@@ -28,7 +28,7 @@ public class SendUnit : EventAction {
 		var targetBuilding = GetTargetBuilding (position);
 		if (targetBuilding != null) {
 			SocketMessage sm = new SocketMessage ();
-			sm.Cmd = "moveUnit";
+			sm.Cmd = "sendUnit";
 			//TODO: change to building id
 			sm.Params.Add (targetBuilding.type.ToString());
 

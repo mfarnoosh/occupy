@@ -38,7 +38,7 @@ public class CreateBuildingEvent : EventAction {
 		Location loc = GeoUtils.XYZToLocation(tile,ghostObject.transform.position);
 
 		SocketMessage sm = new SocketMessage ();
-		sm.Cmd = "saveBuilding";
+		sm.Cmd = "createTower";
 		sm.Params.Add (loc.Latitude.ToString());
 		sm.Params.Add (loc.Longitude.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
@@ -98,7 +98,7 @@ public class CreateBuildingEvent : EventAction {
 			return;
 		ghostObject.transform.position = tempTarget.Value;
 
-		if (PlayerManager.Current.CanPlaceBuildingHere (ghostObject)) {
+		if (MapManager.Current.CanPlaceBuildingHere (ghostObject)) {
 			rend.material.color = Color.green;
 		} else {
 			rend.material.color = Color.red;
