@@ -2,6 +2,7 @@ package com.mcm.network.messages;
 
 import com.mcm.network.SocketMessage;
 import com.mcm.network.messages.handlers.*;
+import com.mcm.util.Spring;
 
 /**
  * Created by Mehrdad on 16/12/11.
@@ -21,7 +22,7 @@ public abstract class MessageFactory {
     private static BaseMessageHandler getHandler(String command){
         switch (command) {
             case "echo":
-                return new EchoMessageHandler();
+                return (EchoMessageHandler)Spring.context.getBean("echoMessageHandler");
             case "updateLoc":
                 return new UpdateLocMessageHandler();
             case "getTile":
