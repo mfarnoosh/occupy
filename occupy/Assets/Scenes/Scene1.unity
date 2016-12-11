@@ -240,7 +240,7 @@ GameObject:
   - 222: {fileID: 231826588}
   - 114: {fileID: 231826587}
   m_Layer: 5
-  m_Name: Towers
+  m_Name: TowersPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -756,7 +756,7 @@ GameObject:
   - 222: {fileID: 616713877}
   - 114: {fileID: 616713876}
   m_Layer: 5
-  m_Name: Units
+  m_Name: UnitsPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1392,6 +1392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30220d46cac923448b2eedacc3c92bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TowersPanel: {fileID: 231826586}
 --- !u!1 &1402367062
 GameObject:
   m_ObjectHideFlags: 0
@@ -2356,6 +2357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8f76a0293e68534d9f586b7481469c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitsPanel: {fileID: 616713875}
 --- !u!1 &1864875231
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,7 +2579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548d089629d154f589edf8c1f2f572e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerIp: 127.0.0.1
+  ServerIp: 192.168.1.3
   ServerPort: 4444
 --- !u!114 &1943568811
 MonoBehaviour:
