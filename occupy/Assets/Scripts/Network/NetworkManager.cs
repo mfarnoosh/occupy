@@ -15,8 +15,8 @@ public class NetworkManager : MonoBehaviour{
 	}
 
 	public Future<SocketMessage> SendToServer (SocketMessage message) {
-		if(PlayerManager.Current.LoggedIn)
-			message.PlayerKey = PlayerManager.Current.PlayerKey;
+		if(PlayerController.Current.LoggedIn)
+			message.PlayerKey = PlayerController.Current.PlayerKey;
 
 		Future<SocketMessage> future = new Future<SocketMessage> ();
 		future.Process (() => {
@@ -32,11 +32,11 @@ public class NetworkManager : MonoBehaviour{
 
 			SocketMessage result = JsonUtility.FromJson<SocketMessage>(data);
 
-			if(PlayerManager.Current.LoggedIn){
+			if(PlayerController.Current.LoggedIn){
 				if(string.IsNullOrEmpty(result.PlayerKey)){
 					throw new InvalidPlayerKeyException("-");
 				}
-				if(!result.PlayerKey.Equals(PlayerManager.Current.PlayerKey,System.StringComparison.CurrentCultureIgnoreCase)){
+				if(!result.PlayerKey.Equals(PlayerController.Current.PlayerKey,System.StringComparison.CurrentCultureIgnoreCase)){
 					throw new InvalidPlayerKeyException(result.PlayerKey);
 				}
 			}

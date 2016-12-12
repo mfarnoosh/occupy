@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System;
 
 public class Tile : MonoBehaviour
 {
 	private Location _center = new Location(35.72083f,51.44816f);
-
+	private List<GameObject> towers = new List<GameObject>();
 	public int _tileX;
 	public int _tileY;
 
@@ -47,6 +47,7 @@ public class Tile : MonoBehaviour
 		sm.Params.Add (location.Latitude.ToString());
 		sm.Params.Add (location.Longitude.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+			//load tile info
 			string tileString = data.value.Params[0];
 			byte[] tile = Convert.FromBase64String(tileString);
 
@@ -60,14 +61,29 @@ public class Tile : MonoBehaviour
 			TileX = int.Parse(data.value.Params[7]);
 			TileY = int.Parse(data.value.Params[8]);
 
-			//TODO: Farnoosh - load and create buildings
+			//set tile texture
+			Texture2D texture = new Texture2D(256, 256);
+			texture.LoadImage(tile);
+			GetComponent<Renderer>().material.mainTexture = texture;
+
+			//load towers on this tile
+			//TODO: Farnoosh - load and create towers
+			int towerNumbers = int.Parse(data.value.Params[9]);
+			for(int i=0;i < towerNumbers; i++){
+				int type = int.Parse(data.value.Params[i * 3 + 10]);
+				float lat = float.Parse(data.value.Params[i * 3 + 11]);
+				float lon = float.Parse(data.value.Params[i * 3 + 12]);
+
+				var loc = new Location(lat,lon);
+				var go = TowerManager.Current.CreateTower(type,loc,this);
+				if(go != null){
+					towers.Add(go);
+				}
+			}
 			//CreateBuilding(float.Parse(data.value.Params[3]),float.Parse(data.value.Params[4]),Color.red);
 
 
-			Texture2D texture = new Texture2D(256, 256);
-			texture.LoadImage(tile);
-			// do whatever you want with texture
-			GetComponent<Renderer>().material.mainTexture = texture;
+			//complete actions
 			DataLoaded = true;
 			onComplete(TileX,TileY);
 		}).OnError((callback) => {
@@ -85,6 +101,10 @@ public class Tile : MonoBehaviour
 		sm.Params.Add (TileX.ToString());
 		sm.Params.Add (TileY.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
+			foreach(var tower in towers)
+			{
+				Destroy(tower);
+			}
 			string tileString = data.value.Params[0];
 			byte[] tile = Convert.FromBase64String(tileString);
 
@@ -107,5 +127,4 @@ public class Tile : MonoBehaviour
 			DataLoaded = true;
 		});
 	}
-
 }

@@ -37,6 +37,21 @@ public class GetTileMessageHandler extends BaseMessageHandler {
         message.Params.add(String.valueOf(tile.getTileX()));
         message.Params.add(String.valueOf(tile.getTileY()));
 
+        //TODO: Farnoosh - Load All Towers from Database
+        message.Params.add(String.valueOf(3)); //number of towers
+
+        message.Params.add(String.valueOf(1)); //tower type
+        message.Params.add(String.valueOf(35.70283f)); //lat
+        message.Params.add(String.valueOf(51.40641f)); //lon
+
+        message.Params.add(String.valueOf(2));
+        message.Params.add(String.valueOf(35.70200f));
+        message.Params.add(String.valueOf(51.40987f));
+
+        message.Params.add(String.valueOf(3));
+        message.Params.add(String.valueOf(35.70536f));
+        message.Params.add(String.valueOf(51.40976f));
+
 //        message.Params.add(String.valueOf(35.70283f));
 //        message.Params.add(String.valueOf(51.40641f));
 //        message.Params.add(String.valueOf(35.72403f));

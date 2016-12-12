@@ -29,7 +29,6 @@ public class TouchManager : MonoBehaviour
 		Current = this;
 	}
 
-
 	public void OnFingerDown (LeanFinger finger)
 	{ 
 		RaycastHit hit;

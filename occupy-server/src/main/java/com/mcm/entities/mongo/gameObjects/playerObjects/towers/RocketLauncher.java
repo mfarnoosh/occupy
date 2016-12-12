@@ -1,9 +1,25 @@
 package com.mcm.entities.mongo.gameObjects.playerObjects.towers;
 
+import com.mcm.entities.mongo.Player;
+
 /**
  * Created by Mehrdad on 16/12/04.
  */
 public class RocketLauncher extends BaseTower {
+    public RocketLauncher(Player player, double[] location){
+        power = 1;
+        powerFactor = 1;
+        isInWar = false;
+        isRangeAttack = false;
+        range = 10;
+
+        health = 100.0;
+        defenceFactor = 1.0;
+        level = 1.0;
+
+        setLocation(location);
+        this.player = player;
+    }
     @Override
     protected double getExperience(double hitPower) {
         return 0;

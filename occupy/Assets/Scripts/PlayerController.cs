@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
+	public GameObject ManagerGameObject;
+
 	public Location WorldCenter = new Location(35.70423f,51.40570f);
 	public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
 	public string PlayerKey;
@@ -10,8 +12,8 @@ public class PlayerManager : MonoBehaviour {
 	private bool _loggedIn = false;
 	public bool LoggedIn{ get { return _loggedIn; } }
 
-	public static PlayerManager Current;
-	public PlayerManager(){
+	public static PlayerController Current;
+	public PlayerController(){
 		Current = this;
 	}
 	void Start(){
@@ -38,6 +40,7 @@ public class PlayerManager : MonoBehaviour {
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
 			string key = data.value.PlayerKey;
 			PlayerPrefs.SetString("player-key",key);
+			Debug.Log("sign up successfully");
 			login(key);
 		}).OnError((callback) => {
 			Debug.Log("Exception occured in signup: " + callback.error.Message);
@@ -53,9 +56,11 @@ public class PlayerManager : MonoBehaviour {
 		sm.PlayerKey = key;
 		sm.Params.Add (configVersion);
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
-			Debug.Log("logged in successfully");
 			PlayerKey = data.value.PlayerKey;
 			_loggedIn = true;
+
+			ManagerGameObject.SetActive (true);
+			Debug.Log("logged in successfully");
 		}).OnError((callback) => {
 			Debug.Log("Exception occured in login: " + callback.error.Message);
 			signup();

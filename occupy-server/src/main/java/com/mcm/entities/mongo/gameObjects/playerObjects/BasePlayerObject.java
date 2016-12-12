@@ -11,13 +11,13 @@ import java.util.LinkedHashSet;
  * Created by Mehrdad on 16/12/04.
  */
 public abstract class BasePlayerObject extends GameObject {
-    private double power = 0.0;
-    private double powerFactor = 0.0;
-    private boolean isInWar = false;
-    private boolean isRangeAttack = false;
-    private boolean needAttention = false;
-    private double range = 0;
-    private Player player;
+    protected double power = 0.0;
+    protected double powerFactor = 0.0;
+    protected boolean isInWar = false;
+    protected boolean isRangeAttack = false;
+    protected boolean needAttention = false;
+    protected double range = 0;
+    protected Player player;
 
     //Constructors
 

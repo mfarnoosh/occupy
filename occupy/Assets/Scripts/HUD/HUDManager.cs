@@ -19,7 +19,6 @@ public class HUDManager : MonoBehaviour {
 	public HUDManager(){
 		Current = this;
 	}
-
 	public void UnitsPanelToggled(bool activated){
 		//TODO: Farnoosh - do sth. e.g. hide all other panels
 	}

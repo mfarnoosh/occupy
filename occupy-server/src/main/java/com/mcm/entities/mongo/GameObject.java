@@ -14,9 +14,9 @@ import java.util.Set;
 public abstract class GameObject extends BaseDocument {
     @GeoSpatialIndexed
     private double[] location;
-    private double health = 100.0;
-    private double defenceFactor = 0.0;
-    private double level = 0.0;
+    protected double health = 100.0;
+    protected double defenceFactor = 0.0;
+    protected double level = 0.0;
 
     //Constructors
     protected GameObject() {

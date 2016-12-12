@@ -33,10 +33,8 @@ public class MapManager : MonoBehaviour
 	}
 	public void Start ()
 	{
-		while (!PlayerManager.Current.LoggedIn) {
-		}
 		_tileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
-		MoveTo(PlayerManager.Current.WorldCenter);
+		MoveTo(PlayerController.Current.WorldCenter);
 	}
 
 	public void MoveMap (Vector3 deltaPosition, float sharpness)

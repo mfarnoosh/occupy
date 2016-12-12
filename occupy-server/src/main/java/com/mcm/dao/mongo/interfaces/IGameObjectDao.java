@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by alirezaghias on 10/19/2016 AD.
  */
-@Repository
+
 public interface IGameObjectDao extends IBaseMongoDao<GameObject> {
     LinkedHashSet<GameObject> gameObjectsNear(BasePlayerObject playerObject);
 }

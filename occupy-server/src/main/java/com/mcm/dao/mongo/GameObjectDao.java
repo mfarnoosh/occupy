@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by alirezaghias on 10/19/2016 AD.
  */
-
+@Repository
 public class GameObjectDao implements IGameObjectDao {
     @Autowired
     MongoOperations mongoTemplate;

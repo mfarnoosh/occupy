@@ -17,6 +17,7 @@ public class LoginMessageHandler extends BaseMessageHandler {
     public SocketMessage handle(SocketMessage message) {
         logger.info("Login msg: " + message);
         logger.info("Login: key = " + message.PlayerKey + " configVersion = " + message.Params.get(0));
-        return null;
+
+        return message;
     }
 }

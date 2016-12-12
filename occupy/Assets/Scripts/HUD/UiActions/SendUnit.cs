@@ -15,9 +15,9 @@ public class SendUnit : EventAction {
 
 		ghostObject = GameObject.Instantiate (UnitGhostPrefab);
 		ghostObject.transform.localScale = new Vector3(
-			ghostObject.transform.localScale.x * PlayerManager.Current.ObjectScaleMultiplier.x,
-			ghostObject.transform.localScale.y * PlayerManager.Current.ObjectScaleMultiplier.y,
-			ghostObject.transform.localScale.z * PlayerManager.Current.ObjectScaleMultiplier.z);
+			ghostObject.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
+			ghostObject.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
+			ghostObject.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
 
 		rend = ghostObject.GetComponent<Renderer> ();
 		MoveGhost (position);
