@@ -883,7 +883,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011483923882}
   m_LocalRotation: {x: 0, y: 0.707224, z: 0.7069895, w: 0}
-  m_LocalPosition: {x: 127.288376, y: 102.21142, z: -282.24088}
+  m_LocalPosition: {x: -2.1255445, y: 47.621437, z: -128.64992}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_LocalEulerAnglesHint: {x: -89.981, y: 180, z: 0}
   m_Children:
@@ -1604,10 +1604,10 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e128073c5d413ad42ad8422dbae2065e, type: 2}
-  - {fileID: 2100000, guid: c7a022c0680235d4a93426adf430f753, type: 2}
-  - {fileID: 2100000, guid: b9b6e0399d8dde24a9c7bf89fb665828, type: 2}
-  - {fileID: 2100000, guid: ff5d1a0bc4ad2b6499b18971246c8539, type: 2}
+  - {fileID: 2100000, guid: d6df8c1c066c9b4468da1a06218b5640, type: 2}
+  - {fileID: 2100000, guid: a1b296baf61da7d4c9e3cc856ec0e09f, type: 2}
+  - {fileID: 2100000, guid: 5ce5a29b805a2eb43a241ead89d01779, type: 2}
+  - {fileID: 2100000, guid: 674322c9dd54d894c9a764796da7aca9, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -1735,6 +1735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ca2e0e447fa3040893ab4e4eab8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
   type: 3
 --- !u!114 &114000010677783556
 MonoBehaviour:
