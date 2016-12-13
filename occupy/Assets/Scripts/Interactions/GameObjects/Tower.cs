@@ -2,8 +2,8 @@
 using System.Collections;
 
 namespace GameObjects{
-	public class Building : GameObjects {
-		public Building(){
+	public class Tower : GameObjects {
+		public Tower(){
 			type = -1;
 		}
 	}

@@ -65,12 +65,12 @@ public class SendUnit : EventAction {
 		}
 	}
 
-	private GameObjects.Building GetTargetBuilding(Vector2 screenPosition){
+	private GameObjects.Tower GetTargetBuilding(Vector2 screenPosition){
 		var ray = Camera.main.ScreenPointToRay (screenPosition);
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))
 			return null;
-		var building = hit.transform.GetComponent<GameObjects.Building> ();
+		var building = hit.transform.GetComponent<GameObjects.Tower> ();
 		return building;
 	}
 }

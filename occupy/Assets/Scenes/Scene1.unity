@@ -2577,6 +2577,7 @@ GameObject:
   - 114: {fileID: 1943568808}
   - 114: {fileID: 1943568811}
   - 114: {fileID: 1943568812}
+  - 114: {fileID: 1943568805}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2584,6 +2585,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &1943568805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1943568804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa5c45be9f4f024b91bb23eee921f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SentryPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
+    type: 2}
+  MachineGunPrefab: {fileID: 1000013162214000, guid: cf783d7a800646b409fb197ee15fada9,
+    type: 2}
+  RocketLauncherPrefab: {fileID: 1000011483923882, guid: d8a72eaa70c41d940ae658f062f75102,
+    type: 2}
+  AntiAircraftPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
+    type: 2}
+  StealthPrefab: {fileID: 1000014290414524, guid: 698c0d5c0acd6e945a69f9672b9d781a,
+    type: 2}
 --- !u!4 &1943568807
 Transform:
   m_ObjectHideFlags: 0

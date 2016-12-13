@@ -32,7 +32,7 @@ public class CreateBuildingEvent : EventAction {
 			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
 			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
 
-		var building = go.GetComponent<GameObjects.Building> ();
+		var building = go.GetComponent<GameObjects.Tower> ();
 		//Send Position to server
 		Tile tile = MapManager.Current.GetTile(ghostObject.transform.position);
 
@@ -44,7 +44,7 @@ public class CreateBuildingEvent : EventAction {
 		sm.Params.Add (loc.Longitude.ToString());
 		sm.Params.Add (building.type.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
-			var mamad = data.value.Params[0];
+			//var mamad = data.value.Params[0];
 			Debug.Log("Create Tower successfully");
 //			string lat = data.value.Params[0];
 //			string lon = data.value.Params[1];

@@ -17,7 +17,7 @@ public class TowerManager : MonoBehaviour
 		Current = this;
 	}
 
-	public GameObject CreateTower (int type, Location location, Tile tile)
+	public GameObject CreateTower (int type,string id, Location location, Tile tile)
 	{
 		//var go = GameObject.Instantiate(SentryPrefab);
 		//		go.transform.localScale = new Vector3(
@@ -63,6 +63,12 @@ public class TowerManager : MonoBehaviour
 
 		go.transform.position = pos;
 		go.transform.parent = tile.transform;
+
+		var tower = go.GetComponent<GameObjects.Tower> ();
+		if (tower != null) {
+			tower.id = id;
+			tower.type = type;
+		}
 
 		return go;
 	}

@@ -1,16 +1,13 @@
 package com.mcm.entities;
 
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
-import com.mcm.entities.mongo.GameObject;
-import com.mcm.entities.mongo.gameObjects.BaseBuilding;
+import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
-import com.mcm.entities.mongo.gameObjects.playerObjects.towers.BaseTower;
-import com.mcm.entities.mongo.gameObjects.playerObjects.units.BaseUnit;
+import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.util.GeoUtil;
 import com.mcm.util.Spring;
 
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  * Created by alirezaghias on 10/18/2016 AD.
@@ -19,7 +16,7 @@ public class World {
     public static boolean canGetTo(double lat1, double lon1, double lat2, double lon2) {
         return false;
     }
-    public static boolean canGetTo(GameObject object, double lat, double lon) {
+    public static boolean canGetTo(BaseGameObject object, double lat, double lon) {
         if (object.getLocation() == null || object.getLocation().length != 2)
             return false;
         return canGetTo(object.getLocation()[0], object.getLocation()[1], lat, lon);
@@ -32,7 +29,7 @@ public class World {
      * @param lon
      * @return time in ms if t = -1 it means ther is no route to specified lat and lon
      */
-    public static double whenItWillGetTo(BaseUnit unit, double lat, double lon) {
+    public static double whenItWillGetTo(Unit unit, double lat, double lon) {
             if (unit.getVelocity() == 0)
                 return -1;
 
@@ -55,7 +52,7 @@ public class World {
         return new Path();
     }
 
-    public static LinkedHashSet<GameObject> gameObjectsNear(BasePlayerObject playerObject) {
+    public static LinkedHashSet<BaseGameObject> gameObjectsNear(BasePlayerObject playerObject) {
         IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
         return gameObjectDao.gameObjectsNear(playerObject);
     }

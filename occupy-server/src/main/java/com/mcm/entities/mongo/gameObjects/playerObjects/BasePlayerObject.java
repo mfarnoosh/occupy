@@ -1,7 +1,7 @@
 package com.mcm.entities.mongo.gameObjects.playerObjects;
 
 import com.mcm.entities.World;
-import com.mcm.entities.mongo.GameObject;
+import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.Player;
 
 import java.util.Iterator;
@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 /**
  * Created by Mehrdad on 16/12/04.
  */
-public abstract class BasePlayerObject extends GameObject {
+public abstract class BasePlayerObject extends BaseGameObject {
     protected double power = 0.0;
     protected double powerFactor = 0.0;
     protected boolean isInWar = false;
@@ -47,13 +47,13 @@ public abstract class BasePlayerObject extends GameObject {
 
     //Functions
     public void attack() {
-        LinkedHashSet<GameObject> others = World.gameObjectsNear(this);
+        LinkedHashSet<BaseGameObject> others = World.gameObjectsNear(this);
         if (isRangeAttack) {
-            for (GameObject other : others) {
+            for (BaseGameObject other : others) {
                 attack(other);
             }
         } else {
-            Iterator<GameObject> iterator = others.iterator();
+            Iterator<BaseGameObject> iterator = others.iterator();
             if (iterator.hasNext()) {
                 attack(iterator.next());
             }
@@ -61,7 +61,7 @@ public abstract class BasePlayerObject extends GameObject {
     }
 
 
-    protected void attack(GameObject otherGameObject) {
+    protected void attack(BaseGameObject otherGameObject) {
         double hitPower = power * powerFactor * (1 - otherGameObject.getDefenceFactor());
         otherGameObject.decreaseHealth(hitPower);
         increaseLevel(getExperience(hitPower));

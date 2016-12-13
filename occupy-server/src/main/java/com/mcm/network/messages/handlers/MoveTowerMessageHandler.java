@@ -1,8 +1,11 @@
 package com.mcm.network.messages.handlers;
 
+import com.mcm.dao.mongo.interfaces.IGameObjectDao;
+import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.network.SocketMessage;
 import com.mcm.network.messages.BaseMessageHandler;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -12,35 +15,28 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("singleton")
 public class MoveTowerMessageHandler extends BaseMessageHandler {
+    @Autowired
+    IGameObjectDao gameObjectDao;
     private Logger logger = Logger.getLogger(MoveTowerMessageHandler.class);
 
     @Override
     public SocketMessage handle(SocketMessage message) {
         logger.info("Move Tower msg: " + message);
 
-        double lat = Double.parseDouble(message.Params.get(0));
-        double lon = Double.parseDouble(message.Params.get(1));
+        String id = String.valueOf(message.Params.get(0));
+        double lat = Double.parseDouble(message.Params.get(1));
+        double lon = Double.parseDouble(message.Params.get(2));
 
         message.Params.clear();
 
+        Tower t = gameObjectDao.findTowerById(id);
+        if (t != null && t.getPlayer().getId().equals(message.PlayerKey)) {
 
-        message.Params.add(String.valueOf(35.70283f));
-        message.Params.add(String.valueOf(51.40641f));
-
-
-        message.Params.add(String.valueOf(35.70200f));
-        message.Params.add(String.valueOf(51.40987f));
-
-
-        message.Params.add(String.valueOf(35.70536f));
-        message.Params.add(String.valueOf(51.40976f));
-
-
-//        message.Params.add(String.valueOf(35.70374f));
-//        message.Params.add(String.valueOf(51.40529f));
-
-        message.Params.add(String.valueOf(35.702305));
-        message.Params.add(String.valueOf(51.400487));
+            t.setLocation(new double[]{lat,lon});
+            gameObjectDao.save(t);
+        }else{
+            message.ExceptionMessage = "Invalid tower.";
+        }
 
 
         return message;

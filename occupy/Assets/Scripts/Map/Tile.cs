@@ -71,11 +71,12 @@ public class Tile : MonoBehaviour
 			int towerNumbers = int.Parse(data.value.Params[9]);
 			for(int i=0;i < towerNumbers; i++){
 				int type = int.Parse(data.value.Params[i * 3 + 10]);
-				float lat = float.Parse(data.value.Params[i * 3 + 11]);
-				float lon = float.Parse(data.value.Params[i * 3 + 12]);
+				string towerId = data.value.Params[i * 3 + 11].ToString();
+				float lat = float.Parse(data.value.Params[i * 3 + 12]);
+				float lon = float.Parse(data.value.Params[i * 3 + 13]);
 
 				var loc = new Location(lat,lon);
-				var go = TowerManager.Current.CreateTower(type,loc,this);
+				var go = TowerManager.Current.CreateTower(type,towerId,loc,this);
 				if(go != null){
 					towers.Add(go);
 				}
@@ -116,14 +117,27 @@ public class Tile : MonoBehaviour
 			South = float.Parse(data.value.Params[5]);
 			West = float.Parse(data.value.Params[6]);
 
-			//TODO: Farnoosh - load and create buildings
-			//CreateBuilding(float.Parse(data.value.Params[3]),float.Parse(data.value.Params[4]),Color.red);
-
-
 			Texture2D texture = new Texture2D(256, 256);
 			texture.LoadImage(tile);
 			// do whatever you want with texture
 			GetComponent<Renderer>().material.mainTexture = texture;
+
+			//load towers on this tile
+			//TODO: Farnoosh - load and create towers
+			int towerNumbers = int.Parse(data.value.Params[7]);
+			for(int i=0;i < towerNumbers; i++){
+				int type = int.Parse(data.value.Params[i * 3 + 8]);
+				string towerId = data.value.Params[i * 3 + 9].ToString();
+				float lat = float.Parse(data.value.Params[i * 3 + 10]);
+				float lon = float.Parse(data.value.Params[i * 3 + 11]);
+
+				var loc = new Location(lat,lon);
+				var go = TowerManager.Current.CreateTower(type,towerId,loc,this);
+				if(go != null){
+					towers.Add(go);
+				}
+			}
+
 			DataLoaded = true;
 		});
 	}

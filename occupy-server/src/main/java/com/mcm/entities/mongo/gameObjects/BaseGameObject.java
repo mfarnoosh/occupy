@@ -1,17 +1,13 @@
-package com.mcm.entities.mongo;
+package com.mcm.entities.mongo.gameObjects;
 
-import com.mcm.entities.World;
+import com.mcm.entities.mongo.BaseDocument;
 import com.mcm.util.GeoUtil;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
-
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 /**
  * Created by alirezaghias on 10/18/2016 AD.
  */
-public abstract class GameObject extends BaseDocument {
+public abstract class BaseGameObject extends BaseDocument {
     @GeoSpatialIndexed
     private double[] location;
     protected double health = 100.0;
@@ -19,9 +15,7 @@ public abstract class GameObject extends BaseDocument {
     protected double level = 0.0;
 
     //Constructors
-    protected GameObject() {
-
-    }
+    protected BaseGameObject() {    }
     //End Constructors
 
     //Method Accessors
@@ -90,7 +84,7 @@ public abstract class GameObject extends BaseDocument {
         return GeoUtil.distance(location[0], location[1], lat, lon, "K");
     }
 
-    public double distanceTo(GameObject otherGameObject) {
+    public double distanceTo(BaseGameObject otherGameObject) {
         if (otherGameObject.getLocation() == null || otherGameObject.getLocation().length != 2)
             return -1;
         return distanceTo(otherGameObject.location[0], otherGameObject.location[1]);
