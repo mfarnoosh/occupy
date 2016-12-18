@@ -1,7 +1,7 @@
 package com.mcm.network;
 
 import com.google.gson.Gson;
-import com.mcm.network.messages.MessageFactory;
+import com.mcm.network.messages.SocketMessage;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.log4j.Logger;
 

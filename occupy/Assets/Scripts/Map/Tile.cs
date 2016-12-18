@@ -69,21 +69,16 @@ public class Tile : MonoBehaviour
 			//load towers on this tile
 			//TODO: Farnoosh - load and create towers
 			int towerNumbers = int.Parse(data.value.Params[9]);
-			for(int i=0;i < towerNumbers; i++){
-				int type = int.Parse(data.value.Params[i * 4 + 10]);
-				string towerId = data.value.Params[i * 4 + 11].ToString();
-				float lat = float.Parse(data.value.Params[i * 4 + 12]);
-				float lon = float.Parse(data.value.Params[i * 4 + 13]);
 
-				var loc = new Location(lat,lon);
-				var go = TowerManager.Current.CreateTower(type,towerId,loc,this);
+			for(int i=0;i < towerNumbers; i++){
+				string towersStr = data.value.Params[i + 10];
+				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
+
+				var go = TowerManager.Current.CreateTower(towerData,this);
 				if(go != null){
 					towers.Add(go);
 				}
 			}
-			//CreateBuilding(float.Parse(data.value.Params[3]),float.Parse(data.value.Params[4]),Color.red);
-
-
 			//complete actions
 			DataLoaded = true;
 			onComplete(TileX,TileY);
@@ -126,13 +121,10 @@ public class Tile : MonoBehaviour
 			//TODO: Farnoosh - load and create towers
 			int towerNumbers = int.Parse(data.value.Params[7]);
 			for(int i=0;i < towerNumbers; i++){
-				int type = int.Parse(data.value.Params[i * 4 + 8]);
-				string towerId = data.value.Params[i * 4 + 9].ToString();
-				float lat = float.Parse(data.value.Params[i * 4 + 10]);
-				float lon = float.Parse(data.value.Params[i * 4 + 11]);
-
-				var loc = new Location(lat,lon);
-				var go = TowerManager.Current.CreateTower(type,towerId,loc,this);
+				string towersStr = data.value.Params[i + 8];
+				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
+			
+				var go = TowerManager.Current.CreateTower(towerData,this);
 				if(go != null){
 					towers.Add(go);
 				}

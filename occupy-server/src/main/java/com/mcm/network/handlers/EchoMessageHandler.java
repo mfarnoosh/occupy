@@ -1,7 +1,7 @@
-package com.mcm.network.messages.handlers;
+package com.mcm.network.handlers;
 
-import com.mcm.network.SocketMessage;
-import com.mcm.network.messages.BaseMessageHandler;
+import com.mcm.network.messages.SocketMessage;
+import com.mcm.network.BaseMessageHandler;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

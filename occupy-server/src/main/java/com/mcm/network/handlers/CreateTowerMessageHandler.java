@@ -1,4 +1,4 @@
-package com.mcm.network.messages.handlers;
+package com.mcm.network.handlers;
 
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IPlayerDao;
@@ -6,8 +6,8 @@ import com.mcm.entities.mongo.Player;
 import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.enums.TowerType;
-import com.mcm.network.SocketMessage;
-import com.mcm.network.messages.BaseMessageHandler;
+import com.mcm.network.messages.SocketMessage;
+import com.mcm.network.BaseMessageHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

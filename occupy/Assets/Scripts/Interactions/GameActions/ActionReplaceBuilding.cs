@@ -75,17 +75,20 @@ public class ActionReplaceBuilding : TouchAction {
 		rend.material.color = originalColor;
 		var highlight = GetComponent<ActionHighlight> ();
 		var tower = GetComponent<GameObjects.Tower> ();
+		if (tower == null) {
+			Debug.Log ("salam");
+		}
 		//Send Position to server
 		Location loc = GeoUtils.XYZToLocation(tile,transform.position);
 	
 		SocketMessage sm = new SocketMessage ();
 		sm.Cmd = "moveTower";
 
-		sm.Params.Add (tower.id);
+		sm.Params.Add (tower.Id);
 		sm.Params.Add (loc.Latitude.ToString());
 		sm.Params.Add (loc.Longitude.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
-			
+			gameObject.transform.parent = currentTile.transform;
 		});
 
 		//End Sending position to server

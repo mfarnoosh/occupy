@@ -1,7 +1,7 @@
-package com.mcm.network.messages;
+package com.mcm.network;
 
-import com.mcm.network.SocketMessage;
-import com.mcm.network.messages.handlers.*;
+import com.mcm.network.handlers.*;
+import com.mcm.network.messages.SocketMessage;
 import com.mcm.util.Spring;
 
 /**

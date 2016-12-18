@@ -9,7 +9,8 @@ import com.mcm.enums.TowerType;
 public class Tower extends BasePlayerObject {
     private TowerType type;
 
-    public Tower(){}
+    public Tower() {}
+
     public Tower(TowerType type, Player player, double[] location) {
         setType(type);
         setLocation(location);
@@ -17,8 +18,9 @@ public class Tower extends BasePlayerObject {
 
         setMechanicValues(type);
     }
+
     public Tower(int typeValue, Player player, double[] location) {
-        this(TowerType.valueOf(typeValue),player,location);
+        this(TowerType.valueOf(typeValue), player, location);
     }
 
     private void setMechanicValues(TowerType type) {
@@ -113,4 +115,46 @@ public class Tower extends BasePlayerObject {
     public void setType(TowerType type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+
+        return "Tower{" +
+                "_Id='" + getId() + '\'' +
+                ", _Type='" + String.valueOf(getType().getValue()) + '\'' +
+                ", _PlayerKey='" + player.getId() + '\'' +
+                ", _Lat='" + String.valueOf(getLocation()[0]) + '\'' +
+                ", _Lon='" + String.valueOf(getLocation()[1]) + '\'' +
+                ", _Level='" + String.valueOf(getLevel()) + '\'' +
+                ", _Health='" + String.valueOf(getHealth()) + '\'' +
+                ", _Range=" + String.valueOf(getRange()) +
+                '}';
+    }
+
+    public TowerData getData() {
+        TowerData td = new TowerData();
+        td.PlayerKey = player.getId();
+        td.Id = getId();
+        td.Type = getType().getValue();
+        td.Range = getRange();
+        td.Lat = getLocation()[0];
+        td.Lon = getLocation()[1];
+        td.Level = getLevel();
+        td.Health = getHealth();
+
+        return td;
+    }
+}
+
+class TowerData {
+    public String PlayerKey;
+    public String Id;
+
+    public int Type = -1;
+
+    public double Range = 0.0;
+    public double Lat = 0.0;
+    public double Lon = 0.0;
+    public double Level = 0.0;
+    public double Health = 100.0;
 }

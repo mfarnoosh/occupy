@@ -1,18 +1,14 @@
-package com.mcm.network.messages.handlers;
+package com.mcm.network.handlers;
 
-import com.mcm.dao.mongo.PlayerDao;
 import com.mcm.dao.mongo.interfaces.IPlayerDao;
 import com.mcm.entities.MultilingualValue;
 import com.mcm.entities.mongo.Player;
-import com.mcm.network.SocketMessage;
-import com.mcm.network.messages.BaseMessageHandler;
-import com.mcm.service.Tile;
-import org.apache.axis.encoding.Base64;
+import com.mcm.network.messages.SocketMessage;
+import com.mcm.network.BaseMessageHandler;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 
 /**
  * Created by Mehrdad on 16/12/11.

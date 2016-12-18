@@ -1,7 +1,6 @@
-package com.mcm.network.messages;
+package com.mcm.network;
 
-import com.mcm.network.SocketMessage;
-import org.springframework.stereotype.Component;
+import com.mcm.network.messages.SocketMessage;
 
 /**
  * Created by Mehrdad on 16/12/11.

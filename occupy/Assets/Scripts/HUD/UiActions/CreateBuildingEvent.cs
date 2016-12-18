@@ -42,7 +42,7 @@ public class CreateBuildingEvent : EventAction {
 		sm.Cmd = "createTower";
 		sm.Params.Add (loc.Latitude.ToString());
 		sm.Params.Add (loc.Longitude.ToString());
-		sm.Params.Add (building.type.ToString());
+		sm.Params.Add (building.Type.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
 			//var mamad = data.value.Params[0];
 			Debug.Log("Create Tower successfully");

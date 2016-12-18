@@ -30,7 +30,7 @@ public class SendUnit : EventAction {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
 			//TODO: change to building id
-			sm.Params.Add (targetBuilding.type.ToString());
+			sm.Params.Add (targetBuilding.Type.ToString());
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 
