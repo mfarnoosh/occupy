@@ -72,6 +72,9 @@ public class TowerManager : MonoBehaviour
 		return go;
 	}
 
+	public int GetMaxTowerLevel(int towerType){
+		return int.Parse(PlayerPrefs.GetFloat("tower." + towerType + ".maxLevel").ToString());
+	}
 	public TowerData GetTowerData(TowerData td){
 		string key = "tower." + td.Type + "." + td.Level;
 		td.Range = PlayerPrefs.GetFloat (key + ".range");

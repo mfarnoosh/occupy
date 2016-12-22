@@ -13,6 +13,9 @@ namespace GameObjects{
 		public Tower(TowerData data){
 			FromObjectData (data);
 		}
+		public void Start(){
+			//FromObjectData(TowerManager.Current.GetTowerData (Type, TowerManager.Current.GetMaxTowerLevel (Type)));
+		}
 
 		public override void FromObjectData(BaseObjectData data){
 			if(data is TowerData){

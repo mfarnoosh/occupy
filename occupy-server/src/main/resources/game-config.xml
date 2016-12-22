@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game-configs>
-    <config version="5">
+    <config version="7">
         <map>
             <zoom-level>16</zoom-level>
             <tile-size-x>0.0054931640625</tile-size-x>
@@ -65,13 +65,20 @@
             </unit>
         </units>
         <towers>
-            <tower name="SENTRY" max-level="1">
+            <tower name="SENTRY" max-level="2">
                 <level level="1">
                     <power>1</power>
                     <power-factor>1</power-factor>
                     <range>75</range>
                     <health>100.0</health>
                     <defence-factor>1</defence-factor>
+                </level>
+                <level level="2">
+                    <power>10</power>
+                    <power-factor>10</power-factor>
+                    <range>250</range>
+                    <health>140.0</health>
+                    <defence-factor>10</defence-factor>
                 </level>
             </tower>
             <tower name="MACHINE_GUN" max-level="1">
@@ -83,7 +90,7 @@
                     <defence-factor>1</defence-factor>
                 </level>
             </tower>
-            <tower name="ROCKET_LAUNCHER" max-level="1">
+            <tower name="ROCKET_LAUNCHER" max-level="2">
                 <level level="1">
                     <power>1</power>
                     <power-factor>1</power-factor>
@@ -91,14 +98,28 @@
                     <health>100.0</health>
                     <defence-factor>1</defence-factor>
                 </level>
+                <level level="2">
+                    <power>2</power>
+                    <power-factor>2</power-factor>
+                    <range>150</range>
+                    <health>120.0</health>
+                    <defence-factor>2</defence-factor>
+                </level>
             </tower>
-            <tower name="ANTI_AIRCRAFT" max-level="1">
+            <tower name="ANTI_AIRCRAFT" max-level="2">
                 <level level="1">
                     <power>1</power>
                     <power-factor>1</power-factor>
                     <range>50</range>
                     <health>100.0</health>
                     <defence-factor>1</defence-factor>
+                </level>
+                <level level="2">
+                    <power>10</power>
+                    <power-factor>10</power-factor>
+                    <range>180</range>
+                    <health>130.0</health>
+                    <defence-factor>10</defence-factor>
                 </level>
             </tower>
             <tower name="STEALTH" max-level="1">

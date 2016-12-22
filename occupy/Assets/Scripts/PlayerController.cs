@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start ()
 	{
-		//PlayerPrefs.DeleteKey ("config-version");
+		PlayerPrefs.DeleteKey ("config-version");
 
 		string key = PlayerPrefs.GetString ("player-key");
 		if (string.IsNullOrEmpty (key)) {
@@ -102,19 +102,43 @@ public class PlayerController : MonoBehaviour
 
 	private void SaveTowersConfig (List<TowerData> towers)
 	{
+		Dictionary<int,double> towerMaxLevel = new Dictionary<int, double> ();
 		foreach (var tower in towers) {
+			if (towerMaxLevel.ContainsKey (tower.Type)) {
+				if (towerMaxLevel [tower.Type] < tower.Level)
+					towerMaxLevel [tower.Type] = tower.Level;
+			} else {
+				towerMaxLevel.Add (tower.Type, tower.Level);
+			}
+
 			string key = "tower." + tower.Type + "." + tower.Level;
 			PlayerPrefs.SetFloat (key + ".range", (float)(tower.Range));
 			PlayerPrefs.SetFloat (key + ".health", (float)(tower.Health));
+		}
+		foreach (KeyValuePair<int,double> item in towerMaxLevel) {
+			PlayerPrefs.SetFloat("tower." + item.Key+ ".maxLevel", (float)(towerMaxLevel[item.Key]));
+			Debug.LogFormat ("tower.{0}.maxLevel = {1}",item.Key,towerMaxLevel[item.Key] );
 		}
 	}
 
 	private void SaveUnitsConfig (List<UnitData> units)
 	{
+		Dictionary<int,double> unitMaxLevel = new Dictionary<int, double> ();
 		foreach (var unit in units) {
+			if (unitMaxLevel.ContainsKey (unit.Type)) {
+				if (unitMaxLevel [unit.Type] < unit.Level)
+					unitMaxLevel [unit.Type] = unit.Level;
+			} else {
+				unitMaxLevel.Add (unit.Type, unit.Level);
+			}
+
 			string key = "unit." + unit.Type + "." + unit.Level;
 			PlayerPrefs.SetFloat (key + ".range", (float)(unit.Range));
 			PlayerPrefs.SetFloat (key + ".health", (float)(unit.Health));
+		}
+		foreach (KeyValuePair<int,double> item in unitMaxLevel) {
+			PlayerPrefs.SetFloat("unit." + item.Key+ ".maxLevel", (float)(unitMaxLevel[item.Key]));
+			Debug.LogFormat ("unit.{0}.maxLevel = {1}",item.Key,unitMaxLevel[item.Key] );
 		}
 	}
 }
