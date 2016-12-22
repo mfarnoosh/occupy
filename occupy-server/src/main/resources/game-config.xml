@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game-configs>
+    <config version="2">
+        <map>
+            <zoom-level>16</zoom-level>
+            <tile-size-x>0.0054931640625</tile-size-x>
+            <tile-size-y>0.0044594279375402834</tile-size-y>
+            <tile-grid-width>5</tile-grid-width>
+            <move-speed>20.0</move-speed>
+        </map>
+        <units>
+            <unit name="SOLDIER" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+            <unit name="MACHINE" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+            <unit name="TANK" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+            <unit name="HELICOPTER" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+            <unit name="AIRCRAFT" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+            <unit name="TITAN" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <defence-factor>1</defence-factor>
+                    <range>100</range>
+                    <health>100.0</health>
+                </level>
+            </unit>
+        </units>
+        <towers>
+            <tower name="SENTRY" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <range>75</range>
+                    <health>100.0</health>
+                    <defence-factor>1</defence-factor>
+                </level>
+            </tower>
+            <tower name="MACHINE_GUN" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <range>50</range>
+                    <health>100.0</health>
+                    <defence-factor>1</defence-factor>
+                </level>
+            </tower>
+            <tower name="ROCKET_LAUNCHER" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <range>50</range>
+                    <health>100.0</health>
+                    <defence-factor>1</defence-factor>
+                </level>
+            </tower>
+            <tower name="ANTI_AIRCRAFT" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <range>50</range>
+                    <health>100.0</health>
+                    <defence-factor>1</defence-factor>
+                </level>
+            </tower>
+            <tower name="STEALTH" max-level="1">
+                <level level="1">
+                    <power>1</power>
+                    <power-factor>1</power-factor>
+                    <range>50</range>
+                    <health>100.0</health>
+                    <defence-factor>1</defence-factor>
+                </level>
+            </tower>
+        </towers>
+    </config>
+</game-configs>

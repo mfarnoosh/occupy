@@ -32,7 +32,7 @@ public class CreateBuildingEvent : EventAction {
 			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
 			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
 
-		var building = go.GetComponent<GameObjects.Tower> ();
+		var tower = go.GetComponent<GameObjects.Tower> ();
 		//Send Position to server
 		Tile tile = MapManager.Current.GetTile(ghostObject.transform.position);
 
@@ -42,38 +42,15 @@ public class CreateBuildingEvent : EventAction {
 		sm.Cmd = "createTower";
 		sm.Params.Add (loc.Latitude.ToString());
 		sm.Params.Add (loc.Longitude.ToString());
-		sm.Params.Add (building.Type.ToString());
+		sm.Params.Add (tower.Type.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
-			//var mamad = data.value.Params[0];
-			Debug.Log("Create Tower successfully");
-//			string lat = data.value.Params[0];
-//			string lon = data.value.Params[1];
-//			Location sLoc = new Location(float.Parse(lat),float.Parse(lon));
-//
-//			CreateBuilding(tile,sLoc,Color.green);
-//
-//
-//			string lat2 = data.value.Params[2];
-//			string lon2 = data.value.Params[3];
-//
-//			Location sLoc2 = new Location(float.Parse(lat2),float.Parse(lon2));
-//
-//			CreateBuilding(tile,sLoc2,Color.red);
-//
-//			string lat3 = data.value.Params[4];
-//			string lon3 = data.value.Params[5];
-//
-//			Location sLoc3 = new Location(float.Parse(lat3),float.Parse(lon3));
-//
-//			CreateBuilding(tile,sLoc3,Color.gray);
-//
-//
-//			string lat4 = data.value.Params[6];
-//			string lon4 = data.value.Params[7];
-//
-//			Location sLoc4 = new Location(float.Parse(lat4),float.Parse(lon4));
-//
-//			CreateBuilding(tile,sLoc4,Color.yellow);
+			string towersStr = data.value.Params[0];
+			string towerId = JsonUtility.FromJson<TowerData>(towersStr).Id;
+			TowerData towerData = TowerManager.Current.GetTowerData(tower.Type,1);
+			towerData.Id = towerId;
+
+			tower.FromObjectData(towerData);
+			tile.AddTower(go);
 
 		});
 

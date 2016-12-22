@@ -2,6 +2,7 @@ package com.mcm.entities.mongo.gameObjects.playerObjects;
 
 import com.mcm.entities.mongo.Player;
 import com.mcm.enums.TowerType;
+import com.mcm.network.messages.TowerData;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -41,7 +42,7 @@ public class Tower extends BasePlayerObject {
                 powerFactor = 1;
                 isInWar = false;
                 isRangeAttack = false;
-                range = 10;
+                range = 5;
 
                 health = 100.0;
                 defenceFactor = 1.0;
@@ -131,30 +132,20 @@ public class Tower extends BasePlayerObject {
                 '}';
     }
 
-    public TowerData getData() {
+    public TowerData getLoadTowerData() {
         TowerData td = new TowerData();
         td.PlayerKey = player.getId();
         td.Id = getId();
         td.Type = getType().getValue();
-        td.Range = getRange();
         td.Lat = getLocation()[0];
         td.Lon = getLocation()[1];
         td.Level = getLevel();
-        td.Health = getHealth();
 
         return td;
     }
-}
-
-class TowerData {
-    public String PlayerKey;
-    public String Id;
-
-    public int Type = -1;
-
-    public double Range = 0.0;
-    public double Lat = 0.0;
-    public double Lon = 0.0;
-    public double Level = 0.0;
-    public double Health = 100.0;
+    public TowerData getNewTowerData() {
+        TowerData td = new TowerData();
+        td.Id = getId();
+        return td;
+    }
 }

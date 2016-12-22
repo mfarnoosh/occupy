@@ -17,7 +17,7 @@ public class TowerManager : MonoBehaviour
 		Current = this;
 	}
 
-	public GameObject CreateTower (TowerData data, Tile tile)
+	public GameObject CreateTower (TowerData td, Tile tile)
 	{
 		//var go = GameObject.Instantiate(SentryPrefab);
 		//		go.transform.localScale = new Vector3(
@@ -31,7 +31,7 @@ public class TowerManager : MonoBehaviour
 		//
 		//		go.transform.position = pos;
 		//		go.transform.parent = tile.transform;
-
+		TowerData data = GetTowerData(td);
 		GameObject go = null;
 		switch (data.Type) {
 		case 1: //Sentry
@@ -70,5 +70,20 @@ public class TowerManager : MonoBehaviour
 		}
 
 		return go;
+	}
+
+	public TowerData GetTowerData(TowerData td){
+		string key = "tower." + td.Type + "." + td.Level;
+		td.Range = PlayerPrefs.GetFloat (key + ".range");
+		td.Health = PlayerPrefs.GetFloat (key + ".health");
+
+		return td;
+	}
+	public TowerData GetTowerData(int towerType,int level){
+		TowerData td = new TowerData ();
+		td.Type = towerType;
+		td.Level = level;
+
+		return GetTowerData (td);
 	}
 }
