@@ -74,11 +74,12 @@ public class PlayerController : MonoBehaviour
 			bool configOK = bool.Parse (data.value.Params [0]);
 			if (!configOK) {
 				var configData = JsonUtility.FromJson<ConfigData> (data.value.Params [1]);
+				Debug.LogFormat ("new Config detected, ver[{0}]. " ,configData.version);
 				SaveMapConfig (configData.mapConfig);
 				SaveTowersConfig (configData.towers);
 				SaveUnitsConfig (configData.units);
 
-				PlayerPrefs.SetString ("config-version", configVersion);
+				PlayerPrefs.SetString ("config-version", configData.version);
 				PlayerPrefs.Save ();
 			}
 

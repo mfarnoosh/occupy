@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game-configs>
-    <config version="2">
+    <config version="5">
         <map>
             <zoom-level>16</zoom-level>
             <tile-size-x>0.0054931640625</tile-size-x>
