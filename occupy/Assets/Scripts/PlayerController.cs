@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start ()
 	{
-		PlayerPrefs.DeleteKey ("config-version");
+		//PlayerPrefs.DeleteKey ("config-version");
 
 		string key = PlayerPrefs.GetString ("player-key");
 		if (string.IsNullOrEmpty (key)) {
