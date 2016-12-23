@@ -8,8 +8,11 @@ public class ActionReplaceTower : TouchAction {
 	private Vector3 originalPosition;
 	private bool isMoving = false;
 	private Tile currentTile = null;
+	private Interactive interactive;
+	private Renderer rend;
+	private Color originalColor;
 	/*
-	Renderer rend;
+
 	Color originalColor;
 	Color Red = new Color(1,0,0,0.5f);
 	Color Green = new Color (0, 1, 0, 0.5f);
@@ -30,17 +33,26 @@ public class ActionReplaceTower : TouchAction {
 		}
 	}
 */
+	void Start(){
+		rend = GetComponent<Renderer> ();
+		originalColor = rend.material.color;
+		Debug.Log ("Start " + Time.deltaTime);
+		interactive = GetComponent<Interactive> ();
+
+	}
+	float startMovingTime = 99999999999f;
 	public override void Select ()	{}
 	public override void SecondSelect ()
 	{
 		TouchManager.Current.enabled = false;
 		originalPosition = transform.position;
 		//originalColor = rend.material.color;
-
+		Debug.Log ("original color: " +Time.deltaTime);
 		var tile =  gameObject.transform.GetComponentInParent<Tile> ();
 		if (tile != null)
 			currentTile = tile;
 
+		startMovingTime = Time.deltaTime;
 		isMoving = true;
 		//rend.material.color = Yellow;
 	}
@@ -51,8 +63,9 @@ public class ActionReplaceTower : TouchAction {
 	}
 
 	void LateUpdate(){
-		if (!isMoving)
+		if(Time.deltaTime <= startMovingTime || !isMoving)
 			return;
+		//Debug.Log ("update: " +Time.deltaTime + "   : " +originalColor);
 		if (LeanTouch.Fingers == null || LeanTouch.Fingers.Count != 1) {
 			Finish (currentTile);
 			return;
@@ -73,18 +86,18 @@ public class ActionReplaceTower : TouchAction {
 		}
 		transform.position = tempTarget.Value;
 
-//		if (MapManager.Current.CanPlaceTowerHere (gameObject) && !collisioned) {
-//			rend.material.color = Green;
-//		} else {
-//			rend.material.color = Red;
-//		}
+		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || interactive.Collisioned) {
+			rend.material.color = Color.red;
+		} else {
+			rend.material.color = originalColor;
+		}
 	}
 	public void Finish(Tile tile){
 		isMoving = false;
 		var highlight = GetComponent<ActionHighlight> ();
-//		rend.material.color = originalColor;
+		rend.material.color = originalColor;
 
-		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null) {
+		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null || interactive.Collisioned) {
 			transform.position = originalPosition;
 		} else {
 			var tower = GetComponent<GameObjects.Tower> ();
