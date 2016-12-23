@@ -50,9 +50,13 @@ public class GetTileMessageHandler extends BaseMessageHandler {
         List<Tower> towers = gameObjectDao.getAllTowersInBox(
                 new double[]{tile.getBoundingBox().south,tile.getBoundingBox().west} ,
                 new double[]{tile.getBoundingBox().north,tile.getBoundingBox().east});
+
+        double tile_x = tile.getBoundingBox().east - tile.getBoundingBox().west;
+        double tile_y = tile.getBoundingBox().north - tile.getBoundingBox().south;
+
         message.Params.add(String.valueOf(towers.size())); //number of towers
         for(Tower t : towers){
-            message.Params.add(new Gson().toJson(t.getData()));
+            message.Params.add(new Gson().toJson(t.getLoadTowerData()));
             /*message.Params.add(String.valueOf(t.getType().getValue())); //tower type
             message.Params.add(String.valueOf(t.getId())); //tower id
             message.Params.add(String.valueOf(t.getLocation()[0])); //lat

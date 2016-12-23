@@ -1,5 +1,6 @@
 package com.mcm.network.handlers;
 
+import com.google.gson.Gson;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IPlayerDao;
 import com.mcm.entities.mongo.Player;
@@ -49,32 +50,17 @@ public class CreateTowerMessageHandler extends BaseMessageHandler {
 
         int type = Integer.parseInt(message.Params.get(2));
 
+        Tower tower = null;
+
         if(TowerType.valueOf(type) != null) {
-            BaseGameObject object = new Tower(type, player, new double[]{lat, lon});
-            gameObjectDao.save(object);
+            tower = new Tower(type, player, new double[]{lat, lon});
+            gameObjectDao.save(tower);
         }
 
-/*
- message.Params.add(String.valueOf(35.70283f));
-        message.Params.add(String.valueOf(51.40641f));
-
-
-        message.Params.add(String.valueOf(35.70200f));
-        message.Params.add(String.valueOf(51.40987f));
-
-
-        message.Params.add(String.valueOf(35.70536f));
-        message.Params.add(String.valueOf(51.40976f));
-
-
-//        message.Params.add(String.valueOf(35.70374f));
-//        message.Params.add(String.valueOf(51.40529f));
-
-        message.Params.add(String.valueOf(35.702305));
-        message.Params.add(String.valueOf(51.400487));
-
- */
         message.Params.clear();
+
+        message.Params.add(new Gson().toJson(tower.getNewTowerData()));
+
         return message;
     }
 }

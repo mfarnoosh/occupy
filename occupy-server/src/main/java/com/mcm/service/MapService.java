@@ -1,5 +1,7 @@
 package com.mcm.service;
 
+import com.mcm.enums.MapConfig;
+import com.mcm.util.GameConfig;
 import com.mcm.util.SharedPreference;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.io.FileUtils;
@@ -14,7 +16,7 @@ import java.net.URLConnection;
  * Created by Mehrdad on 16/11/23.
  */
 public class MapService {
-    public static int defaultZoomLevel = Integer.parseInt(SharedPreference.get("map.default_zoom_level"));
+    public static int defaultZoomLevel = Integer.parseInt(GameConfig.getMapProperty(MapConfig.ZOOM_LEVEL));
 
     public MapService(){}
 

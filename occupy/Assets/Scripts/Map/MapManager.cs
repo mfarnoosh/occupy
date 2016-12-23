@@ -8,19 +8,45 @@ using System.Linq;
 
 public class MapManager : MonoBehaviour
 {
-	private static int tilesGrid = 5; //means e.g. grid 3 X 3 of tiles
-	private static float moveSpeed = 20.0f;
+	private int _tilesGrid = 0; //means e.g. grid 3 X 3 of tiles
+	private float _moveSpeed = 0.0f;
+	private float _serverTileSizeX = 0.0f;
+	private float _serverTileSizeY = 0.0f;
+	private float _tileAlphaX = 0.0f;
+	private float _tileAlphaY = 0.0f;
+
+	public int TilesGridWidth{
+		get{return _tilesGrid;}
+		set{ _tilesGrid = value; }
+	}
+	public float MoveSpeed{
+		get{return _moveSpeed;}
+		set{_moveSpeed = value;}
+	}
+	public float ServerTileSizeX{
+		get{return _serverTileSizeX;}
+		set{_serverTileSizeX = value;}
+	}
+	public float ServerTileSizeY{
+		get{return _serverTileSizeY;}
+		set{ _serverTileSizeY = value;}
+	}
+	public float TileAlphaX{ get { return _tileAlphaX; } }
+	public float TileAlphaY{ get { return _tileAlphaY; } }
+
 	private Vector3 _tileSize;
+
 	//TODO: Farnoosh
 	/*
 	 * http://tile.mapzen.com/mapzen/vector/v1/{layers}/{z}/{x}/{y}.{format}?api_key={api_key}
 	 * mapzen-etTgDC5
 	 * 35.72135,51.44947
 	 */
+
 	public GameObject TilePrefab;
 	public GameObject MapObject;
 
-	private Tile[,] tiles = new Tile[tilesGrid, tilesGrid];
+	private Tile[,] tiles;
 
 
 	public Vector3 TileSize{get { return _tileSize;}}
@@ -33,24 +59,44 @@ public class MapManager : MonoBehaviour
 	}
 	public void Start ()
 	{
+		//Farnoosh - init values
+		if (TilesGridWidth == 0) {
+			TilesGridWidth = PlayerPrefs.GetInt ("map.tilesGridWidth");	
+		}
+		if (MoveSpeed == 0.0f) {
+			MoveSpeed = PlayerPrefs.GetFloat ("map.moveSpeed");	
+		}
+		if (ServerTileSizeX == 0.0f) {
+			ServerTileSizeX = PlayerPrefs.GetFloat ("map.serverTileSizeX");	
+		}
+		if (ServerTileSizeY == 0.0f) {
+			ServerTileSizeY = PlayerPrefs.GetFloat ("map.serverTileSizeY");	
+		}
 		_tileSize = TilePrefab.GetComponent<Renderer> ().bounds.size;
+
+		_tileAlphaX = _tileSize.x / ServerTileSizeX;
+		_tileAlphaY = _tileSize.z / ServerTileSizeY;
+
+		tiles = new Tile[TilesGridWidth, TilesGridWidth];
+		//end init
+
 		MoveTo(PlayerController.Current.WorldCenter);
 	}
 
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
-		MapObject.transform.position += new Vector3 (deltaPosition.x * moveSpeed, 0, deltaPosition.z * moveSpeed * 2);
+		MapObject.transform.position += new Vector3 (deltaPosition.x * MoveSpeed, 0, deltaPosition.z * MoveSpeed * 2);
 		AdjustTiles ();
 	}
 	public void MoveTo(Location newLocation){
 		InitCenterFinished = false;
 
 		//(tilesGrid - 1) / 2 ==> center tile
-		int centerTileX = (tilesGrid - 1) / 2;
+		int centerTileX = (TilesGridWidth - 1) / 2;
 
 
-		for (int i = 0; i < tilesGrid; i++) {
-			for (int j = 0; j < tilesGrid; j++) {
+		for (int i = 0; i < TilesGridWidth; i++) {
+			for (int j = 0; j < TilesGridWidth; j++) {
 				if(tiles[i,j] != null && tiles[i,j].transform.gameObject != null)
 					Destroy (tiles [i, j].transform.gameObject);
 
@@ -62,8 +108,8 @@ public class MapManager : MonoBehaviour
 			}
 		}
 		tiles [centerTileX, centerTileX].initWithLatLon (newLocation, (x, y) => {
-			for (int i = 0; i < tilesGrid; i++) {
-				for (int j = 0; j < tilesGrid; j++) {
+			for (int i = 0; i < TilesGridWidth; i++) {
+				for (int j = 0; j < TilesGridWidth; j++) {
 					if (i == centerTileX && j == centerTileX)
 						continue;
 					tiles [i, j].TileX = x + (i - centerTileX);
@@ -75,8 +121,8 @@ public class MapManager : MonoBehaviour
 		});
 	}
 	public Tile GetTile(Vector3 targetPosition){
-		for (int i = 0; i < tilesGrid; i++) {
-			for (int j = 0; j < tilesGrid; j++) {
+		for (int i = 0; i < TilesGridWidth; i++) {
+			for (int j = 0; j < TilesGridWidth; j++) {
 				if (targetPosition.x >= (tiles [i, j].transform.position.x - TileSize.x / 2) &&
 					targetPosition.x <= (tiles [i, j].transform.position.x + TileSize.x / 2) &&
 					targetPosition.z >= (tiles [i, j].transform.position.z - TileSize.z / 2) &&
@@ -139,7 +185,7 @@ public class MapManager : MonoBehaviour
 	private void AdjustTiles(){
 		if (!InitCenterFinished)
 			return;
-		int centerTileX = (tilesGrid - 1) / 2;
+		int centerTileX = (TilesGridWidth - 1) / 2;
 
 		if (tiles [centerTileX, centerTileX].transform.position.x < -1 * TileSize.x / 2) {
 			LoadRightTiles ();
@@ -155,26 +201,26 @@ public class MapManager : MonoBehaviour
 		}
 	}
 	private void LoadRightTiles(){
-		for (int i = 0; i < tilesGrid; i++) {
+		for (int i = 0; i < TilesGridWidth; i++) {
 			Tile t = tiles [0, i];
-			for (int j = 0; j < tilesGrid - 1; j++) {
+			for (int j = 0; j < TilesGridWidth - 1; j++) {
 				tiles [j, i] = tiles [j + 1, i];
 				tiles [j, i].gameObject.transform.name = String.Format ("Tile({0},{1})", j, i);
 			}
 
-			t.TileX = tiles [tilesGrid - 2, i].TileX + 1;
-			var newPos = new Vector3 (tiles[tilesGrid - 2,i].gameObject.transform.position.x + TileSize.x,t.gameObject.transform.position.y,t.gameObject.transform.position.z);
+			t.TileX = tiles [TilesGridWidth - 2, i].TileX + 1;
+			var newPos = new Vector3 (tiles[TilesGridWidth - 2,i].gameObject.transform.position.x + TileSize.x,t.gameObject.transform.position.y,t.gameObject.transform.position.z);
 			t.gameObject.transform.position = newPos;
-			t.gameObject.transform.name = String.Format ("Tile({0},{1})", tilesGrid - 1, i);
-			tiles [tilesGrid - 1, i] = t;
+			t.gameObject.transform.name = String.Format ("Tile({0},{1})", TilesGridWidth - 1, i);
+			tiles [TilesGridWidth - 1, i] = t;
 			t.LoadTileByXY ();
 		}
 	}
 	private void LoadLeftTiles(){
-		for (int i = 0; i < tilesGrid; i++) {
-			Tile t = tiles [tilesGrid - 1, i];
+		for (int i = 0; i < TilesGridWidth; i++) {
+			Tile t = tiles [TilesGridWidth - 1, i];
 
-			for (int j = tilesGrid - 1; j > 0; j--) {
+			for (int j = TilesGridWidth - 1; j > 0; j--) {
 				tiles [j, i] = tiles [j - 1, i];
 				tiles [j, i].gameObject.transform.name = String.Format ("Tile({0},{1})", j, i);
 			}
@@ -205,18 +251,18 @@ public class MapManager : MonoBehaviour
 //		}
 	}
 	private void LoadDownTiles(){
-		for (int i = 0; i < tilesGrid; i++) {
+		for (int i = 0; i < TilesGridWidth; i++) {
 			Tile t = tiles [i, 0];
-			for (int j = 0; j < tilesGrid - 1; j++) {
+			for (int j = 0; j < TilesGridWidth - 1; j++) {
 				tiles [i, j] = tiles [i, j + 1];
 				tiles [i, j].gameObject.transform.name = String.Format ("Tile({0},{1})", i, j);
 			}
 
-			t.TileY = tiles [i, tilesGrid - 2].TileY + 1;
-			var newPos = new Vector3 (t.gameObject.transform.position.x, t.gameObject.transform.position.y, tiles [i, tilesGrid - 2].gameObject.transform.position.z - TileSize.z);
+			t.TileY = tiles [i, TilesGridWidth - 2].TileY + 1;
+			var newPos = new Vector3 (t.gameObject.transform.position.x, t.gameObject.transform.position.y, tiles [i, TilesGridWidth - 2].gameObject.transform.position.z - TileSize.z);
 			t.gameObject.transform.position = newPos;
-			t.gameObject.transform.name = String.Format ("Tile({0},{1})", i, tilesGrid - 1);
-			tiles [i, tilesGrid - 1] = t;
+			t.gameObject.transform.name = String.Format ("Tile({0},{1})", i, TilesGridWidth - 1);
+			tiles [i, TilesGridWidth - 1] = t;
 			t.LoadTileByXY ();
 		}
 //		for (int i = 0; i < 3; i++) {
@@ -237,9 +283,9 @@ public class MapManager : MonoBehaviour
 //		}
 	}
 	private void LoadUpTiles(){
-		for (int i = 0; i < tilesGrid; i++) {
-			Tile t = tiles [i, tilesGrid - 1];
-			for (int j = tilesGrid - 1; j > 0; j--) {
+		for (int i = 0; i < TilesGridWidth; i++) {
+			Tile t = tiles [i, TilesGridWidth - 1];
+			for (int j = TilesGridWidth - 1; j > 0; j--) {
 				tiles [i, j] = tiles [i, j - 1];
 				tiles [i, j].gameObject.transform.name = String.Format ("Tile({0},{1})", i, j);
 			}

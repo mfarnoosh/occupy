@@ -13,6 +13,9 @@ namespace GameObjects{
 		public Tower(TowerData data){
 			FromObjectData (data);
 		}
+		public void Start(){
+			//FromObjectData(TowerManager.Current.GetTowerData (Type, TowerManager.Current.GetMaxTowerLevel (Type)));
+		}
 
 		public override void FromObjectData(BaseObjectData data){
 			if(data is TowerData){
@@ -41,18 +44,4 @@ namespace GameObjects{
 			return td;
 		}
 	}
-}
-
-[Serializable]
-public class TowerData : BaseObjectData{
-	public string PlayerKey;
-	public string Id;
-
-	public int Type = -1;
-
-	public double Range = 0.0;
-	public double Lat = 0.0;
-	public double Lon = 0.0;
-	public double Level = 0.0;
-	public double Health = 100.0;
 }

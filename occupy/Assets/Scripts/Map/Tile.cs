@@ -41,6 +41,11 @@ public class Tile : MonoBehaviour
 	public bool DataLoaded = false;
 	public Tile(){}
 
+	public void AddTower(GameObject tower){
+		if(tower != null)
+			towers.Add (tower);
+	}
+
 	public void initWithLatLon(Location location,Action<int,int> onComplete){
 		SocketMessage sm = new SocketMessage ();
 		sm.Cmd = "getTile";
@@ -75,9 +80,7 @@ public class Tile : MonoBehaviour
 				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
 
 				var go = TowerManager.Current.CreateTower(towerData,this);
-				if(go != null){
-					towers.Add(go);
-				}
+				AddTower(go);
 			}
 			//complete actions
 			DataLoaded = true;
@@ -123,11 +126,8 @@ public class Tile : MonoBehaviour
 			for(int i=0;i < towerNumbers; i++){
 				string towersStr = data.value.Params[i + 8];
 				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
-			
 				var go = TowerManager.Current.CreateTower(towerData,this);
-				if(go != null){
-					towers.Add(go);
-				}
+				AddTower(go);
 			}
 
 			DataLoaded = true;
