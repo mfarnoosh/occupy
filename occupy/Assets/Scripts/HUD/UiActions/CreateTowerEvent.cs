@@ -3,34 +3,26 @@ using UnityEngine.EventSystems;
 using Lean.Touch;
 using System.Collections;
 
-public class CreateBuildingEvent : EventAction {
-	public GameObject BuildingPrefab;
-	public GameObject BuildingGhostPrefab;
+public class CreateTowerEvent : EventAction {
+	public GameObject TowerPrefab;
+	public GameObject TowerGhostPrefab;
 
 	private GameObject ghostObject;
 	private Renderer rend;
 
 	public override void PointerDown (Vector2 position)
 	{
-		if (BuildingPrefab == null || BuildingGhostPrefab == null)
+		if (TowerPrefab == null || TowerGhostPrefab == null)
 			return;
 
-		ghostObject = GameObject.Instantiate (BuildingGhostPrefab);
-		ghostObject.transform.localScale = new Vector3(
-			ghostObject.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-			ghostObject.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-			ghostObject.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
+		ghostObject = GameObject.Instantiate (TowerGhostPrefab);
 		
 		rend = ghostObject.GetComponent<Renderer> ();
 		MoveGhost (position);
 	}
 	public override void PointerUp (Vector2 position)
 	{
-		var go = GameObject.Instantiate (BuildingPrefab);
-		go.transform.localScale = new Vector3(
-			go.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
+		var go = GameObject.Instantiate (TowerPrefab);
 
 		var tower = go.GetComponent<GameObjects.Tower> ();
 		//Send Position to server
@@ -79,19 +71,14 @@ public class CreateBuildingEvent : EventAction {
 			return;
 		ghostObject.transform.position = tempTarget.Value;
 
-		if (MapManager.Current.CanPlaceBuildingHere (ghostObject)) {
+		if (MapManager.Current.CanPlaceTowerHere (ghostObject)) {
 			rend.material.color = Color.green;
 		} else {
 			rend.material.color = Color.red;
 		}
 	}
-	private void CreateBuilding(Tile tile,Location loc,Color col){
-		var go = GameObject.Instantiate(BuildingPrefab);
-		go.transform.localScale = new Vector3(
-			go.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
-
+	private void CreateTower(Tile tile,Location loc,Color col){
+		var go = GameObject.Instantiate(TowerPrefab);
 		go.GetComponent<Renderer> ().material.color = col;
 		//TODO: Convert Latitude,Longitude to X,Y
 		var pos = GeoUtils.LocationToXYZ(tile,loc);

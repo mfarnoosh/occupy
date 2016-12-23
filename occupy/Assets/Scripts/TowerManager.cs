@@ -54,10 +54,6 @@ public class TowerManager : MonoBehaviour
 			Debug.LogError ("not found type of tower.");
 			return null;
 		}
-		go.transform.localScale = new Vector3 (
-			go.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
 
 		var pos = GeoUtils.LocationToXYZ (tile, new Location((float)(data.Lat),(float)(data.Lon)));
 

@@ -134,7 +134,7 @@ public class MapManager : MonoBehaviour
 		return null;
 	}
 
-	public bool CanPlaceBuildingHere(GameObject go){
+	public bool CanPlaceTowerHere(GameObject go){
 		//		var verts = go.GetComponent<MeshFilter> ().mesh.vertices;
 		//		var obstacles = GameObject.FindObjectsOfType<NavMeshObstacle> ();
 		//		var cols = new List<Collider> ();

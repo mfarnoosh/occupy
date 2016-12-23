@@ -3,7 +3,7 @@ using UnityEngine;
 using Lean.Touch;
 using System.Collections;
 
-public class ActionReplaceBuilding : TouchAction {
+public class ActionReplaceTower : TouchAction {
 
 	private Vector3 originalPosition;
 	private bool isMoving = false;
@@ -62,14 +62,14 @@ public class ActionReplaceBuilding : TouchAction {
 		}
 		transform.position = tempTarget.Value;
 
-		if (MapManager.Current.CanPlaceBuildingHere (gameObject)) {
+		if (MapManager.Current.CanPlaceTowerHere (gameObject)) {
 			rend.material.color = Yellow;
 		} else {
 			rend.material.color = Red;
 		}
 	}
 	public void Finish(Tile tile){
-		if (!MapManager.Current.CanPlaceBuildingHere (gameObject) || currentTile == null)
+		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null)
 			transform.position = originalPosition;
 		isMoving = false;
 		rend.material.color = originalColor;

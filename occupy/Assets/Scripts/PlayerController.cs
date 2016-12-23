@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
 	public Location WorldCenter = new Location (35.70423f, 51.40570f);
 
-	public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
+	//public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
 
 	public string PlayerKey;
 

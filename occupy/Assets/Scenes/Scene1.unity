@@ -700,9 +700,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingPrefab: {fileID: 1000011483923882, guid: d8a72eaa70c41d940ae658f062f75102,
+  TowerPrefab: {fileID: 1000013013317800, guid: b0c7f7647e1139e46a59aa01baa8d33b,
     type: 2}
-  BuildingGhostPrefab: {fileID: 1000011483923882, guid: d8a72eaa70c41d940ae658f062f75102,
+  TowerGhostPrefab: {fileID: 1000013013317800, guid: b0c7f7647e1139e46a59aa01baa8d33b,
     type: 2}
 --- !u!114 &549481262
 MonoBehaviour:
@@ -1308,9 +1308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingPrefab: {fileID: 1000014290414524, guid: 698c0d5c0acd6e945a69f9672b9d781a,
+  TowerPrefab: {fileID: 1000013013317800, guid: 7b0dc1fd5e46db94aba35113d05c57aa,
     type: 2}
-  BuildingGhostPrefab: {fileID: 1000014290414524, guid: 698c0d5c0acd6e945a69f9672b9d781a,
+  TowerGhostPrefab: {fileID: 1000013013317800, guid: 7b0dc1fd5e46db94aba35113d05c57aa,
     type: 2}
 --- !u!114 &1090223146
 MonoBehaviour:
@@ -1911,9 +1911,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
+  TowerPrefab: {fileID: 1000013013317800, guid: a724c59674f6038459d0514b5ec268e9,
     type: 2}
-  BuildingGhostPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
+  TowerGhostPrefab: {fileID: 1000013013317800, guid: a724c59674f6038459d0514b5ec268e9,
     type: 2}
 --- !u!114 &1643218035
 MonoBehaviour:
@@ -2051,8 +2051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd204828a4f272947a3af89a42ea85a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 1000011935917790, guid: 37d704e86cfb1e84281c0d8e637e03d2, type: 2}
-  UnitGhostPrefab: {fileID: 1000011935917790, guid: 37d704e86cfb1e84281c0d8e637e03d2,
+  UnitPrefab: {fileID: 1000012410492362, guid: e5655dee937d83a459f31a9fe3a614c1, type: 2}
+  UnitGhostPrefab: {fileID: 1000012410492362, guid: e5655dee937d83a459f31a9fe3a614c1,
     type: 2}
 --- !u!114 &1646236127
 MonoBehaviour:
@@ -2596,15 +2596,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa5c45be9f4f024b91bb23eee921f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SentryPrefab: {fileID: 1000011274649070, guid: 70417f4174bcf574dad30f82c3b15405,
+  SentryPrefab: {fileID: 1000013013317800, guid: a724c59674f6038459d0514b5ec268e9,
     type: 2}
-  MachineGunPrefab: {fileID: 1000013162214000, guid: cf783d7a800646b409fb197ee15fada9,
+  MachineGunPrefab: {fileID: 1000013013317800, guid: 51729876d19f2b64c89a763052e2bf75,
     type: 2}
-  RocketLauncherPrefab: {fileID: 1000011483923882, guid: d8a72eaa70c41d940ae658f062f75102,
+  RocketLauncherPrefab: {fileID: 1000013013317800, guid: b0c7f7647e1139e46a59aa01baa8d33b,
     type: 2}
   AntiAircraftPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
     type: 2}
-  StealthPrefab: {fileID: 1000014290414524, guid: 698c0d5c0acd6e945a69f9672b9d781a,
+  StealthPrefab: {fileID: 1000013013317800, guid: 7b0dc1fd5e46db94aba35113d05c57aa,
     type: 2}
 --- !u!4 &1943568807
 Transform:
@@ -2851,9 +2851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
+  TowerPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
     type: 2}
-  BuildingGhostPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
+  TowerGhostPrefab: {fileID: 1000013013317800, guid: f8ac42f5f4b7e7a438f59d6c9c564ede,
     type: 2}
 --- !u!114 &1992904843
 MonoBehaviour:
@@ -2991,9 +2991,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e86d80e00858444e9197b39be471239, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuildingPrefab: {fileID: 1000013162214000, guid: cf783d7a800646b409fb197ee15fada9,
+  TowerPrefab: {fileID: 1000013013317800, guid: 51729876d19f2b64c89a763052e2bf75,
     type: 2}
-  BuildingGhostPrefab: {fileID: 1000013162214000, guid: cf783d7a800646b409fb197ee15fada9,
+  TowerGhostPrefab: {fileID: 1000013013317800, guid: 51729876d19f2b64c89a763052e2bf75,
     type: 2}
 --- !u!114 &2062605649
 MonoBehaviour:

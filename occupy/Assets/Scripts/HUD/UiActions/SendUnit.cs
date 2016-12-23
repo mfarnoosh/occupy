@@ -14,10 +14,6 @@ public class SendUnit : EventAction {
 			return;
 
 		ghostObject = GameObject.Instantiate (UnitGhostPrefab);
-		ghostObject.transform.localScale = new Vector3(
-			ghostObject.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-			ghostObject.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-			ghostObject.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
 
 		rend = ghostObject.GetComponent<Renderer> ();
 		MoveGhost (position);
@@ -25,12 +21,12 @@ public class SendUnit : EventAction {
 
 	public override void PointerUp (Vector2 position)
 	{
-		var targetBuilding = GetTargetBuilding (position);
-		if (targetBuilding != null) {
+		var targetTower = GetTargetTower (position);
+		if (targetTower != null) {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
-			//TODO: change to building id
-			sm.Params.Add (targetBuilding.Type.ToString());
+			//TODO: change to tower id
+			sm.Params.Add (targetTower.Type.ToString());
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 
@@ -55,9 +51,9 @@ public class SendUnit : EventAction {
 			return;
 		ghostObject.transform.position = tempTarget.Value;
 
-		var building = GetTargetBuilding(screenPosition);
+		var tower = GetTargetTower(screenPosition);
 		if(rend != null){
-			if (building == null) {
+			if (tower == null) {
 				rend.material.color = Color.red;
 			} else {
 				rend.material.color = Color.green;
@@ -65,12 +61,12 @@ public class SendUnit : EventAction {
 		}
 	}
 
-	private GameObjects.Tower GetTargetBuilding(Vector2 screenPosition){
+	private GameObjects.Tower GetTargetTower(Vector2 screenPosition){
 		var ray = Camera.main.ScreenPointToRay (screenPosition);
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))
 			return null;
-		var building = hit.transform.GetComponent<GameObjects.Tower> ();
-		return building;
+		var tower = hit.transform.GetComponent<GameObjects.Tower> ();
+		return tower;
 	}
 }
