@@ -8,6 +8,15 @@ public class Interactive : MonoBehaviour {
 
 	public bool Swap = false;
 
+	Renderer rend;
+	Color originalColor;
+	public bool Interacting{ get; set; }
+
+	void Start(){
+		rend = GetComponent<Renderer> ();
+		originalColor = rend.material.color;
+	}
+
 	public void Select(){
 		_selected = true;
 		foreach (var selection in GetComponents<TouchAction>()) {
@@ -34,6 +43,18 @@ public class Interactive : MonoBehaviour {
 				Deselect ();
 			else
 				Select ();
+		}
+	}
+
+	void OnTriggerEnter(Collider col){
+		if (!col.gameObject.name.StartsWith ("Tile") && Selected) {
+			//originalColor = rend.material.color;
+			rend.material.color = Color.red;
+		}
+	}
+	void OnTriggerExit(Collider col){
+		if (!col.gameObject.name.StartsWith ("Tile") && Selected) {
+			rend.material.color = originalColor;
 		}
 	}
 }

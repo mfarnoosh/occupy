@@ -10,6 +10,7 @@ public class CreateTowerEvent : EventAction {
 	private GameObject ghostObject;
 	private Renderer rend;
 
+
 	public override void PointerDown (Vector2 position)
 	{
 		if (TowerPrefab == null || TowerGhostPrefab == null)
@@ -18,6 +19,7 @@ public class CreateTowerEvent : EventAction {
 		ghostObject = GameObject.Instantiate (TowerGhostPrefab);
 		
 		rend = ghostObject.GetComponent<Renderer> ();
+		rend.material.color = Color.yellow;
 		MoveGhost (position);
 	}
 	public override void PointerUp (Vector2 position)
@@ -71,11 +73,11 @@ public class CreateTowerEvent : EventAction {
 			return;
 		ghostObject.transform.position = tempTarget.Value;
 
-		if (MapManager.Current.CanPlaceTowerHere (ghostObject)) {
-			rend.material.color = Color.green;
-		} else {
-			rend.material.color = Color.red;
-		}
+//		if (MapManager.Current.CanPlaceTowerHere (ghostObject)) {
+//			rend.material.color = Color.green;
+//		} else {
+//			rend.material.color = Color.red;
+//		}
 	}
 	private void CreateTower(Tile tile,Location loc,Color col){
 		var go = GameObject.Instantiate(TowerPrefab);

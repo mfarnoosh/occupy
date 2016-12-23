@@ -15,6 +15,7 @@ namespace GameObjects{
 		}
 		public void Start(){
 			//FromObjectData(TowerManager.Current.GetTowerData (Type, TowerManager.Current.GetMaxTowerLevel (Type)));
+			//Physics.IgnoreCollision(MapManager.Current.MapObject.GetComponent<>);
 		}
 
 		public override void FromObjectData(BaseObjectData data){

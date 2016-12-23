@@ -558,6 +558,8 @@ GameObject:
   - 114: {fileID: 114000011986198052}
   - 114: {fileID: 114000011048762984}
   - 114: {fileID: 114000013641392450}
+  - 65: {fileID: 65000013122597012}
+  - 54: {fileID: 54000010301502184}
   m_Layer: 0
   m_Name: Rocket Launcher
   m_TagString: Untagged
@@ -1663,6 +1665,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010132829592}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54000010301502184
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013013317800}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64000011157834080
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -1683,10 +1700,22 @@ MeshCollider:
   m_GameObject: {fileID: 1000013013317800}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 4300000, guid: f44b89d3ef3db044fa9cd866642ba5c8, type: 3}
+--- !u!65 &65000013122597012
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013013317800}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 76.885994, y: 60.502575, z: 187.61157}
+  m_Center: {x: -11.880469, y: 0.81982416, z: 89.70732}
 --- !u!95 &95000010440655612
 Animator:
   serializedVersion: 3
@@ -1785,7 +1814,7 @@ MonoBehaviour:
   Level: 0
   Health: 100
   PlayerKey: 
-  Type: 4
+  Type: 3
   Range: 0
 --- !u!137 &137000011314342694
 SkinnedMeshRenderer:

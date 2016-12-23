@@ -8,30 +8,41 @@ public class ActionReplaceTower : TouchAction {
 	private Vector3 originalPosition;
 	private bool isMoving = false;
 	private Tile currentTile = null;
-
+	/*
 	Renderer rend;
 	Color originalColor;
 	Color Red = new Color(1,0,0,0.5f);
 	Color Green = new Color (0, 1, 0, 0.5f);
 	Color Yellow = new Color(0.5f,0.5f,0.5f,0.5f);
 
+	bool collisioned = false;
 	void Start(){
 		rend = GetComponent<Renderer> ();
 	}
-
+	void OnTriggerEnter(Collider col){
+		if (!col.gameObject.name.StartsWith ("Tile")) {
+			collisioned = true;
+		}
+	}
+	void OnTriggerExit(Collider col){
+		if (!col.gameObject.name.StartsWith ("Tile")) {
+			collisioned = false;
+		}
+	}
+*/
 	public override void Select ()	{}
 	public override void SecondSelect ()
 	{
 		TouchManager.Current.enabled = false;
 		originalPosition = transform.position;
-		originalColor = rend.material.color;
+		//originalColor = rend.material.color;
 
 		var tile =  gameObject.transform.GetComponentInParent<Tile> ();
 		if (tile != null)
 			currentTile = tile;
 
 		isMoving = true;
-		rend.material.color = Yellow;
+		//rend.material.color = Yellow;
 	}
 	public override void Deselect ()
 	{
@@ -62,36 +73,39 @@ public class ActionReplaceTower : TouchAction {
 		}
 		transform.position = tempTarget.Value;
 
-		if (MapManager.Current.CanPlaceTowerHere (gameObject)) {
-			rend.material.color = Yellow;
-		} else {
-			rend.material.color = Red;
-		}
+//		if (MapManager.Current.CanPlaceTowerHere (gameObject) && !collisioned) {
+//			rend.material.color = Green;
+//		} else {
+//			rend.material.color = Red;
+//		}
 	}
 	public void Finish(Tile tile){
-		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null)
-			transform.position = originalPosition;
 		isMoving = false;
-		rend.material.color = originalColor;
 		var highlight = GetComponent<ActionHighlight> ();
-		var tower = GetComponent<GameObjects.Tower> ();
-		if (tower == null) {
-			Debug.Log ("salam");
-		}
-		//Send Position to server
-		Location loc = GeoUtils.XYZToLocation(tile,transform.position);
+//		rend.material.color = originalColor;
+
+		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null) {
+			transform.position = originalPosition;
+		} else {
+			var tower = GetComponent<GameObjects.Tower> ();
+			if (tower == null) {
+				Debug.Log ("salam");
+			}
+			//Send Position to server
+			Location loc = GeoUtils.XYZToLocation (tile, transform.position);
 	
-		SocketMessage sm = new SocketMessage ();
-		sm.Cmd = "moveTower";
+			SocketMessage sm = new SocketMessage ();
+			sm.Cmd = "moveTower";
 
-		sm.Params.Add (tower.Id);
-		sm.Params.Add (loc.Latitude.ToString());
-		sm.Params.Add (loc.Longitude.ToString());
-		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
-			gameObject.transform.parent = currentTile.transform;
-		});
+			sm.Params.Add (tower.Id);
+			sm.Params.Add (loc.Latitude.ToString ());
+			sm.Params.Add (loc.Longitude.ToString ());
+			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+				gameObject.transform.parent = currentTile.transform;
+			});
+			//End Sending position to server
+		}
 
-		//End Sending position to server
 		if (highlight != null)
 			highlight.Select ();
 		TouchManager.Current.enabled = true;
