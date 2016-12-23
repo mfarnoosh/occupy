@@ -47,10 +47,7 @@ public class Interactive : MonoBehaviour {
 		if (!col.gameObject.name.StartsWith ("Tile")) {
 			if (!collisions.Contains (col)) {
 				collisions.Add (col);
-				//originalColor = rend.material.color;
-				//rend.material.color = Color.red;
 				Collisioned = true;
-				Debug.Log ("Enter: " + collisions.Count);
 			}
 		}
 	}
@@ -58,10 +55,8 @@ public class Interactive : MonoBehaviour {
 		
 		if (!col.gameObject.name.StartsWith ("Tile")) {
 			collisions.Remove (col);
-			//rend.material.color = originalColor;
 			if(collisions.Count == 0)
 				Collisioned = false;
-			Debug.Log ("Exit: " + collisions.Count);
 		}
 	}
 }

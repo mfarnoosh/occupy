@@ -36,11 +36,9 @@ public class ActionReplaceTower : TouchAction {
 	void Start(){
 		rend = GetComponent<Renderer> ();
 		originalColor = rend.material.color;
-		Debug.Log ("Start " + Time.deltaTime);
 		interactive = GetComponent<Interactive> ();
 
 	}
-	float startMovingTime = 99999999999f;
 	public override void Select ()	{}
 	public override void SecondSelect ()
 	{
@@ -51,8 +49,6 @@ public class ActionReplaceTower : TouchAction {
 		var tile =  gameObject.transform.GetComponentInParent<Tile> ();
 		if (tile != null)
 			currentTile = tile;
-
-		startMovingTime = Time.deltaTime;
 		isMoving = true;
 		//rend.material.color = Yellow;
 	}
@@ -63,9 +59,8 @@ public class ActionReplaceTower : TouchAction {
 	}
 
 	void LateUpdate(){
-		if(Time.deltaTime <= startMovingTime || !isMoving)
+		if(!isMoving)
 			return;
-		//Debug.Log ("update: " +Time.deltaTime + "   : " +originalColor);
 		if (LeanTouch.Fingers == null || LeanTouch.Fingers.Count != 1) {
 			Finish (currentTile);
 			return;
