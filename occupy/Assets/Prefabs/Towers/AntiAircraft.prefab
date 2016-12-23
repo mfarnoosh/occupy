@@ -1231,7 +1231,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013013317800}
   m_LocalRotation: {x: 0, y: 0.707224, z: 0.7069895, w: 0}
-  m_LocalPosition: {x: -0.70606685, y: 47.63348, z: -128.11328}
+  m_LocalPosition: {x: 272.74374, y: 499.08438, z: 413.9695}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_LocalEulerAnglesHint: {x: -89.981, y: 180, z: 0}
   m_Children:
@@ -1604,10 +1604,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c23aabb98add345459958ae8a5959d8d, type: 2}
-  - {fileID: 2100000, guid: f421ca7d3192a174ea94983a101520f7, type: 2}
-  - {fileID: 2100000, guid: f44e645e824c3254892549a32b5b7039, type: 2}
-  - {fileID: 2100000, guid: 4903901326d728e4c88a0b7fe62b0a8b, type: 2}
+  - {fileID: 2100000, guid: 1da4c890d97e2504799823a5956f574b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -1789,6 +1786,7 @@ MonoBehaviour:
   Health: 100
   PlayerKey: 
   Type: 4
+  Range: 0
 --- !u!137 &137000011314342694
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
