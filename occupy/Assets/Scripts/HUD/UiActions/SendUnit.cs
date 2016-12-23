@@ -32,7 +32,7 @@ public class SendUnit : EventAction {
 
 			});
 		}
-		Destroy (ghostObject);
+		//Destroy (ghostObject);
 	}
 
 	public override void PointerDragging (Vector2 position, Vector2 delta)
