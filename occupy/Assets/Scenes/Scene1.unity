@@ -561,8 +561,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd204828a4f272947a3af89a42ea85a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 1000012175123750, guid: 3b4c88374ca6fbf4eb5ffc2a949ca301, type: 2}
-  UnitGhostPrefab: {fileID: 1000012175123750, guid: 3b4c88374ca6fbf4eb5ffc2a949ca301,
+  UnitPrefab: {fileID: 1000011495471054, guid: 2a300d2a19e5fe7418e070e6c48c24c5, type: 2}
+  UnitGhostPrefab: {fileID: 1000011495471054, guid: 2a300d2a19e5fe7418e070e6c48c24c5,
     type: 2}
 --- !u!114 &522952547
 MonoBehaviour:
@@ -2550,8 +2550,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd204828a4f272947a3af89a42ea85a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 1000011657599360, guid: c33ecf5687d174646b245ef73e1bf3ac, type: 2}
-  UnitGhostPrefab: {fileID: 1000011657599360, guid: c33ecf5687d174646b245ef73e1bf3ac,
+  UnitPrefab: {fileID: 1000013901556720, guid: da034d1140e4bae468bbe60ea3922cc6, type: 2}
+  UnitGhostPrefab: {fileID: 1000013901556720, guid: da034d1140e4bae468bbe60ea3922cc6,
     type: 2}
 --- !u!114 &1864875237
 MonoBehaviour:
