@@ -36,8 +36,8 @@ public class World {
         Path path = nearestPath(unit.getLocation()[0], unit.getLocation()[1], lat, lon);
         double t = 0;
         for (Line line: path.lines) {
-            if (line.start != null && line.start.length == 2 && line.end != null && line.end.length == 2) {
-                t += GeoUtil.distance(line.start[0], line.start[1], line.end[0], line.end[1], "K")/unit.getVelocity();
+            if (line.getStart() != null && line.getStart().length == 2 && line.getEnd() != null && line.getEnd().length == 2) {
+                t += GeoUtil.distance(line.getStart()[0], line.getStart()[1], line.getEnd()[0], line.getEnd()[1], "K")/unit.getVelocity();
             } else {
                 t = -1;
                 break;

@@ -5,6 +5,7 @@ import com.mcm.enums.*;
 import com.mcm.network.NetworkManager;
 import com.mcm.util.GameConfig;
 import com.mcm.util.GeoUtil;
+import com.mcm.util.Spring;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.axis.encoding.Base64;
 import org.w3c.dom.Element;
@@ -33,7 +34,7 @@ public class Main {
 //
 
 
-
+        Spring.context.getBean(MainThread.class).run();
         new NetworkManager().initializeServer(port);
 
     }

@@ -134,6 +134,14 @@ public class Unit extends BasePlayerObject {
         return isMoving;
     }
 
+    public void setVelocity(double velocity) {
+        this.velocity = velocity;
+    }
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
+    }
+
     public UnitType getType() {
         return type;
     }

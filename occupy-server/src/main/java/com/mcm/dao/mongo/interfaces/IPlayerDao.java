@@ -1,6 +1,5 @@
 package com.mcm.dao.mongo.interfaces;
 
-import com.mcm.entities.mongo.GameObject;
 import com.mcm.entities.mongo.Player;
 import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import org.springframework.stereotype.Repository;

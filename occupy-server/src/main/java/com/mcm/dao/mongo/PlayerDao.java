@@ -24,10 +24,7 @@ public class PlayerDao implements IPlayerDao {
     public MongoOperations getMongoOperations() {return mongoTemplate;}
 
 
-    @Override
-    public void deleteAll() {
-        mongoTemplate.findAllAndRemove(new Query(), Player.class);
-    }
+
 
     @Override
     public Player findByEmail(String email) {

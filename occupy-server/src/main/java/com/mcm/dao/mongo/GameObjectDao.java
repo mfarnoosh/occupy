@@ -35,10 +35,7 @@ public class GameObjectDao implements IGameObjectDao {
         return mongoTemplate;
     }
 
-    @Override
-    public void deleteAll() {
-        mongoTemplate.findAllAndRemove(new Query(), BaseGameObject.class);
-    }
+
 
     public LinkedHashSet<BaseGameObject> gameObjectsNear(BasePlayerObject playerObject) {
         final LinkedHashSet<BaseGameObject> res = new LinkedHashSet<>();
@@ -52,6 +49,20 @@ public class GameObjectDao implements IGameObjectDao {
         }
         return res;
     }
+
+    public boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer) {
+        final LinkedHashSet<BaseGameObject> res = new LinkedHashSet<>();
+        if (playerObject.getLocation() == null || playerObject.getLocation().length != 2) {
+            return false;
+        }
+        final List<GeoResult<BaseGameObject>> results = getMongoOperations().geoNear(NearQuery.near(destination[0], destination[1])
+                .inKilometers().maxDistance(maxRadiusInKilometer), BaseGameObject.class).getContent();
+        for (GeoResult<BaseGameObject> geoResult : results) {
+            res.add(geoResult.getContent());
+        }
+        return res.contains(playerObject);
+    }
+
     public List<Tower> getAllTowersInBox(double[] lowerLeft,double[] upperRight){
         Query query = new Query();
         query.addCriteria(Criteria.where("location").within(new Box(lowerLeft,upperRight)));
@@ -64,5 +75,15 @@ public class GameObjectDao implements IGameObjectDao {
         query.addCriteria(Criteria.where("id").is(id));
         final Tower result = getMongoOperations().findOne(query,Tower.class);
         return result;
+    }
+
+    @Override
+    public boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2) {
+        for (BaseGameObject object: gameObjectsNear(object1)) {
+            if (object.equals(object2)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
