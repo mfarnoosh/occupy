@@ -6,14 +6,17 @@ import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IMoveEventDao;
 import com.mcm.entities.mongo.events.AttackEvent;
 import com.mcm.entities.mongo.events.MoveEvent;
+import com.mcm.network.NetworkManager;
 import com.mcm.processors.AttackEventProcessor;
 import com.mcm.processors.MoveEventProcessor;
+import com.mcm.util.SharedPreference;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -28,22 +31,29 @@ import java.util.stream.Collectors;
  */
 @Component
 public class MainThread extends Thread {
+    private final static Logger logger = Logger.getLogger(MainThread.class);
     final ExecutorService executorService = Executors.newCachedThreadPool();
+    final private int batchSize = 20;
     @Autowired
     protected IGameObjectDao gameObjectDao;
     @Autowired
     protected IMoveEventDao moveEventDao;
     @Autowired
     protected IAttackEventDao attackEventDao;
-    final private int batchSize = 20;
-    private final static Logger logger = Logger.getLogger(MainThread.class);
 
     @Override
     public void run() {
+        //Starting Client network service
+        try {
+            new NetworkManager().initializeServer(Integer.parseInt(SharedPreference.get("server_port")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //End Starting client network service
         long cycle = 0;
         while (!interrupted()) {
-            long time  = System.currentTimeMillis();
-            cycle ++;
+            long time = System.currentTimeMillis();
+            cycle++;
             logger.info("--- cycle = " + cycle + " time -> " + time + "---");
             try {
                 // processing move events

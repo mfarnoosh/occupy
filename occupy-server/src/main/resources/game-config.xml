@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game-configs>
-    <config version="7">
+    <config version="8">
         <map>
             <zoom-level>16</zoom-level>
             <tile-size-x>0.0054931640625</tile-size-x>
@@ -85,7 +85,7 @@
                 <level level="1">
                     <power>1</power>
                     <power-factor>1</power-factor>
-                    <range>50</range>
+                    <range>500</range>
                     <health>100.0</health>
                     <defence-factor>1</defence-factor>
                 </level>

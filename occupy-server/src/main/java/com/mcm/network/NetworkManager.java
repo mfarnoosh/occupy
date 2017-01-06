@@ -1,5 +1,6 @@
 package com.mcm.network;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,9 +17,11 @@ import java.util.concurrent.Executors;
 @Component
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
 public class NetworkManager {
+    private final static Logger logger = Logger.getLogger(NetworkManager.class);
     private ExecutorService executorService = Executors.newFixedThreadPool(100);
     public void initializeServer(int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
+        logger.info("Sever started on port = " + port);
         while (!Thread.interrupted()) {
             Socket client = serverSocket.accept();
             executorService.execute(new ClientService(client));

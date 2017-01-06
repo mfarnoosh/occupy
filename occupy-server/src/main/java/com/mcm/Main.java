@@ -21,8 +21,6 @@ import java.util.Enumeration;
  * Created by Cross on 7/5/2015.
  */
 public class Main {
-    final static int port = 4444;
-
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 //        final Logger log=Logger.getLogger(Main.class);
 //        final Factory factory = new IniSecurityManagerFactory("classpath:shiro.ini");
@@ -35,8 +33,6 @@ public class Main {
 
 
         Spring.context.getBean(MainThread.class).run();
-        new NetworkManager().initializeServer(port);
-
     }
 
     //simple function to echo data to terminal
