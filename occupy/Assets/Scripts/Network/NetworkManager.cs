@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviour{
 			}
 			return result;
 		});
+
 		return future;	
 	}
 
