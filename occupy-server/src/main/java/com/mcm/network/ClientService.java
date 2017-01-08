@@ -3,10 +3,10 @@ package com.mcm.network;
 import com.google.gson.Gson;
 import com.mcm.network.messages.SocketMessage;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -15,16 +15,26 @@ import java.net.Socket;
 public class ClientService implements Runnable {
     private Logger logger = Logger.getLogger(ClientService.class);
     private Socket client;
-    private String clientData = "";
-    private String clientOutData = "";
 
     public ClientService(Socket client) throws IOException {
         this.client = client;
         this.client.setSoTimeout(45000);
     }
 
-    private void readClientData() throws IOException {
-        DataInputStream dis = new DataInputStream(client.getInputStream());
+
+    @Override
+    public void run() {
+        try {
+            String clientData = readClientData(client.getInputStream());
+            String clientOutData = handleCommand(clientData);
+            sendDataToClient(client.getOutputStream(),clientOutData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String readClientData(InputStream inputStream) throws IOException {
+        DataInputStream dis = new DataInputStream(inputStream);
         byte[] data = new byte[1024];
         ByteOutputStream bos = new ByteOutputStream();
         int count;
@@ -41,35 +51,28 @@ public class ClientService implements Runnable {
                     break;
             }
         }
+        String readData = "";
         if (length > 0) {
-            clientData = new String(bos.getBytes(), "UTF-8").trim();
-            clientData = clientData.substring(0, clientData.length() - 7);
+            readData = new String(bos.getBytes(), "UTF-8").trim();
+            readData = readData.substring(0, readData.length() - 7);
         }
+        return readData;
     }
 
-    @Override
-    public void run() {
-        try {
-            readClientData();
-            SocketMessage socketMessage = handleCommand();
-            if (socketMessage == null)
-                clientOutData = "";
-            else {
-                clientOutData = new Gson().toJson(socketMessage);
-            }
-            byte[] bytes = clientOutData.getBytes("UTF-8");
-            client.getOutputStream().write(bytes);
-            client.getOutputStream().flush();
-            client.getOutputStream().close();
-            //logger.info("sent -> " + bytes.length + " byte");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void sendDataToClient(OutputStream outputStream,String clientOutData) throws IOException {
+        if(StringUtils.isEmpty(clientOutData))
+            throw new IOException("Sending data is empty");
+
+        byte[] bytes = clientOutData.getBytes("UTF-8");
+        outputStream.write(bytes);
+        outputStream.flush();
+        outputStream.close();
     }
-
-    private SocketMessage handleCommand() {
-        SocketMessage socketMessage = new Gson().fromJson(clientData, SocketMessage.class);
-
-        return MessageFactory.handleMessage(socketMessage);
+    private String handleCommand(String clientData) {
+        SocketMessage receivedMessage = new Gson().fromJson(clientData, SocketMessage.class);
+        SocketMessage sendMessage = MessageFactory.handleMessage(receivedMessage);
+        if (sendMessage != null)
+            return new Gson().toJson(sendMessage);
+        return "";
     }
 }
