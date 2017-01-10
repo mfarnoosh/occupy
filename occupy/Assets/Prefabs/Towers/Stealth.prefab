@@ -2441,14 +2441,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ca2e0e447fa3040893ab4e4eab8000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 
-  Lat: 0
-  Lon: 0
-  Level: 0
-  Health: 100
-  PlayerKey: 
-  Type: 5
-  Range: 0
+  type: 5
+  playerKey: 
+  id: 
+  level: 0
+  currentHitPoint: 0
+  isAttacking: 0
+  isUpgrading: 0
 --- !u!114 &114000014098615190
 MonoBehaviour:
   m_ObjectHideFlags: 1

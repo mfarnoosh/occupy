@@ -64,31 +64,34 @@ public class TowerManager : MonoBehaviour
 			Debug.LogError ("not found type of tower.");
 			return null;
 		}
-
-		Location towerLocation = new Location ((float)(td.Lat), (float)(td.Lon));
-		var pos = GeoUtils.LocationToXYZ (tile, towerLocation);
-
-		go.transform.position = pos;
-		go.transform.parent = tile.transform;
-
-		var tower = go.GetComponent<Tower> ();
-		if (tower != null) {
-			UpdateTowerInfo (tower, td, towerLocation);
-		}
-
+			
+		SetTowerInfo (go, td, tile);
 		return go;
 	}
 
-	private void UpdateTowerInfo (Tower tower, TowerData td, Location location)
+	public void SetTowerInfo (GameObject go, TowerData td, Tile parentTile)
 	{
+		var tower = go.GetComponent<Tower> ();
+		if (tower == null)
+			return;
+		
+		Location towerLocation = new Location ((float)(td.Lat), (float)(td.Lon));
+		var pos = GeoUtils.LocationToXYZ (parentTile, towerLocation);
+
+		go.transform.position = pos;
+		go.transform.parent = parentTile.transform;
+
+		parentTile.AddTower (go);
+
 		tower.playerKey = td.PlayerKey;
 		tower.id = td.Id;
 		tower.type = td.Type;
 		tower.level = td.Level;
 		tower.currentHitPoint = (float)td.CurrentHitPoint;
-		tower.location = location;
+		tower.location = towerLocation;
 		tower.isAttacking = td.IsAttacking;
 		tower.isUpgrading = td.IsUpgrading;
+		tower.parentTile = parentTile;
 	}
 
 	public TowerConfigData GetTowerConfig (int type, int level)

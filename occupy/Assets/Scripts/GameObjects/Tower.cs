@@ -19,7 +19,23 @@ public class Tower : MonoBehaviour
 	public bool isAttacking = false;
 	public bool isUpgrading = false;
 
+	public Tile parentTile;
+
 	public TowerConfigData Config {
 		get{ return TowerManager.Current.GetTowerConfig (type, level); }
+	}
+	void Start(){
+		InvokeRepeating ("GetDataFromServer", 3.0f, 1.0f);
+	}
+	private void GetDataFromServer(){
+		SocketMessage message = new SocketMessage ();
+		message.Cmd = "getTowerData";
+		message.Params.Add (id);
+		NetworkManager.Current.SendToServer (message).OnSuccess ((data) => {
+			string towersStr = data.value.Params[0];
+			var towerData = JsonUtility.FromJson<TowerData>(towersStr);
+
+			TowerManager.Current.SetTowerInfo(this.gameObject,towerData,parentTile);
+		});
 	}
 }

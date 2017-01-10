@@ -44,11 +44,9 @@ public class CreateTowerEvent : EventAction {
 			sm.Params.Add (tower.type.ToString ());
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 				string towersStr = data.value.Params [0];
-				string towerId = JsonUtility.FromJson<TowerData> (towersStr).Id;
-				tower.id= towerId;
+				var towerData = JsonUtility.FromJson<TowerData> (towersStr);
 
-				tile.AddTower (go);
-
+				TowerManager.Current.SetTowerInfo(tower.gameObject,towerData,tile);
 			});
 
 			//End Sending position to server

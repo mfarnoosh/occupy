@@ -39,6 +39,8 @@ public abstract class MessageFactory {
                 return (LoginMessageHandler)Spring.context.getBean("loginMessageHandler");
             case "signup":
                 return (SignupMessageHandler)Spring.context.getBean("signupMessageHandler");
+            case "getTowerData":
+                return (GetTowerDataMessageHandler)Spring.context.getBean("getTowerDataMessageHandler");
         }
         return null;
     }

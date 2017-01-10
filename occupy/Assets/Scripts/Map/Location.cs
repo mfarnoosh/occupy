@@ -14,4 +14,14 @@ public class Location{
 		Latitude = latitude;
 		Longitude = longitude;
 	}
+
+	public override bool Equals (object obj)
+	{
+		if (obj != null && obj is Location) {
+			Location target = obj as Location;
+			if (target.Latitude.Equals (this.Latitude) && target.Longitude.Equals (this.Longitude))
+				return true;
+		}
+		return false;
+	}
 }
