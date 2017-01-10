@@ -13,11 +13,16 @@ import java.util.List;
  */
 
 public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
-    LinkedHashSet<BaseGameObject> gameObjectsNear(BasePlayerObject playerObject);
     List<Tower> getAllTowersInBox(double[] lowerLeft, double[] upperRight);
     Tower findTowerById(String id);
 
     boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2);
 
     boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer);
+
+    LinkedHashSet<Unit> getAllUnitsInTowerRange(Tower tower);
+
+    LinkedHashSet<Tower> getAllTowersInUnitRange(Unit unit);
+
+    Tower getNearestTowerInUnitRange(Unit unit);
 }

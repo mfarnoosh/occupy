@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TowerManager : MonoBehaviour
 {
@@ -10,11 +11,21 @@ public class TowerManager : MonoBehaviour
 	public GameObject AntiAircraftPrefab;
 	public GameObject StealthPrefab;
 
+	public List<TowerConfigData> _towersConfig = null;
 	public static TowerManager Current;
 
 	public TowerManager ()
 	{
 		Current = this;
+	}
+
+	private List<TowerConfigData> TowersConfigList {
+		get {
+			if (_towersConfig == null || _towersConfig.Count <= 0) {
+				LoadTowersConfig ();
+			}
+			return _towersConfig;
+		}
 	}
 
 	public GameObject CreateTower (TowerData td, Tile tile)
@@ -31,9 +42,8 @@ public class TowerManager : MonoBehaviour
 		//
 		//		go.transform.position = pos;
 		//		go.transform.parent = tile.transform;
-		TowerData data = GetTowerData(td);
 		GameObject go = null;
-		switch (data.Type) {
+		switch (td.Type) {
 		case 1: //Sentry
 			go = GameObject.Instantiate (SentryPrefab);
 			break;
@@ -47,7 +57,7 @@ public class TowerManager : MonoBehaviour
 			go = GameObject.Instantiate (AntiAircraftPrefab);
 			break;
 		case 5: //Stealth
-			go = GameObject. Instantiate (StealthPrefab);
+			go = GameObject.Instantiate (StealthPrefab);
 			break;
 		}
 		if (go == null) {
@@ -55,34 +65,91 @@ public class TowerManager : MonoBehaviour
 			return null;
 		}
 
-		var pos = GeoUtils.LocationToXYZ (tile, new Location((float)(data.Lat),(float)(data.Lon)));
+		Location towerLocation = new Location ((float)(td.Lat), (float)(td.Lon));
+		var pos = GeoUtils.LocationToXYZ (tile, towerLocation);
 
 		go.transform.position = pos;
 		go.transform.parent = tile.transform;
 
-		var tower = go.GetComponent<GameObjects.Tower> ();
+		var tower = go.GetComponent<Tower> ();
 		if (tower != null) {
-			tower.FromObjectData (data);
+			UpdateTowerInfo (tower, td, towerLocation);
 		}
 
 		return go;
 	}
 
-	public int GetMaxTowerLevel(int towerType){
-		return int.Parse(PlayerPrefs.GetFloat("tower." + towerType + ".maxLevel").ToString());
+	private void UpdateTowerInfo (Tower tower, TowerData td, Location location)
+	{
+		tower.playerKey = td.PlayerKey;
+		tower.id = td.Id;
+		tower.type = td.Type;
+		tower.level = td.Level;
+		tower.currentHitPoint = (float)td.CurrentHitPoint;
+		tower.location = location;
+		tower.isAttacking = td.IsAttacking;
+		tower.isUpgrading = td.IsUpgrading;
 	}
-	public TowerData GetTowerData(TowerData td){
-		string key = "tower." + td.Type + "." + td.Level;
-		td.Range = PlayerPrefs.GetFloat (key + ".range");
-		td.Health = PlayerPrefs.GetFloat (key + ".health");
 
-		return td;
+	public TowerConfigData GetTowerConfig (int type, int level)
+	{
+		foreach (var tower in TowersConfigList) {
+			if (tower.Level == level && tower.Type == type) {
+				return tower;
+			}
+		}
+		return null;
 	}
-	public TowerData GetTowerData(int towerType,int level){
-		TowerData td = new TowerData ();
-		td.Type = towerType;
-		td.Level = level;
 
-		return GetTowerData (td);
+	public void SaveTowersConfig (List<TowerConfigData> towers)
+	{
+		foreach (var tower in towers) {
+			string key = "tower." + tower.Type + "." + tower.Level;
+			PlayerPrefs.SetFloat (key + ".build-time", (float)(tower.BuildTime));
+			PlayerPrefs.SetFloat (key + ".value", (float)(tower.Value));
+			PlayerPrefs.SetFloat (key + ".hit-point", (float)(tower.HitPoint));
+			PlayerPrefs.SetFloat (key + ".damage", (float)(tower.Damage));
+			PlayerPrefs.SetFloat (key + ".fire-rate", (float)(tower.FireRate));
+			PlayerPrefs.SetFloat (key + ".range", (float)(tower.Range));
+			PlayerPrefs.SetFloat (key + ".max-capacity", (float)(tower.MaxCapacity));
+			PlayerPrefs.SetFloat (key + ".upgrade-price", (float)(tower.UpgradePrice));
+			PlayerPrefs.SetFloat (key + ".upgrade-time", (float)(tower.UpgradeTime));
+			if (tower.MaxLevel) {
+				PlayerPrefs.SetInt ("tower." + tower.Type + ".max-level", tower.Level);
+			}
+		}
+
+		this._towersConfig = towers;
+	}
+
+	private void LoadTowersConfig ()
+	{
+		_towersConfig = new List<TowerConfigData> ();
+		for (int i = 1; i <= 5; i++) {
+			int maxLevel = PlayerPrefs.GetInt ("tower." + i + ".max-level");
+			for (int level = 1; level <= maxLevel; level++) {
+				TowerConfigData towerConfig = new TowerConfigData ();
+
+				towerConfig.Type = i;
+				towerConfig.Level = level;
+
+				string key = "tower." + i + "." + level;
+
+				towerConfig.BuildTime = PlayerPrefs.GetFloat (key + ".build-time");
+				towerConfig.Value = PlayerPrefs.GetFloat (key + ".value");
+				towerConfig.HitPoint = PlayerPrefs.GetFloat (key + ".hit-point");
+				towerConfig.Damage = PlayerPrefs.GetFloat (key + ".damage");
+				towerConfig.FireRate = PlayerPrefs.GetFloat (key + ".fire-rate");
+				towerConfig.Range = PlayerPrefs.GetFloat (key + ".range");
+				towerConfig.MaxCapacity = PlayerPrefs.GetFloat (key + ".max-capacity");
+				towerConfig.UpgradePrice = PlayerPrefs.GetFloat (key + ".upgrade-price");
+				towerConfig.UpgradeTime = PlayerPrefs.GetFloat (key + ".upgrade-time");
+
+				if (level == maxLevel)
+					towerConfig.MaxLevel = true;
+
+				_towersConfig.Add (towerConfig);
+			}
+		}
 	}
 }

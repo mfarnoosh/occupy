@@ -83,6 +83,14 @@ public class MapManager : MonoBehaviour
 		MoveTo(PlayerController.Current.WorldCenter);
 	}
 
+	public void SaveMapConfig (MapConfigData mapConfigData)
+	{
+		PlayerPrefs.SetFloat ("map.serverTileSizeX", (float)(mapConfigData.tileSizeX));
+		PlayerPrefs.SetFloat ("map.serverTileSizeY", (float)(mapConfigData.tileSizeY));
+		PlayerPrefs.SetInt ("map.tilesGridWidth", mapConfigData.tileGridWidth);
+		PlayerPrefs.SetFloat ("map.moveSpeed", (float)(mapConfigData.moveSpeed));
+	}
+
 	public void MoveMap (Vector3 deltaPosition, float sharpness)
 	{
 		MapObject.transform.position += new Vector3 (deltaPosition.x * MoveSpeed, 0, deltaPosition.z * MoveSpeed * 2);

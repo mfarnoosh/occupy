@@ -1,12 +1,6 @@
 package com.mcm.network.messages;
 
-import com.mcm.enums.TowerPropertyType;
-import com.mcm.enums.TowerType;
-import com.mcm.util.GameConfig;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 
 /**
  * Created by Mehrdad on 16/12/17.
@@ -14,31 +8,26 @@ import java.util.List;
 public class TowerData {
     public String PlayerKey;
     public String Id;
-
     public int Type = -1;
+    public int Level = 0;
 
-    public double Range = 0.0;
+    public double CurrentHitPoint = 0.0;
+
     public double Lat = 0.0;
     public double Lon = 0.0;
-    public double Level = 0.0;
-    public double Health = 100.0;
 
-    public static List<TowerData> getTowerConfig() {
-        List<TowerData> result = new LinkedList<>();
-        for (TowerType type : TowerType.values()) {
-            int maxLevel = GameConfig.getTowerMaxLevel(type);
-            for (int level = 1; level <= maxLevel; level++) {
-                TowerData td = new TowerData();
+    public boolean IsAttacking = false;
+    public boolean IsUpgrading = false;
 
-                td.Type = type.getValue();
-                td.Level = level;
-
-                td.Range = Double.parseDouble(GameConfig.getTowerProperty(type,level, TowerPropertyType.RANGE));
-                td.Health = Double.parseDouble(GameConfig.getTowerProperty(type,level, TowerPropertyType.HEALTH));
-
-                result.add(td);
-            }
-        }
-        return result;
+    public TowerData(Tower tower){
+        PlayerKey = tower.getPlayer().getId();
+        Id = tower.getId();
+        Type = tower.getType().getValue();
+        Lat = tower.getLocation()[0];
+        Lon = tower.getLocation()[1];
+        Level = tower.getLevel();
+        CurrentHitPoint = tower.getCurrentHitPoint();
+        IsAttacking = tower.isAttacking();
+        IsUpgrading = tower.isUpgrading();
     }
 }

@@ -9,6 +9,7 @@ import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.enums.TowerType;
 import com.mcm.network.messages.SocketMessage;
 import com.mcm.network.BaseMessageHandler;
+import com.mcm.network.messages.TowerData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class CreateTowerMessageHandler extends BaseMessageHandler {
 
         message.Params.clear();
 
-        message.Params.add(new Gson().toJson(tower.getNewTowerData()));
+        message.Params.add(new Gson().toJson(new TowerData(tower)));
 
         return message;
     }

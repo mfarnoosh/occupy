@@ -95,7 +95,7 @@ public class ActionReplaceTower : TouchAction {
 		if (!MapManager.Current.CanPlaceTowerHere (gameObject) || currentTile == null || interactive.Collisioned) {
 			transform.position = originalPosition;
 		} else {
-			var tower = GetComponent<GameObjects.Tower> ();
+			var tower = GetComponent<Tower> ();
 			if (tower == null) {
 				Debug.Log ("salam");
 			}
@@ -105,7 +105,7 @@ public class ActionReplaceTower : TouchAction {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "moveTower";
 
-			sm.Params.Add (tower.Id);
+			sm.Params.Add (tower.id);
 			sm.Params.Add (loc.Latitude.ToString ());
 			sm.Params.Add (loc.Longitude.ToString ());
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {

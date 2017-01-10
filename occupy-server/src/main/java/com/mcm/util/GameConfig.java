@@ -96,4 +96,12 @@ public class GameConfig {
         Element e= getFirstElementByAttribute(currentConfigUnits.getChildNodes(),"name",type.toString());
         return Integer.parseInt(e.getAttribute("max-level"));
     }
+
+    /**
+     * this is the basis of game mechanic, which show us every minute in game how many gold worth
+     * @return
+     */
+    public static double getEveryMinuteValue(){
+       return 50;
+    }
 }

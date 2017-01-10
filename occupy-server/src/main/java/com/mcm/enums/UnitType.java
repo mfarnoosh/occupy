@@ -5,7 +5,7 @@ package com.mcm.enums;
  */
 public enum UnitType {
     SOLDIER(1),
-    MACHINE(2),
+    MOTOR(2),
     TANK(3),
     HELICOPTER(4),
     AIRCRAFT(5),

@@ -3,14 +3,16 @@ using System.Collections;
 
 [Serializable]
 public class TowerData : BaseObjectData{
-	public string PlayerKey;
-	public string Id;
-
+	public String PlayerKey;
+	public String Id;
 	public int Type = -1;
+	public int Level = 0;
 
-	public double Range = 0.0;
+	public double CurrentHitPoint = 0.0;
+
 	public double Lat = 0.0;
 	public double Lon = 0.0;
-	public double Level = 0.0;
-	public double Health = 100.0;
+
+	public bool IsAttacking = false;
+	public bool IsUpgrading = false;
 }

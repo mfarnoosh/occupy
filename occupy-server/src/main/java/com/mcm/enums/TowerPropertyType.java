@@ -4,11 +4,15 @@ package com.mcm.enums;
  * Created by Mehrdad on 16/12/13.
  */
 public enum TowerPropertyType {
-    POWER("power"),
-    POWER_FACTOR("power-factor"),
-    DEFENCE_FACTOR("defence-factor"),
+    BUILD_TIME("build-time"),
+    VALUE("value"),
+    HIT_POINT("hit-point"),
+    DAMAGE("damage"),
+    FIRE_RATE("fire-rate"),
     RANGE("range"),
-    HEALTH("health");
+    MAX_CAPACITY("max-capacity"),
+    UPGRADE_PRICE("upgrade-price"),
+    UPGRADE_TIME("upgrade-time");
 
     private final String value;
     TowerPropertyType(String value){this.value = value;}

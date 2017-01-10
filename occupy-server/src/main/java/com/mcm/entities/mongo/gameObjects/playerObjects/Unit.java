@@ -3,168 +3,182 @@ package com.mcm.entities.mongo.gameObjects.playerObjects;
 import com.mcm.entities.World;
 import com.mcm.entities.mongo.Player;
 import com.mcm.entities.mongo.gameObjects.BaseGameObject;
+import com.mcm.enums.UnitPropertyType;
 import com.mcm.enums.UnitType;
+import com.mcm.util.GameConfig;
+
+import java.util.LinkedHashSet;
 
 /**
  * Created by Mehrdad on 16/12/04.
  */
 public class Unit extends BasePlayerObject {
     private UnitType type;
-    private double velocity = 0;
+
     private boolean isMoving = false;
 
+    //region Constructors
     public Unit(UnitType type, Player player) {
         setType(type);
         this.player = player;
 
-        setMechanicValues(type);
+        initialize();
     }
+
     public Unit(int typeValue, Player player) {
-        this(UnitType.valueOf(typeValue),player);
+        this(UnitType.valueOf(typeValue), player);
     }
 
-    private void setMechanicValues(UnitType type) {
-        switch (type) {
-            case SOLDIER:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    //endregion
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
-            case MACHINE:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    //region Functions
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
-            case TANK:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    /**
+     * initialize the some data which should save in db
+     */
+    private void initialize() {
+        setCurrentHitPoint(getMaxHitPoint());
+    }
+    //TODO: Reconsider about reload
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
-            case HELICOPTER:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    /**
+     * reload rate shows how many percent should increase in a period of time
+     * ??!!
+     *
+     * @return reload rate in minute
+     */
+    public double getReloadRate() {
+        return (5 / 9) * (getMaxHitPoint() / getValue());
+    }
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
-            case AIRCRAFT:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    /**
+     * shows how much time it takes to reload completely.
+     *
+     * @return time in minutes
+     */
+    public double getReloadTime() {
+        return getReloadNowCost() / GameConfig.getEveryMinuteValue();
+    }
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
-            case TITAN:
-                power = 1;
-                powerFactor = 1;
-                isInWar = false;
-                isRangeAttack = false;
-                range = 10;
+    /**
+     * player should pay how many gold to make the unit ready just now
+     *
+     * @return cost of reload now
+     */
+    public double getReloadNowCost() {
+        return 1.5 * ((getMaxHitPoint() - getCurrentHitPoint()) / getMaxHitPoint()) * getValue();
+    }
 
-                health = 100.0;
-                defenceFactor = 1.0;
-                level = 1.0;
-                break;
+    /**
+     * make unit ready to use
+     */
+    public void reloadNow() {
+        //TODO: Farnoosh
+    }
+
+
+    /**
+     * show this unit how long takes to arrive to given location
+     *
+     * @param lat destination lat
+     * @param lon destination lon
+     * @return less than zero means can not reach there
+     */
+    public double getArriveTime(double lat, double lon) {
+        return World.getArriveTime(this, lat, lon);
+    }
+
+    /**
+     * see the above overload method doc
+     *
+     * @param targetTower destination tower
+     * @return
+     */
+    public double getArriveTime(Tower targetTower) {
+        if (targetTower.getLocation() == null || targetTower.getLocation().length != 2)
+            return -1;
+        return getArriveTime(targetTower.getLocation()[0], targetTower.getLocation()[1]);
+    }
+
+    /**
+     * show this unit is ready to attack or not
+     *
+     * @return
+     */
+    public boolean canAttack() {
+        return true;
+    }
+
+    /**
+     * attack to any enemy target in it's range
+     * CONSIDER that for unit there is no splash attack and just one target can be attacked.
+     */
+    public void attack() {
+        if (canAttack()) {
+            Tower targetTower = World.getNearestTowerInUnitRange(this);
+            //TODO: Farnoosh
         }
     }
+    //endregion
+    //region Override Functions
 
-    //Constructors
-
-    //End Constructors
-
-    //Abstract Methods
+    /**
+     * see parent doc
+     */
     @Override
-    protected double getExperience(double hitPower) {
-        return 0;
+    public void upgrade() {
+        //TODO: Farnoosh
     }
 
-    @Override
-    protected void levelIncreasedBy(double diff) {
+    //endregion
 
+    //region Method Accessors
+    public boolean isMoving() { return isMoving; }
+
+    public void setMoving(boolean moving) { isMoving = moving; }
+
+    public UnitType getType() { return type; }
+
+    public void setType(UnitType type) { this.type = type; }
+
+    //endregion
+
+    //region config values
+    public double getBuildTime() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.BUILD_TIME));
     }
 
-    @Override
-    protected void healthIncreasedBy(double diff) {
-
+    public double getValue() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.VALUE));
     }
 
-    @Override
-    protected void levelDecreasedBy(double diff) {
-
+    public double getMaxHitPoint() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.HIT_POINT));
     }
 
-    @Override
-    protected void healthDecreasedBy(double diff) {
-
-    }
-    //End Abstract Methods
-
-    //Method Accessors
-    public double getVelocity() {
-        return velocity;
+    public double getDamagePerSec() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.DAMAGE));
     }
 
-    public boolean isMoving() {
-        return isMoving;
+    public double getFireRate() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.FIRE_RATE));
     }
 
-    public void setVelocity(double velocity) {
-        this.velocity = velocity;
+    public double getRange() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.RANGE));
     }
 
-    public void setMoving(boolean moving) {
-        isMoving = moving;
+    public double getSpeed() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.SPEED));
     }
 
-    public UnitType getType() {
-        return type;
+    public double getUpgradePrice() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.UPGRADE_PRICE));
     }
 
-    public void setType(UnitType type) {
-        this.type = type;
-    }
-    //End Method Accessors
-
-    //Functions
-    public double whenItWillGetTo(double lat, double lon) {
-        return World.whenItWillGetTo(this, lat, lon);
+    public double getUpgradeTime() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.UPGRADE_TIME));
     }
 
-    public boolean canGetTo(double lat, double lon) {
-        return World.canGetTo(this, lat, lon);
-    }
-
-    public double whenItWillGetTo(BaseGameObject otherGameObject) {
-        if (otherGameObject.getLocation() == null || otherGameObject.getLocation().length != 2)
-            return -1;
-        return whenItWillGetTo(otherGameObject.getLocation()[0], otherGameObject.getLocation()[1]);
-    }
-
-    //End Functions
+    //endregion
 }

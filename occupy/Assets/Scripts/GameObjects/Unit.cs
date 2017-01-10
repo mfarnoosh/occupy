@@ -2,38 +2,25 @@
 using System.Collections;
 using System;
 
-namespace GameObjects{
-	public class Unit : BasePlayerObject {
-		/// <summary>
-		/// Solider(1),Machine(2),Tank(3),Helicopter(4),Aircraft(5),Titan(6)
-		/// </summary>
-		public int Type;
-		public double Range;
-		public override void FromObjectData(BaseObjectData data){
-			if(data is UnitData){
-				var ud = data as UnitData;
+public class Unit : MonoBehaviour
+{
+	/// <summary>
+	/// Solider(1),Machine(2),Tank(3),Helicopter(4),Aircraft(5),Titan(6)
+	/// </summary>
+	public int type = -1;
+	public String playerKey;
+	public String id;
+	public int level = 0;
+	public float currentHitPoint = 0.0f;
+	public Location location;
+	public bool isMoving = false;
+	public bool isAttacking = false;
+	public bool isUpgrading = false;
 
-				PlayerKey = ud.PlayerKey;
-				Id = ud.Id;
-				Type = ud.Type;
-				Range = ud.Range;
-				Lat = ud.Lat;
-				Lon = ud.Lon;
-				Level = ud.Level;
-				Health = ud.Health;
-			}
-		}
-		public override BaseObjectData ToObjectData(){
-			UnitData ud = new UnitData ();
-			ud.PlayerKey = PlayerKey;
-			ud.Id = Id;
-			ud.Type = Type;
-			ud.Range = Range;
-			ud.Lat = Lat;
-			ud.Lon = Lon;
-			ud.Level = Level;
-			ud.Health = Health;
-			return ud;
-		}
+	private UnitConfigData configData = null;
+
+	void Awake ()
+	{
+		configData = UnitManager.Current.GetUnitConfig (type, level);
 	}
 }

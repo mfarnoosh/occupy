@@ -32,11 +32,11 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                 tower.attack();
                 gameObjectDao.save(unit);
                 gameObjectDao.save(tower);
-                if (unit.getHealth() <= 0) {
+                if (unit.getCurrentHitPoint() <= 0) {
                     gameObjectDao.delete(unit);
                     attackEventDao.delete(attackEvent);
                 }
-                if (tower.getHealth() <= 0) {
+                if (tower.getCurrentHitPoint() <= 0) {
                     gameObjectDao.delete(tower);
                     attackEventDao.delete(attackEvent);
                 }

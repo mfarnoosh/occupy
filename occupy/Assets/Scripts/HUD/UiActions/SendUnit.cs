@@ -26,7 +26,7 @@ public class SendUnit : EventAction {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
 			//TODO: change to tower id
-			sm.Params.Add (targetTower.Type.ToString());
+			sm.Params.Add (targetTower.type.ToString());
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 
@@ -61,12 +61,12 @@ public class SendUnit : EventAction {
 		}
 	}
 
-	private GameObjects.Tower GetTargetTower(Vector2 screenPosition){
+	private Tower GetTargetTower(Vector2 screenPosition){
 		var ray = Camera.main.ScreenPointToRay (screenPosition);
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))
 			return null;
-		var tower = hit.transform.GetComponent<GameObjects.Tower> ();
+		var tower = hit.transform.GetComponent<Tower> ();
 		return tower;
 	}
 }

@@ -32,7 +32,7 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
         for (MoveEvent moveEvent: batch) {
             Unit unit = (Unit) gameObjectDao.findById(moveEvent.getGameObjectId());
             long t = (new Date().getTime() - moveEvent.getCreated().getTime())/1000; //time in seccond
-            double v = unit.getVelocity();
+            double v = unit.getSpeed();
             double x = v * t; // distance in meter if velocity is m/s
             double xInKilometer = x/1000;
             try {

@@ -11,12 +11,9 @@ import java.util.LinkedHashSet;
  * Created by Mehrdad on 16/12/04.
  */
 public abstract class BasePlayerObject extends BaseGameObject {
-    protected double power = 0.0;
-    protected double powerFactor = 0.0;
-    protected boolean isInWar = false;
-    protected boolean isRangeAttack = false;
-    protected boolean needAttention = false;
-    protected double range = 0;
+    protected double currentHitPoint = 0;
+    protected boolean isAttacking = false;
+    protected boolean isUpgrading = false;
     protected Player player;
 
     //Constructors
@@ -25,46 +22,40 @@ public abstract class BasePlayerObject extends BaseGameObject {
 
     //Abstract Methods
 
+    /**
+     * upgrade this object to higher level(if available)
+     * decrease the upgrade price which saved in game-config file from user
+     * and put the object in upgrade list until upgrade will finished
+     */
+    public abstract void upgrade();
     //End Abstract Methods
 
 
-    //Method Accessors
-    public Double getPower() { return power; }
+    //region Method Accessors
+    public double getCurrentHitPoint() {return currentHitPoint;}
 
-    public Double getPowerFactor() { return powerFactor; }
+    public void setCurrentHitPoint(double currentHitPoint) {this.currentHitPoint = currentHitPoint;}
 
-    public boolean isInWar() { return isInWar; }
+    public boolean isAttacking() { return isAttacking; }
 
-    public boolean isNeedAttention() { return needAttention; }
+    public void setAttacking(boolean attacking) { isAttacking = attacking; }
 
-    public boolean isRangeAttack() { return isRangeAttack; }
+    public boolean isUpgrading() { return isUpgrading; }
 
-    public double getRange() { return range; }
-
-
+    public void setUpgrading(boolean upgrading) { isUpgrading = upgrading; }
     public Player getPlayer() { return player; }
-    //End Method Accessors
+
+    public void setPlayer(Player player) { this.player = player; }
+    //end region
 
     //Functions
-    public void attack() {
-        LinkedHashSet<BaseGameObject> others = World.gameObjectsNear(this);
-        if (isRangeAttack) {
-            for (BaseGameObject other : others) {
-                attack(other);
-            }
-        } else {
-            Iterator<BaseGameObject> iterator = others.iterator();
-            if (iterator.hasNext()) {
-                attack(iterator.next());
-            }
-        }
-    }
 
-
-    protected void attack(BaseGameObject otherGameObject) {
-        double hitPower = power * powerFactor * (1 - otherGameObject.getDefenceFactor());
-        otherGameObject.decreaseHealth(hitPower);
-        increaseLevel(getExperience(hitPower));
+    /**
+     * move object to new location
+     * @param newLocation
+     */
+    public void move(double[] newLocation) {
+        setLocation(newLocation);
     }
     //End Functions
 }

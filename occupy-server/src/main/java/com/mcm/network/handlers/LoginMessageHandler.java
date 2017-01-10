@@ -30,8 +30,8 @@ public class LoginMessageHandler extends BaseMessageHandler {
             ConfigData config = new ConfigData();
             config.version = SharedPreference.get("game_config_version");
             config.mapConfig = MapConfigData.getMapConfig();
-            config.towers = TowerData.getTowerConfig();
-            config.units = UnitData.getUnitConfig();
+            config.towers = TowerConfigData.getAllTowerConfigs();
+            config.units = UnitConfigData.getAllUnitConfigs();
 
 
             message.Params.add(new Gson().toJson(config));

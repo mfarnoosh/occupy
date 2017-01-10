@@ -31,7 +31,7 @@ public class CreateTowerEvent : EventAction {
 		} else {
 			var go = GameObject.Instantiate (TowerPrefab);
 
-			var tower = go.GetComponent<GameObjects.Tower> ();
+			var tower = go.GetComponent<Tower> ();
 			//Send Position to server
 			Tile tile = MapManager.Current.GetTile (ghostObject.transform.position);
 
@@ -41,14 +41,12 @@ public class CreateTowerEvent : EventAction {
 			sm.Cmd = "createTower";
 			sm.Params.Add (loc.Latitude.ToString ());
 			sm.Params.Add (loc.Longitude.ToString ());
-			sm.Params.Add (tower.Type.ToString ());
+			sm.Params.Add (tower.type.ToString ());
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 				string towersStr = data.value.Params [0];
 				string towerId = JsonUtility.FromJson<TowerData> (towersStr).Id;
-				TowerData towerData = TowerManager.Current.GetTowerData (tower.Type, 1);
-				towerData.Id = towerId;
+				tower.id= towerId;
 
-				tower.FromObjectData (towerData);
 				tile.AddTower (go);
 
 			});

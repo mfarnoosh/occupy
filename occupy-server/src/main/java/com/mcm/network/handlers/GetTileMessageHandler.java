@@ -5,6 +5,7 @@ import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.network.messages.SocketMessage;
 import com.mcm.network.BaseMessageHandler;
+import com.mcm.network.messages.TowerData;
 import com.mcm.service.Tile;
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
@@ -56,11 +57,7 @@ public class GetTileMessageHandler extends BaseMessageHandler {
 
         message.Params.add(String.valueOf(towers.size())); //number of towers
         for(Tower t : towers){
-            message.Params.add(new Gson().toJson(t.getLoadTowerData()));
-            /*message.Params.add(String.valueOf(t.getType().getValue())); //tower type
-            message.Params.add(String.valueOf(t.getId())); //tower id
-            message.Params.add(String.valueOf(t.getLocation()[0])); //lat
-            message.Params.add(String.valueOf(t.getLocation()[1])); //lon*/
+            message.Params.add(new Gson().toJson(new TowerData(t)));
         }
 
         return message;

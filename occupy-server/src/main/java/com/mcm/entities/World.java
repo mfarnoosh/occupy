@@ -3,6 +3,7 @@ package com.mcm.entities;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
+import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.util.GeoUtil;
 import com.mcm.util.Spring;
@@ -16,6 +17,7 @@ public class World {
     public static boolean canGetTo(double lat1, double lon1, double lat2, double lon2) {
         return false;
     }
+
     public static boolean canGetTo(BaseGameObject object, double lat, double lon) {
         if (object.getLocation() == null || object.getLocation().length != 2)
             return false;
@@ -23,21 +25,20 @@ public class World {
     }
 
     /**
-     *
      * @param unit
      * @param lat
      * @param lon
      * @return time in ms if t = -1 it means ther is no route to specified lat and lon
      */
-    public static double whenItWillGetTo(Unit unit, double lat, double lon) {
-            if (unit.getVelocity() == 0)
-                return -1;
+    public static double getArriveTime(Unit unit, double lat, double lon) {
+        if (unit.getSpeed() == 0)
+            return -1;
 
         Path path = nearestPath(unit.getLocation()[0], unit.getLocation()[1], lat, lon);
         double t = 0;
-        for (Line line: path.lines) {
+        for (Line line : path.lines) {
             if (line.getStart() != null && line.getStart().length == 2 && line.getEnd() != null && line.getEnd().length == 2) {
-                t += GeoUtil.distance(line.getStart()[0], line.getStart()[1], line.getEnd()[0], line.getEnd()[1], "K")/unit.getVelocity();
+                t += GeoUtil.distance(line.getStart()[0], line.getStart()[1], line.getEnd()[0], line.getEnd()[1], "K") / unit.getSpeed();
             } else {
                 t = -1;
                 break;
@@ -52,8 +53,13 @@ public class World {
         return new Path();
     }
 
-    public static LinkedHashSet<BaseGameObject> gameObjectsNear(BasePlayerObject playerObject) {
+    public static LinkedHashSet<Unit> getAllUnitsNearTower(Tower tower) {
         IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
-        return gameObjectDao.gameObjectsNear(playerObject);
+        return gameObjectDao.getAllUnitsInTowerRange(tower);
+    }
+
+    public static Tower getNearestTowerInUnitRange(Unit unit) {
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
+        return gameObjectDao.getNearestTowerInUnitRange(unit);
     }
 }

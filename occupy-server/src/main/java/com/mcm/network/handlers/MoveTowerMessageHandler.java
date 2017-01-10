@@ -31,8 +31,7 @@ public class MoveTowerMessageHandler extends BaseMessageHandler {
 
         Tower t = gameObjectDao.findTowerById(id);
         if (t != null && t.getPlayer().getId().equals(message.PlayerKey)) {
-
-            t.setLocation(new double[]{lat,lon});
+            t.move(new double[]{lat,lon});
             gameObjectDao.save(t);
         }else{
             message.ExceptionMessage = "Invalid tower.";

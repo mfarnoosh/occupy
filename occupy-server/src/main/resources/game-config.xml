@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game-configs>
-    <config version="8">
+    <config version="1">
         <map>
             <zoom-level>16</zoom-level>
             <tile-size-x>0.0054931640625</tile-size-x>
@@ -11,124 +11,147 @@
         <units>
             <unit name="SOLDIER" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>0.5</build-time>
+                    <value>25</value>
+                    <hit-point>5</hit-point>
+                    <damage>2</damage>
+                    <fire-rate>5</fire-rate>
+                    <range>3</range>
+                    <speed>10</speed>
+                    <upgrade-price>312.5</upgrade-price>
+                    <upgrade-time>6.25</upgrade-time>
                 </level>
             </unit>
-            <unit name="MACHINE" max-level="1">
+            <unit name="MOTOR" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>1</build-time>
+                    <value>50</value>
+                    <hit-point>10</hit-point>
+                    <damage>2</damage>
+                    <fire-rate>8</fire-rate>
+                    <range>3</range>
+                    <speed>27</speed>
+                    <upgrade-price>1250</upgrade-price>
+                    <upgrade-time>25</upgrade-time>
                 </level>
             </unit>
             <unit name="TANK" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>2</build-time>
+                    <value>100</value>
+                    <hit-point>75</hit-point>
+                    <damage>15</damage>
+                    <fire-rate>1</fire-rate>
+                    <range>4</range>
+                    <speed>5</speed>
+                    <upgrade-price>5000</upgrade-price>
+                    <upgrade-time>100</upgrade-time>
                 </level>
             </unit>
             <unit name="HELICOPTER" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>2</build-time>
+                    <value>100</value>
+                    <hit-point>40</hit-point>
+                    <damage>10</damage>
+                    <fire-rate>5</fire-rate>
+                    <range>10</range>
+                    <speed>35</speed>
+                    <upgrade-price>5000</upgrade-price>
+                    <upgrade-time>100</upgrade-time>
                 </level>
             </unit>
             <unit name="AIRCRAFT" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>3</build-time>
+                    <value>150</value>
+                    <hit-point>51</hit-point>
+                    <damage>15</damage>
+                    <fire-rate>3</fire-rate>
+                    <range>21</range>
+                    <speed>60</speed>
+                    <upgrade-price>11250</upgrade-price>
+                    <upgrade-time>225</upgrade-time>
                 </level>
             </unit>
             <unit name="TITAN" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <defence-factor>1</defence-factor>
-                    <range>100</range>
-                    <health>100.0</health>
+                    <build-time>0</build-time>
+                    <value>0</value>
+                    <hit-point>0</hit-point>
+                    <damage>0</damage>
+                    <fire-rate>0</fire-rate>
+                    <range>0</range>
+                    <speed>0</speed>
+                    <upgrade-price>0</upgrade-price>
+                    <upgrade-time>0</upgrade-time>
                 </level>
             </unit>
         </units>
         <towers>
-            <tower name="SENTRY" max-level="2">
+            <tower name="SENTRY" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <range>75</range>
-                    <health>100.0</health>
-                    <defence-factor>1</defence-factor>
-                </level>
-                <level level="2">
-                    <power>10</power>
-                    <power-factor>10</power-factor>
-                    <range>250</range>
-                    <health>140.0</health>
-                    <defence-factor>10</defence-factor>
+                    <build-time>1</build-time>
+                    <value>50</value>
+                    <hit-point>15</hit-point>
+                    <damage>10</damage>
+                    <fire-rate>20</fire-rate>
+                    <range>5</range>
+                    <max-capacity>50</max-capacity>
+                    <upgrade-price>1250</upgrade-price>
+                    <upgrade-time>25</upgrade-time>
                 </level>
             </tower>
             <tower name="MACHINE_GUN" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <range>500</range>
-                    <health>100.0</health>
-                    <defence-factor>1</defence-factor>
+                    <build-time>3</build-time>
+                    <value>150</value>
+                    <hit-point>39</hit-point>
+                    <damage>6</damage>
+                    <fire-rate>96</fire-rate>
+                    <range>9</range>
+                    <max-capacity>150</max-capacity>
+                    <upgrade-price>11250</upgrade-price>
+                    <upgrade-time>225</upgrade-time>
                 </level>
             </tower>
-            <tower name="ROCKET_LAUNCHER" max-level="2">
+            <tower name="ROCKET_LAUNCHER" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <range>50</range>
-                    <health>100.0</health>
-                    <defence-factor>1</defence-factor>
-                </level>
-                <level level="2">
-                    <power>2</power>
-                    <power-factor>2</power-factor>
-                    <range>150</range>
-                    <health>120.0</health>
-                    <defence-factor>2</defence-factor>
+                    <build-time>4</build-time>
+                    <value>200</value>
+                    <hit-point>64</hit-point>
+                    <damage>90</damage>
+                    <fire-rate>6</fire-rate>
+                    <range>40</range>
+                    <max-capacity>200</max-capacity>
+                    <upgrade-price>20000</upgrade-price>
+                    <upgrade-time>400</upgrade-time>
                 </level>
             </tower>
-            <tower name="ANTI_AIRCRAFT" max-level="2">
+            <tower name="ANTI_AIRCRAFT" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <range>50</range>
-                    <health>100.0</health>
-                    <defence-factor>1</defence-factor>
-                </level>
-                <level level="2">
-                    <power>10</power>
-                    <power-factor>10</power-factor>
-                    <range>180</range>
-                    <health>130.0</health>
-                    <defence-factor>10</defence-factor>
+                    <build-time>10</build-time>
+                    <value>500</value>
+                    <hit-point>90</hit-point>
+                    <damage>200</damage>
+                    <fire-rate>10</fire-rate>
+                    <range>200</range>
+                    <max-capacity>500</max-capacity>
+                    <upgrade-price>125000</upgrade-price>
+                    <upgrade-time>2500</upgrade-time>
                 </level>
             </tower>
             <tower name="STEALTH" max-level="1">
                 <level level="1">
-                    <power>1</power>
-                    <power-factor>1</power-factor>
-                    <range>50</range>
-                    <health>100.0</health>
-                    <defence-factor>1</defence-factor>
+                    <build-time>5</build-time>
+                    <value>250</value>
+                    <hit-point>30</hit-point>
+                    <damage>150</damage>
+                    <fire-rate>10</fire-rate>
+                    <range>60</range>
+                    <max-capacity>250</max-capacity>
+                    <upgrade-price>31250</upgrade-price>
+                    <upgrade-time>625</upgrade-time>
                 </level>
             </tower>
         </towers>
