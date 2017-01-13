@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 {
 	private Location _center = new Location(35.72083f,51.44816f);
 	private List<GameObject> towers = new List<GameObject>();
+	private List<GameObject> units = new List<GameObject>();
 	public int _tileX;
 	public int _tileY;
 
@@ -39,11 +40,20 @@ public class Tile : MonoBehaviour
 	}
 
 	public bool DataLoaded = false;
+
+	private Renderer renderer;
 	public Tile(){}
+	public void Start(){
+		this.renderer = GetComponent<Renderer> ();
+	}
 
 	public void AddTower(GameObject tower){
 		if(tower != null)
 			towers.Add (tower);
+	}
+	public void AddUnit(GameObject unit){
+		if (unit != null)
+			units.Add (unit);
 	}
 
 	public void initWithLatLon(Location location,Action<int,int> onComplete){
@@ -53,34 +63,35 @@ public class Tile : MonoBehaviour
 		sm.Params.Add (location.Longitude.ToString());
 		NetworkManager.Current.SendToServer (sm).OnSuccess((data)=>{
 			//load tile info
-			string tileString = data.value.Params[0];
-			byte[] tile = Convert.FromBase64String(tileString);
+			string tileDataStr = data.value.Params[0];
+			var tileData = JsonUtility.FromJson<TileData>(tileDataStr);
 
-			Center.Latitude = float.Parse(data.value.Params[1]);
-			Center.Longitude = float.Parse(data.value.Params[2]);
-			North = float.Parse(data.value.Params[3]);
-			East = float.Parse(data.value.Params[4]);
-			South = float.Parse(data.value.Params[5]);
-			West = float.Parse(data.value.Params[6]);
+			byte[] tile = Convert.FromBase64String(tileData.ImageBytes);
 
-			TileX = int.Parse(data.value.Params[7]);
-			TileY = int.Parse(data.value.Params[8]);
+			Center.Latitude = tileData.CenterLat;
+			Center.Longitude = tileData.CenterLon;
+			North = tileData.North;
+			East = tileData.East;
+			South = tileData.South;
+			West = tileData.West;
 
+			TileX = tileData.PositionX;
+			TileY = tileData.PositionY;
+		
 			//set tile texture
 			Texture2D texture = new Texture2D(256, 256);
 			texture.LoadImage(tile);
-			GetComponent<Renderer>().material.mainTexture = texture;
+			renderer.material.mainTexture = texture;
 
 			//load towers on this tile
-			//TODO: Farnoosh - load and create towers
-			int towerNumbers = int.Parse(data.value.Params[9]);
-
-			for(int i=0;i < towerNumbers; i++){
-				string towersStr = data.value.Params[i + 10];
-				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
-
+			foreach(var towerData in tileData.towers){
 				var go = TowerManager.Current.CreateTower(towerData,this);
 				AddTower(go);
+			}
+
+			foreach(var unitData in tileData.units){
+				var go = UnitManager.Current.CreateUnit(unitData,this);
+				AddUnit(go);
 			}
 			//complete actions
 			DataLoaded = true;
@@ -104,30 +115,35 @@ public class Tile : MonoBehaviour
 			{
 				Destroy(tower);
 			}
-			string tileString = data.value.Params[0];
-			byte[] tile = Convert.FromBase64String(tileString);
+			foreach(var unit in units)
+			{
+				Destroy(unit);
+			}
+			string tileDataStr = data.value.Params[0];
+			var tileData = JsonUtility.FromJson<TileData>(tileDataStr);
 
-			Center.Latitude = float.Parse(data.value.Params[1]);
-			Center.Longitude = float.Parse(data.value.Params[2]);
+			byte[] tile = Convert.FromBase64String(tileData.ImageBytes);
 
-			North = float.Parse(data.value.Params[3]);
-			East = float.Parse(data.value.Params[4]);
-			South = float.Parse(data.value.Params[5]);
-			West = float.Parse(data.value.Params[6]);
-
+			Center.Latitude = tileData.CenterLat;
+			Center.Longitude = tileData.CenterLon;
+			North = tileData.North;
+			East = tileData.East;
+			South = tileData.South;
+			West = tileData.West;
+			//set tile texture
 			Texture2D texture = new Texture2D(256, 256);
 			texture.LoadImage(tile);
-			// do whatever you want with texture
-			GetComponent<Renderer>().material.mainTexture = texture;
+			renderer.material.mainTexture = texture;
 
 			//load towers on this tile
-			//TODO: Farnoosh - load and create towers
-			int towerNumbers = int.Parse(data.value.Params[7]);
-			for(int i=0;i < towerNumbers; i++){
-				string towersStr = data.value.Params[i + 8];
-				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
+			foreach(var towerData in tileData.towers){
 				var go = TowerManager.Current.CreateTower(towerData,this);
 				AddTower(go);
+			}
+
+			foreach(var unitData in tileData.units){
+				var go = UnitManager.Current.CreateUnit(unitData,this);
+				AddUnit(go);
 			}
 
 			DataLoaded = true;

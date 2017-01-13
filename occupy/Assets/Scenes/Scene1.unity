@@ -1145,7 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548d089629d154f589edf8c1f2f572e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ServerIp: 192.168.1.8
+  ServerIp: localhost
   ServerPort: 4444
 --- !u!4 &982901639
 Transform:
@@ -2607,6 +2607,7 @@ MonoBehaviour:
     type: 2}
   StealthPrefab: {fileID: 1000013013317800, guid: 7b0dc1fd5e46db94aba35113d05c57aa,
     type: 2}
+  _towersConfig: []
 --- !u!114 &1943568806
 MonoBehaviour:
   m_ObjectHideFlags: 0

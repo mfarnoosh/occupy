@@ -56,6 +56,12 @@ public class GameObjectDao implements IGameObjectDao {
         final List<Tower> results = getMongoOperations().find(query,Tower.class);
         return results;
     }
+    public List<Unit> getAllUnitsInBox(double[] lowerLeft, double[] upperRight){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location").within(new Box(lowerLeft,upperRight)));
+        final List<Unit> results = getMongoOperations().find(query,Unit.class);
+        return results;
+    }
 
     public Tower findTowerById(String id){
         Query query = new Query();

@@ -17,10 +17,25 @@ public class Unit : MonoBehaviour
 	public bool isAttacking = false;
 	public bool isUpgrading = false;
 
-	private UnitConfigData configData = null;
+	public Tile parentTile;
 
-	void Awake ()
+	public UnitConfigData Config {
+		get{ return UnitManager.Current.GetUnitConfig (type, level); }
+	}
+
+	void Start ()
 	{
-		configData = UnitManager.Current.GetUnitConfig (type, level);
+		InvokeRepeating ("GetDataFromServer", 3.0f, 1.0f);
+	}
+	private void GetDataFromServer(){
+		SocketMessage message = new SocketMessage ();
+		message.Cmd = "getUnitData";
+		message.Params.Add (id);
+		NetworkManager.Current.SendToServer (message).OnSuccess ((data) => {
+			string unitStr = data.value.Params[0];
+			var unitData = JsonUtility.FromJson<UnitData>(unitStr);
+
+			UnitManager.Current.SetUnitInfo(this.gameObject,unitData,parentTile);
+		});
 	}
 }

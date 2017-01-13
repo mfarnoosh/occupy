@@ -56,31 +56,34 @@ public class UnitManager :MonoBehaviour
 			return null;
 		}
 
-		Location unitLocation = new Location ((float)(td.Lat), (float)(td.Lon));
-		var pos = GeoUtils.LocationToXYZ (tile, unitLocation);
-
-		go.transform.position = pos;
-		go.transform.parent = tile.transform;
-
-		var unit = go.GetComponent<Unit> ();
-		if (unit != null) {
-			UpdateUnitInfo (unit, td, unitLocation);
-		}
-
+		SetUnitInfo (go, td, tile);
 		return go;
 	}
 
-	private void UpdateUnitInfo (Unit unit, UnitData td, Location location)
+	public void SetUnitInfo (GameObject go, UnitData td, Tile parentTile)
 	{
+		var unit = go.GetComponent<Unit> ();
+		if (unit == null)
+			return;
+
+		Location unitLocation = new Location ((float)(td.Lat), (float)(td.Lon));
+		var pos = GeoUtils.LocationToXYZ (parentTile, unitLocation);
+
+		go.transform.position = pos;
+		go.transform.parent = parentTile.transform;
+
+		parentTile.AddUnit (go);
+
 		unit.playerKey = td.PlayerKey;
 		unit.id = td.Id;
 		unit.type = td.Type;
 		unit.level = td.Level;
 		unit.currentHitPoint = (float)td.CurrentHitPoint;
-		unit.location = location;
+		unit.location = unitLocation;
 		unit.isAttacking = td.IsAttacking;
 		unit.isUpgrading = td.IsUpgrading;
 		unit.isMoving = td.IsMoving;
+		unit.parentTile = parentTile;
 	}
 
 	public UnitConfigData GetUnitConfig (int type, int level)

@@ -14,6 +14,8 @@ import java.util.List;
 
 public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
     List<Tower> getAllTowersInBox(double[] lowerLeft, double[] upperRight);
+    List<Unit> getAllUnitsInBox(double[] lowerLeft, double[] upperRight);
+
     Tower findTowerById(String id);
 
     boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2);
