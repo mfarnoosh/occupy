@@ -7,12 +7,14 @@ public enum TowerPropertyType {
     BUILD_TIME("build-time"),
     VALUE("value"),
     HIT_POINT("hit-point"),
-    DAMAGE("damage"),
+    AIR_DAMAGE("air-damage"),
+    LAND_DAMAGE("land-damage"),
     FIRE_RATE("fire-rate"),
     RANGE("range"),
     MAX_CAPACITY("max-capacity"),
     UPGRADE_PRICE("upgrade-price"),
-    UPGRADE_TIME("upgrade-time");
+    UPGRADE_TIME("upgrade-time"),
+    MAX_HOUSE_SPACE("max-space");
 
     private final String value;
     TowerPropertyType(String value){this.value = value;}

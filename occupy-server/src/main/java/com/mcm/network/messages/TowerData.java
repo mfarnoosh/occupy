@@ -19,8 +19,10 @@ public class TowerData {
     public boolean IsAttacking = false;
     public boolean IsUpgrading = false;
 
+    public int OccupiedSpace = 0;
+
     public TowerData(Tower tower){
-        PlayerKey = tower.getPlayer().getId();
+        PlayerKey = tower.getPlayerId();
         Id = tower.getId();
         Type = tower.getType().getValue();
         Lat = tower.getLocation()[0];
@@ -29,5 +31,6 @@ public class TowerData {
         CurrentHitPoint = tower.getCurrentHitPoint();
         IsAttacking = tower.isAttacking();
         IsUpgrading = tower.isUpgrading();
+        OccupiedSpace = tower.getOccupiedHouseSpace();
     }
 }

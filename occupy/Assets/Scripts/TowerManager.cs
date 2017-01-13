@@ -91,6 +91,8 @@ public class TowerManager : MonoBehaviour
 		tower.location = towerLocation;
 		tower.isAttacking = td.IsAttacking;
 		tower.isUpgrading = td.IsUpgrading;
+		tower.occupiedSpace = td.OccupiedSpace;
+
 		tower.parentTile = parentTile;
 	}
 
@@ -111,12 +113,14 @@ public class TowerManager : MonoBehaviour
 			PlayerPrefs.SetFloat (key + ".build-time", (float)(tower.BuildTime));
 			PlayerPrefs.SetFloat (key + ".value", (float)(tower.Value));
 			PlayerPrefs.SetFloat (key + ".hit-point", (float)(tower.HitPoint));
-			PlayerPrefs.SetFloat (key + ".damage", (float)(tower.Damage));
+			PlayerPrefs.SetFloat (key + ".air-damage", (float)(tower.AirDamage));
+			PlayerPrefs.SetFloat (key + ".land-damage", (float)(tower.LandDamage));
 			PlayerPrefs.SetFloat (key + ".fire-rate", (float)(tower.FireRate));
 			PlayerPrefs.SetFloat (key + ".range", (float)(tower.Range));
 			PlayerPrefs.SetFloat (key + ".max-capacity", (float)(tower.MaxCapacity));
 			PlayerPrefs.SetFloat (key + ".upgrade-price", (float)(tower.UpgradePrice));
 			PlayerPrefs.SetFloat (key + ".upgrade-time", (float)(tower.UpgradeTime));
+			PlayerPrefs.SetInt (key + ".max-house-space", (tower.MaxHouseSpace));
 			if (tower.MaxLevel) {
 				PlayerPrefs.SetInt ("tower." + tower.Type + ".max-level", tower.Level);
 			}
@@ -141,12 +145,14 @@ public class TowerManager : MonoBehaviour
 				towerConfig.BuildTime = PlayerPrefs.GetFloat (key + ".build-time");
 				towerConfig.Value = PlayerPrefs.GetFloat (key + ".value");
 				towerConfig.HitPoint = PlayerPrefs.GetFloat (key + ".hit-point");
-				towerConfig.Damage = PlayerPrefs.GetFloat (key + ".damage");
+				towerConfig.AirDamage = PlayerPrefs.GetFloat (key + ".air-damage");
+				towerConfig.LandDamage = PlayerPrefs.GetFloat (key + ".land-damage");
 				towerConfig.FireRate = PlayerPrefs.GetFloat (key + ".fire-rate");
 				towerConfig.Range = PlayerPrefs.GetFloat (key + ".range");
 				towerConfig.MaxCapacity = PlayerPrefs.GetFloat (key + ".max-capacity");
 				towerConfig.UpgradePrice = PlayerPrefs.GetFloat (key + ".upgrade-price");
 				towerConfig.UpgradeTime = PlayerPrefs.GetFloat (key + ".upgrade-time");
+				towerConfig.MaxHouseSpace = PlayerPrefs.GetInt (key + ".max-house-space");
 
 				if (level == maxLevel)
 					towerConfig.MaxLevel = true;

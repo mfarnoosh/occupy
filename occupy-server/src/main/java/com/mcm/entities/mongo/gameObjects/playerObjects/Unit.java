@@ -2,31 +2,25 @@ package com.mcm.entities.mongo.gameObjects.playerObjects;
 
 import com.mcm.entities.World;
 import com.mcm.entities.mongo.Player;
-import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.enums.UnitPropertyType;
 import com.mcm.enums.UnitType;
 import com.mcm.util.GameConfig;
-
-import java.util.LinkedHashSet;
 
 /**
  * Created by Mehrdad on 16/12/04.
  */
 public class Unit extends BasePlayerObject {
     private UnitType type;
-
+    private String keepingTowerId;
     private boolean isMoving = false;
 
     //region Constructors
-    public Unit(UnitType type, Player player) {
+    public Unit(UnitType type, Player player, Tower keepingTower) {
         setType(type);
-        this.player = player;
+        setPlayer(player);
+        setKeepingTowerId(keepingTower);
 
         initialize();
-    }
-
-    public Unit(int typeValue, Player player) {
-        this(UnitType.valueOf(typeValue), player);
     }
 
     //endregion
@@ -141,6 +135,13 @@ public class Unit extends BasePlayerObject {
 
     public void setType(UnitType type) { this.type = type; }
 
+    public String getKeepingTowerId() { return keepingTowerId; }
+
+    public void setKeepingTowerId(Tower keepingTower) {
+        if (keepingTower != null)
+            this.keepingTowerId = keepingTower.getId();
+    }
+
     //endregion
 
     //region config values
@@ -156,8 +157,12 @@ public class Unit extends BasePlayerObject {
         return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.HIT_POINT));
     }
 
-    public double getDamagePerSec() {
-        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.DAMAGE));
+    public double getAttackDamage() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.ATTACK_DAMAGE));
+    }
+
+    public double getDefenceDamage() {
+        return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.DEFENCE_DAMAGE));
     }
 
     public double getFireRate() {
@@ -178,6 +183,10 @@ public class Unit extends BasePlayerObject {
 
     public double getUpgradeTime() {
         return Double.parseDouble(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.UPGRADE_TIME));
+    }
+
+    public int getHouseSpace(){
+        return Integer.parseInt(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.HOUSE_SPACE));
     }
 
     //endregion

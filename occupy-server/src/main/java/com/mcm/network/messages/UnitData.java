@@ -22,7 +22,7 @@ public class UnitData {
     public boolean IsUpgrading = false;
 
     public UnitData(Unit unit){
-        PlayerKey = unit.getPlayer().getId();
+        PlayerKey = unit.getPlayerId();
         Id = unit.getId();
         Type = unit.getType().getValue();
         Lat = unit.getLocation()[0];

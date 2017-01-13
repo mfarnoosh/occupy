@@ -1,7 +1,6 @@
 package com.mcm.dao.mongo;
 
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
-
 import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
@@ -11,7 +10,6 @@ import org.springframework.data.geo.Box;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
@@ -70,6 +68,13 @@ public class GameObjectDao implements IGameObjectDao {
         return result;
     }
 
+    public Unit findUnitById(String unitId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("id").is(unitId));
+        final Unit result = getMongoOperations().findOne(query,Unit.class);
+        return result;
+    }
+
     @Override
     public boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2) {
         //TODO: Farnoosh
@@ -105,6 +110,20 @@ public class GameObjectDao implements IGameObjectDao {
 
     public Tower getNearestTowerInUnitRange(Unit unit){
         return getAllTowersInUnitRange(unit).iterator().next();
+    }
+
+    public List<Tower> getPlayerTowers(String playerId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("playerId").is(playerId));
+        final List<Tower> result = getMongoOperations().find(query,Tower.class);
+        return result;
+    }
+
+    public int getPlayerTowersCount(String playerId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("playerId").is(playerId));
+        long towerCount = getMongoOperations().count(query,Tower.class);
+        return (int) towerCount;
     }
 
 }

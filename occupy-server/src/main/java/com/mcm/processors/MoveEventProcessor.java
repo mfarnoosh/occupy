@@ -1,7 +1,5 @@
 package com.mcm.processors;
 
-import com.mcm.dao.mongo.GameObjectDao;
-import com.mcm.dao.mongo.MoveEventDao;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IMoveEventDao;
 import com.mcm.entities.mongo.events.MoveEvent;
@@ -9,9 +7,6 @@ import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.exceptions.NotValidPathException;
 import com.mcm.util.GeoUtil;
 import com.mcm.util.Spring;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
@@ -39,7 +34,7 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                 double[] newLoc = GeoUtil.latLonOf(xInKilometer, moveEvent.getPath());
                 unit.setLocation(newLoc);
                 unit.setMoving(true);
-                if (gameObjectDao.isArrived(unit, moveEvent.getDestination(), 0.05)) {
+                if (gameObjectDao.isArrived(unit, moveEvent.getTargetTowerLocation(), 0.05)) {
                     unit.setMoving(false);
                     moveEventDao.delete(moveEvent);
                 }

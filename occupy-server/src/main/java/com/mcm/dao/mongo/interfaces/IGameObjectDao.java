@@ -17,14 +17,18 @@ public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
     List<Unit> getAllUnitsInBox(double[] lowerLeft, double[] upperRight);
 
     Tower findTowerById(String id);
+    Unit findUnitById(String unitId);
 
     boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2);
-
     boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer);
 
     LinkedHashSet<Unit> getAllUnitsInTowerRange(Tower tower);
-
     LinkedHashSet<Tower> getAllTowersInUnitRange(Unit unit);
 
     Tower getNearestTowerInUnitRange(Unit unit);
+
+    List<Tower> getPlayerTowers(String playerId);
+    int getPlayerTowersCount(String playerId);
+
+
 }

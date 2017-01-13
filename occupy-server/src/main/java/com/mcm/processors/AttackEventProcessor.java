@@ -1,14 +1,11 @@
 package com.mcm.processors;
 
-import com.mcm.dao.mongo.AttackEventDao;
-import com.mcm.dao.mongo.GameObjectDao;
 import com.mcm.dao.mongo.interfaces.IAttackEventDao;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.entities.mongo.events.AttackEvent;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.util.Spring;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -26,7 +23,7 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
     void doJob(List<AttackEvent> batch) {
         for (AttackEvent attackEvent: batch) {
             Unit unit = (Unit) gameObjectDao.findById(attackEvent.getGameObjectId());
-            Tower tower = gameObjectDao.findTowerById(attackEvent.getUnderAttackObjectId());
+            Tower tower = gameObjectDao.findTowerById(attackEvent.getUnderAttackTowerId());
             if (gameObjectDao.isInRangeEachOther(tower, unit)) {
                 unit.attack();
                 tower.attack();

@@ -1,11 +1,7 @@
 package com.mcm.entities.mongo.gameObjects.playerObjects;
 
-import com.mcm.entities.World;
-import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.entities.mongo.Player;
-
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -14,7 +10,7 @@ public abstract class BasePlayerObject extends BaseGameObject {
     protected double currentHitPoint = 0;
     protected boolean isAttacking = false;
     protected boolean isUpgrading = false;
-    protected Player player;
+    protected String playerId;
 
     //Constructors
 
@@ -43,9 +39,10 @@ public abstract class BasePlayerObject extends BaseGameObject {
     public boolean isUpgrading() { return isUpgrading; }
 
     public void setUpgrading(boolean upgrading) { isUpgrading = upgrading; }
-    public Player getPlayer() { return player; }
 
-    public void setPlayer(Player player) { this.player = player; }
+    public String getPlayerId() { return playerId; }
+
+    public void setPlayer(Player player) { this.playerId = player.getId(); }
     //end region
 
     //Functions

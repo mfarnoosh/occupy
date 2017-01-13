@@ -16,12 +16,14 @@ public class UnitConfigData {
     public double BuildTime = 0.0;
     public double Value = 0.0;
     public double HitPoint = 0.0;
-    public double Damage = 0.0;
+    public double AttackDamage = 0.0;
+    public double DefenceDamage = 0.0;
     public double FireRate = 0.0;
     public double Range = 0.0;
     public double Speed = 0.0;
     public double UpgradePrice = 0.0;
     public double UpgradeTime = 0.0;
+    public int HouseSpace = 0;
 
     public boolean MaxLevel = false;
 
@@ -38,12 +40,14 @@ public class UnitConfigData {
                 td.BuildTime = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.BUILD_TIME));
                 td.Value = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.VALUE));
                 td.HitPoint = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.HIT_POINT));
-                td.Damage = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.DAMAGE));
+                td.AttackDamage = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.ATTACK_DAMAGE));
+                td.DefenceDamage = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.DEFENCE_DAMAGE));
                 td.FireRate = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.FIRE_RATE));
                 td.Range = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.RANGE));
                 td.Speed = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.SPEED));
                 td.UpgradePrice = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.UPGRADE_PRICE));
                 td.UpgradeTime = Double.parseDouble(GameConfig.getUnitProperty(type,level, UnitPropertyType.UPGRADE_TIME));
+                td.HouseSpace = Integer.parseInt(GameConfig.getUnitProperty(type,level,UnitPropertyType.HOUSE_SPACE));
 
                 if(level == maxLevel)
                     td.MaxLevel = true;

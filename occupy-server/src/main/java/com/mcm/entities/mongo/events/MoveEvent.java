@@ -1,13 +1,13 @@
 package com.mcm.entities.mongo.events;
 
 import com.mcm.entities.Path;
-import com.mcm.entities.mongo.BaseDocument;
 
 /**
  * Created by alirezaghias on 1/6/2017 AD.
  */
 public class MoveEvent extends BaseEvent {
-    private double[] destination;
+    private String targetTowerId;
+    private double[] targetTowerLocation; //move destination
     private Path path;
 
     public Path getPath() {
@@ -18,11 +18,19 @@ public class MoveEvent extends BaseEvent {
         this.path = path;
     }
 
-    public double[] getDestination() {
-        return destination;
+    public String getTargetTowerId() {
+        return targetTowerId;
     }
 
-    public void setDestination(double[] destination) {
-        this.destination = destination;
+    public void setTargetTowerId(String targetTowerId) {
+        this.targetTowerId = targetTowerId;
+    }
+
+    public double[] getTargetTowerLocation() {
+        return targetTowerLocation;
+    }
+
+    public void setTargetTowerLocation(double[] targetTowerLocation) {
+        this.targetTowerLocation = targetTowerLocation;
     }
 }

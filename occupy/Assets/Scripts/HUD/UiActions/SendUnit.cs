@@ -8,6 +8,10 @@ public class SendUnit : EventAction {
 	private GameObject ghostObject;
 	private Renderer rend;
 
+	private Unit unit;
+	void Start(){
+		unit = UnitPrefab.GetComponent<Unit> ();
+	}
 	public override void PointerDown (Vector2 position)
 	{
 		if (UnitPrefab == null || UnitGhostPrefab == null)
@@ -25,14 +29,14 @@ public class SendUnit : EventAction {
 		if (targetTower != null) {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
-			//TODO: change to tower id
-			sm.Params.Add (targetTower.type.ToString());
+			sm.Params.Add (unit.id);
+			sm.Params.Add (targetTower.id);
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 
 			});
 		}
-		//Destroy (ghostObject);
+		Destroy (ghostObject);
 	}
 
 	public override void PointerDragging (Vector2 position, Vector2 delta)

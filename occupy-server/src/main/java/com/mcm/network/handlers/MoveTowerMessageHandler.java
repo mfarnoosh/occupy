@@ -30,7 +30,7 @@ public class MoveTowerMessageHandler extends BaseMessageHandler {
         message.Params.clear();
 
         Tower t = gameObjectDao.findTowerById(id);
-        if (t != null && t.getPlayer().getId().equals(message.PlayerKey)) {
+        if (t != null && t.getPlayerId().equals(message.PlayerKey)) {
             t.move(new double[]{lat,lon});
             gameObjectDao.save(t);
         }else{

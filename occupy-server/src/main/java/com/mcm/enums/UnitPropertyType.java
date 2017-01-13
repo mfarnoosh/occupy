@@ -7,12 +7,14 @@ public enum UnitPropertyType {
     BUILD_TIME("build-time"),
     VALUE("value"),
     HIT_POINT("hit-point"),
-    DAMAGE("damage"),
+    ATTACK_DAMAGE("attack-damage"),
+    DEFENCE_DAMAGE("defence-damage"),
     FIRE_RATE("fire-rate"),
     RANGE("range"),
     SPEED("speed"),
     UPGRADE_PRICE("upgrade-price"),
-    UPGRADE_TIME("upgrade-time");
+    UPGRADE_TIME("upgrade-time"),
+    HOUSE_SPACE("house-space");
 
     private final String value;
     UnitPropertyType(String value){this.value = value;}

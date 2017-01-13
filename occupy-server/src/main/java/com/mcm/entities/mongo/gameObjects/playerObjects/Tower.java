@@ -2,13 +2,10 @@ package com.mcm.entities.mongo.gameObjects.playerObjects;
 
 import com.mcm.entities.World;
 import com.mcm.entities.mongo.Player;
-import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import com.mcm.enums.TowerPropertyType;
 import com.mcm.enums.TowerType;
-import com.mcm.network.messages.TowerData;
 import com.mcm.util.GameConfig;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 /**
@@ -16,20 +13,16 @@ import java.util.LinkedHashSet;
  */
 public class Tower extends BasePlayerObject {
     private TowerType type;
-
+    private int occupiedHouseSpace = 0;
     //region Constructors
     public Tower() {}
 
     public Tower(TowerType type, Player player, double[] location) {
         setType(type);
         setLocation(location);
-        this.player = player;
+        setPlayer(player);
 
         initialize();
-    }
-
-    public Tower(int typeValue, Player player, double[] location) {
-        this(TowerType.valueOf(typeValue), player, location);
     }
     //endregion
 
@@ -161,6 +154,9 @@ public class Tower extends BasePlayerObject {
     public void setType(TowerType type) {
         this.type = type;
     }
+    public int getOccupiedHouseSpace() { return occupiedHouseSpace; }
+
+    public void setOccupiedHouseSpace(int occupiedHouseSpace) { this.occupiedHouseSpace = occupiedHouseSpace; }
     //endregion
 
     //region config values
@@ -176,8 +172,12 @@ public class Tower extends BasePlayerObject {
         return Double.parseDouble(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.HIT_POINT));
     }
 
-    public double getDamagePerSec() {
-        return Double.parseDouble(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.DAMAGE));
+    public double getAirDamage() {
+        return Double.parseDouble(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.AIR_DAMAGE));
+    }
+
+    public double getLandDamage() {
+        return Double.parseDouble(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.LAND_DAMAGE));
     }
 
     public double getFireRate() {
@@ -200,6 +200,9 @@ public class Tower extends BasePlayerObject {
         return Double.parseDouble(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.UPGRADE_TIME));
     }
 
+    public int getMaxHouseSpace(){
+        return Integer.parseInt(GameConfig.getTowerProperty(getType(), getLevel(), TowerPropertyType.MAX_HOUSE_SPACE));
+    }
     //endregion
 
 //    @Override

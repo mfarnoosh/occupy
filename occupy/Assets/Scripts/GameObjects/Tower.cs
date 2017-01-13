@@ -19,6 +19,8 @@ public class Tower : MonoBehaviour
 	public bool isAttacking = false;
 	public bool isUpgrading = false;
 
+	public int occupiedSpace = 0;
+
 	public Tile parentTile;
 
 	public TowerConfigData Config {

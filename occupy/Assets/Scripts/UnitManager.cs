@@ -103,12 +103,15 @@ public class UnitManager :MonoBehaviour
 			PlayerPrefs.SetFloat (key + ".build-time", (float)(unit.BuildTime));
 			PlayerPrefs.SetFloat (key + ".value", (float)(unit.Value));
 			PlayerPrefs.SetFloat (key + ".hit-point", (float)(unit.HitPoint));
-			PlayerPrefs.SetFloat (key + ".damage", (float)(unit.Damage));
+			PlayerPrefs.SetFloat (key + ".attack-damage", (float)(unit.AttackDamage));
+			PlayerPrefs.SetFloat (key + ".defence-damage", (float)(unit.DefenceDamage));
 			PlayerPrefs.SetFloat (key + ".fire-rate", (float)(unit.FireRate));
 			PlayerPrefs.SetFloat (key + ".range", (float)(unit.Range));
 			PlayerPrefs.SetFloat (key + ".speed", (float)(unit.Speed));
 			PlayerPrefs.SetFloat (key + ".upgrade-price", (float)(unit.UpgradePrice));
 			PlayerPrefs.SetFloat (key + ".upgrade-time", (float)(unit.UpgradeTime));
+			PlayerPrefs.SetInt (key + ".house-space", (unit.HouseSpace));
+
 			if (unit.MaxLevel) {
 				PlayerPrefs.SetInt ("unit." + unit.Type + ".max-level", unit.Level);
 			}
@@ -133,12 +136,14 @@ public class UnitManager :MonoBehaviour
 				unitConfig.BuildTime = PlayerPrefs.GetFloat (key + ".build-time");
 				unitConfig.Value = PlayerPrefs.GetFloat (key + ".value");
 				unitConfig.HitPoint = PlayerPrefs.GetFloat (key + ".hit-point");
-				unitConfig.Damage = PlayerPrefs.GetFloat (key + ".damage");
+				unitConfig.AttackDamage = PlayerPrefs.GetFloat (key + ".attack-damage");
+				unitConfig.DefenceDamage = PlayerPrefs.GetFloat (key + ".defence-damage");
 				unitConfig.FireRate = PlayerPrefs.GetFloat (key + ".fire-rate");
 				unitConfig.Range = PlayerPrefs.GetFloat (key + ".range");
 				unitConfig.Speed = PlayerPrefs.GetFloat (key + ".speed");
 				unitConfig.UpgradePrice = PlayerPrefs.GetFloat (key + ".upgrade-price");
 				unitConfig.UpgradeTime = PlayerPrefs.GetFloat (key + ".upgrade-time");
+				unitConfig.HouseSpace = PlayerPrefs.GetInt (key + ".house-space");
 
 				if (level == maxLevel)
 					unitConfig.MaxLevel = true;

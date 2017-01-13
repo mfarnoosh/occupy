@@ -1,9 +1,6 @@
 package com.mcm.network.messages;
 
-import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
-
 import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 /**

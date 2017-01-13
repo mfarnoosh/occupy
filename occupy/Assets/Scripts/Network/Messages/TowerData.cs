@@ -15,4 +15,6 @@ public class TowerData : BaseObjectData{
 
 	public bool IsAttacking = false;
 	public bool IsUpgrading = false;
+
+	public int OccupiedSpace = 0;
 }
