@@ -3,8 +3,17 @@ using System.Collections;
 
 public class RepairNow : EventAction {
 
+	private TowerPopupHandler towerPopupHandler;
+	void Start(){
+		towerPopupHandler = GetComponent<TowerPopupHandler> ();
+	}
 	public override void PointerClick ()
 	{
+		if (towerPopupHandler != null) {
+			Debug.Log ("not null");
+		} else {
+			Debug.Log ("null");
+		}
 		Debug.Log ("Repair Now Clicked.");
 	}
 

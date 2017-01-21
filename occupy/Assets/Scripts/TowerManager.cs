@@ -12,6 +12,18 @@ public class TowerManager : MonoBehaviour
 	public GameObject StealthPrefab;
 
 	public List<TowerConfigData> _towersConfig = null;
+
+	private Tower _selectedTower = null;
+	public Tower SelectedTower { 
+		get{ return _selectedTower; } 
+		set {
+			this._selectedTower = value;
+			if (_selectedTower != null)
+				HUDManager.Current.TowerSelect (_selectedTower);
+			else
+				HUDManager.Current.TowerDeselect ();
+		}
+	}
 	public static TowerManager Current;
 
 	public TowerManager ()
@@ -30,43 +42,44 @@ public class TowerManager : MonoBehaviour
 
 	public GameObject CreateTower (TowerData td, Tile tile)
 	{
-		//var go = GameObject.Instantiate(SentryPrefab);
-		//		go.transform.localScale = new Vector3(
-		//			go.transform.localScale.x * PlayerController.Current.ObjectScaleMultiplier.x,
-		//			go.transform.localScale.y * PlayerController.Current.ObjectScaleMultiplier.y,
-		//			go.transform.localScale.z * PlayerController.Current.ObjectScaleMultiplier.z);
-		//
-		//		go.GetComponent<Renderer> ().material.color = col;
-		//		//TODO: Convert Latitude,Longitude to X,Y
-		//		var pos = GeoUtils.LocationToXYZ(tile,loc);
-		//
-		//		go.transform.position = pos;
-		//		go.transform.parent = tile.transform;
-		GameObject go = null;
-		switch (td.Type) {
-		case 1: //Sentry
-			go = GameObject.Instantiate (SentryPrefab);
-			break;
-		case 2: //MachineGun
-			go = GameObject.Instantiate (MachineGunPrefab);
-			break;
-		case 3: //RocketLauncher
-			go = GameObject.Instantiate (RocketLauncherPrefab);
-			break;
-		case 4: //AntiAircraft
-			go = GameObject.Instantiate (AntiAircraftPrefab);
-			break;
-		case 5: //Stealth
-			go = GameObject.Instantiate (StealthPrefab);
-			break;
-		}
-		if (go == null) {
-			Debug.LogError ("not found type of tower.");
+		GameObject go = GetTowerPrefabByType(td.Type);
+		if (go == null)
 			return null;
-		}
 			
 		SetTowerInfo (go, td, tile);
 		return go;
+	}
+
+	public GameObject GetTowerPrefabByType(int towerType){
+		switch (towerType) {
+		case 1: //Sentry
+			return GameObject.Instantiate (SentryPrefab);
+		case 2: //MachineGun
+			return GameObject.Instantiate (MachineGunPrefab);
+		case 3: //RocketLauncher
+			return GameObject.Instantiate (RocketLauncherPrefab);
+		case 4: //AntiAircraft
+			return GameObject.Instantiate (AntiAircraftPrefab);
+		case 5: //Stealth
+			return GameObject.Instantiate (StealthPrefab);
+		}
+			return null;
+	}
+
+	public GameObject GetTowerGhostPrefabByType(int towerType){
+		switch (towerType) {
+		case 1: //Sentry
+			return GameObject.Instantiate (SentryPrefab);
+		case 2: //MachineGun
+			return GameObject.Instantiate (MachineGunPrefab);
+		case 3: //RocketLauncher
+			return GameObject.Instantiate (RocketLauncherPrefab);
+		case 4: //AntiAircraft
+			return GameObject.Instantiate (AntiAircraftPrefab);
+		case 5: //Stealth
+			return GameObject.Instantiate (StealthPrefab);
+		}
+		return null;
 	}
 
 	public void SetTowerInfo (GameObject go, TowerData td, Tile parentTile)
@@ -92,7 +105,9 @@ public class TowerManager : MonoBehaviour
 		tower.isAttacking = td.IsAttacking;
 		tower.isUpgrading = td.IsUpgrading;
 		tower.occupiedSpace = td.OccupiedSpace;
-
+		if (td.Units != null && td.Units.Count > 0) {
+			tower.AddUnit (td.Units);
+		}
 		tower.parentTile = parentTile;
 	}
 

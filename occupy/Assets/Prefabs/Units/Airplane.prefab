@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000013809043980}
   - 33: {fileID: 33000012517163762}
   - 23: {fileID: 23000011326907888}
+  - 114: {fileID: 114000011905215646}
   m_Layer: 0
   m_Name: Airplane
   m_TagString: Untagged
@@ -78,3 +79,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013901556720}
   m_Mesh: {fileID: 4300000, guid: cb907576c062b1d4f927ee117ac102dd, type: 3}
+--- !u!114 &114000011905215646
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013901556720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fb71555010eea4d8d2e20908148f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 5
+  playerKey: 
+  id: 
+  level: 0
+  currentHitPoint: 0
+  isMoving: 0
+  isAttacking: 0
+  isUpgrading: 0
+  parentTile: {fileID: 0}

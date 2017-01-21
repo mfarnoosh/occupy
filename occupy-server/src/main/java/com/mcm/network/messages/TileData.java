@@ -20,5 +20,5 @@ public class TileData {
     public int PositionY;
 
     public List<TowerData> towers;
-    public List<UnitData> units;
+    //public List<UnitData> units;
 }

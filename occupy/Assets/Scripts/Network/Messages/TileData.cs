@@ -18,5 +18,4 @@ public class TileData : BaseObjectData{
 	public int PositionY;
 
 	public List<TowerData> towers;
-	public List<UnitData> units;
 }

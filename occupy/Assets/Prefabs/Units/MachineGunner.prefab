@@ -216,6 +216,7 @@ GameObject:
   - 4: {fileID: 4000010288932234}
   - 95: {fileID: 95000013463833564}
   - 23: {fileID: 23000011615709070}
+  - 114: {fileID: 114000010764952832}
   m_Layer: 0
   m_Name: MachineGunner
   m_TagString: Untagged
@@ -813,6 +814,26 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000010764952832
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012688169992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fb71555010eea4d8d2e20908148f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  playerKey: 
+  id: 
+  level: 0
+  currentHitPoint: 0
+  isMoving: 0
+  isAttacking: 0
+  isUpgrading: 0
+  parentTile: {fileID: 0}
 --- !u!137 &137000014032006570
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

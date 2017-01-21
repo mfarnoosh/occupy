@@ -8,34 +8,29 @@ public class Unit : MonoBehaviour
 	/// Solider(1),Machine(2),Tank(3),Helicopter(4),Aircraft(5),Titan(6)
 	/// </summary>
 	public int type = -1;
-	public String playerKey;
-	public String id;
-	public int level = 0;
-	public float currentHitPoint = 0.0f;
-	public Location location;
-	public bool isMoving = false;
-	public bool isAttacking = false;
-	public bool isUpgrading = false;
+	public UnitData unitData;
 
-	public Tile parentTile;
+	public Tower parentTower;
 
 	public UnitConfigData Config {
-		get{ return UnitManager.Current.GetUnitConfig (type, level); }
+		get{ return UnitManager.Current.GetUnitConfig (type, unitData.Level); }
 	}
 
 	void Start ()
 	{
-		InvokeRepeating ("GetDataFromServer", 3.0f, 1.0f);
+		//InvokeRepeating ("GetDataFromServer", 3.0f, 1.0f);
 	}
-	private void GetDataFromServer(){
+/*	unit will updated in Owner Tower script
+ * private void GetDataFromServer(){
 		SocketMessage message = new SocketMessage ();
 		message.Cmd = "getUnitData";
-		message.Params.Add (id);
+		message.Params.Add (unitData.id);
 		NetworkManager.Current.SendToServer (message).OnSuccess ((data) => {
 			string unitStr = data.value.Params[0];
 			var unitData = JsonUtility.FromJson<UnitData>(unitStr);
 
-			UnitManager.Current.SetUnitInfo(this.gameObject,unitData,parentTile);
+			UnitManager.Current.SetUnitInfo(this.gameObject,unitData,parentTower);
 		});
 	}
+	*/
 }

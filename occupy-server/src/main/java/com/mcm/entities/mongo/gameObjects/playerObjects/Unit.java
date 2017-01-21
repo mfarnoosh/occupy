@@ -15,10 +15,12 @@ public class Unit extends BasePlayerObject {
     private boolean isMoving = false;
 
     //region Constructors
+    public Unit(){}
     public Unit(UnitType type, Player player, Tower keepingTower) {
         setType(type);
         setPlayer(player);
         setKeepingTowerId(keepingTower);
+        setLocation(keepingTower.getLocation());
 
         initialize();
     }

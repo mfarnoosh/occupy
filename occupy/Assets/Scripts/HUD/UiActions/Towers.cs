@@ -24,7 +24,7 @@ public class Towers : EventAction {
 		if (TowersPanelActivated) {
 			TowersPanel.gameObject.SetActive (false);
 		} else {
-			var pos = gameObject.transform.position;
+//			var pos = gameObject.transform.position;
 
 			TowersPanel.gameObject.SetActive (true);
 //			TowersPanel.gameObject.transform.position = 

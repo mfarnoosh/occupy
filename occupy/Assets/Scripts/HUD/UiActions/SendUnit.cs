@@ -1,26 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SendUnit : EventAction {
-	public GameObject UnitPrefab;
-	public GameObject UnitGhostPrefab;
-
+public class SendUnit : EventAction
+{
 	private GameObject ghostObject;
-	private Renderer rend;
+	private Renderer ghostRend;
 
-	private Unit unit;
-	void Start(){
-		unit = UnitPrefab.GetComponent<Unit> ();
+	public UnitData unit { get;	set;}
+
+	void Start ()
+	{
 	}
+
 	public override void PointerDown (Vector2 position)
 	{
-		if (UnitPrefab == null || UnitGhostPrefab == null)
-			return;
-
-		ghostObject = GameObject.Instantiate (UnitGhostPrefab);
-
-		rend = ghostObject.GetComponent<Renderer> ();
-		MoveGhost (position);
 	}
 
 	public override void PointerUp (Vector2 position)
@@ -29,7 +22,7 @@ public class SendUnit : EventAction {
 		if (targetTower != null) {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
-			sm.Params.Add (unit.id);
+			sm.Params.Add (unit.Type.ToString ());
 			sm.Params.Add (targetTower.id);
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
@@ -41,13 +34,21 @@ public class SendUnit : EventAction {
 
 	public override void PointerDragging (Vector2 position, Vector2 delta)
 	{
+		if (this.ghostObject == null && this.unit != null) {
+			ghostObject = UnitManager.Current.GetUnitGhostPrefabByType (this.unit.Type);
+			ghostRend = ghostObject.GetComponent<Renderer> ();
+		}
 		MoveGhost (position);
 	}
 
-	public override void PointerClick (){}
+	public override void PointerClick ()
+	{
+		//TODO: Farnoosh - Go to clicked unit position on map(call MapManager.Current.MoveMap(new Location(unit.lat,unit.lon));
+	}
 
-	private void MoveGhost(Vector2 screenPosition){
-		if (ghostObject == null || rend == null)
+	private void MoveGhost (Vector2 screenPosition)
+	{
+		if (ghostObject == null || ghostRend == null)
 			return;
 		Vector3? tempTarget = MapManager.Current.ScreenPointToMapPosition (screenPosition);
 
@@ -55,17 +56,16 @@ public class SendUnit : EventAction {
 			return;
 		ghostObject.transform.position = tempTarget.Value;
 
-		var tower = GetTargetTower(screenPosition);
-		if(rend != null){
-			if (tower == null) {
-				rend.material.color = Color.red;
-			} else {
-				rend.material.color = Color.green;
-			}
+		var tower = GetTargetTower (screenPosition);
+		if (tower == null) {
+			ghostRend.material.color = Color.red;
+		} else {
+			ghostRend.material.color = Color.green;
 		}
 	}
 
-	private Tower GetTargetTower(Vector2 screenPosition){
+	private Tower GetTargetTower (Vector2 screenPosition)
+	{
 		var ray = Camera.main.ScreenPointToRay (screenPosition);
 		RaycastHit hit;
 		if (!Physics.Raycast (ray, out hit))

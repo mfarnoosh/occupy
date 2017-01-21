@@ -31,4 +31,5 @@ public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
     int getPlayerTowersCount(String playerId);
 
 
+    List<Unit> findUnitByOwnerTower(Tower tower);
 }

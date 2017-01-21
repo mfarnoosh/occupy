@@ -15,12 +15,8 @@ public class TouchManager : MonoBehaviour
 	[Tooltip("The distance from the camera the world positions will be sampled from")]
 	public float Distance = 100.0f;
 
-
-
-
 	private Interactive Selected;
 	private Vector3 targetInteractivePosition = Vector3.zero;
-
 
 	public static TouchManager Current;
 
@@ -54,7 +50,6 @@ public class TouchManager : MonoBehaviour
 		if (!Physics.Raycast (finger.GetRay (Camera.main), out hit))
 			return;
 		var interact = hit.transform.GetComponent<Interactive> ();
-
 		if (interact == null) {
 			if (Selected != null) {
 				Selected.Deselect ();

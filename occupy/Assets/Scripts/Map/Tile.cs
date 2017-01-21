@@ -6,7 +6,6 @@ public class Tile : MonoBehaviour
 {
 	private Location _center = new Location(35.72083f,51.44816f);
 	private List<GameObject> towers = new List<GameObject>();
-	private List<GameObject> units = new List<GameObject>();
 	public int _tileX;
 	public int _tileY;
 
@@ -51,10 +50,6 @@ public class Tile : MonoBehaviour
 		if(tower != null)
 			towers.Add (tower);
 	}
-	public void AddUnit(GameObject unit){
-		if (unit != null)
-			units.Add (unit);
-	}
 
 	public void initWithLatLon(Location location,Action<int,int> onComplete){
 		SocketMessage sm = new SocketMessage ();
@@ -88,11 +83,7 @@ public class Tile : MonoBehaviour
 				var go = TowerManager.Current.CreateTower(towerData,this);
 				AddTower(go);
 			}
-
-			foreach(var unitData in tileData.units){
-				var go = UnitManager.Current.CreateUnit(unitData,this);
-				AddUnit(go);
-			}
+				
 			//complete actions
 			DataLoaded = true;
 			onComplete(TileX,TileY);
@@ -115,10 +106,6 @@ public class Tile : MonoBehaviour
 			{
 				Destroy(tower);
 			}
-			foreach(var unit in units)
-			{
-				Destroy(unit);
-			}
 			string tileDataStr = data.value.Params[0];
 			var tileData = JsonUtility.FromJson<TileData>(tileDataStr);
 
@@ -139,11 +126,6 @@ public class Tile : MonoBehaviour
 			foreach(var towerData in tileData.towers){
 				var go = TowerManager.Current.CreateTower(towerData,this);
 				AddTower(go);
-			}
-
-			foreach(var unitData in tileData.units){
-				var go = UnitManager.Current.CreateUnit(unitData,this);
-				AddUnit(go);
 			}
 
 			DataLoaded = true;

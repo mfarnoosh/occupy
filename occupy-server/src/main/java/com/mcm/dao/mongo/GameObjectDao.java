@@ -125,5 +125,11 @@ public class GameObjectDao implements IGameObjectDao {
         long towerCount = getMongoOperations().count(query,Tower.class);
         return (int) towerCount;
     }
+    public List<Unit> findUnitByOwnerTower(Tower tower){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("keepingTowerId").is(tower.getId()));
+        final List<Unit> result = getMongoOperations().find(query,Unit.class);
+        return result;
+    }
 
 }

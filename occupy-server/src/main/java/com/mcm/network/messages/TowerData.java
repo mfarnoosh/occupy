@@ -1,6 +1,11 @@
 package com.mcm.network.messages;
 
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
+import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mehrdad on 16/12/17.
@@ -21,7 +26,9 @@ public class TowerData {
 
     public int OccupiedSpace = 0;
 
-    public TowerData(Tower tower){
+    public List<UnitData> Units = new LinkedList<>();
+
+    public TowerData(Tower tower, List<Unit> units){
         PlayerKey = tower.getPlayerId();
         Id = tower.getId();
         Type = tower.getType().getValue();
@@ -32,5 +39,7 @@ public class TowerData {
         IsAttacking = tower.isAttacking();
         IsUpgrading = tower.isUpgrading();
         OccupiedSpace = tower.getOccupiedHouseSpace();
+        if(units != null)
+            Units.addAll(units.stream().map(UnitData::new).collect(Collectors.toList()));
     }
 }

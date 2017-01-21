@@ -26,72 +26,61 @@ public class UnitManager :MonoBehaviour
 			return _unitsConfig;
 		}
 	}
-
-	public GameObject CreateUnit (UnitData td, Tile tile)
+	public bool ShowUnitObject(Tower ownerTower,UnitData ud){
+		if (ud.IsMoving || ud.IsAttacking)
+			return true;
+		return false;
+	}
+	public GameObject GetUnitGameObject (Tower ownerTower,UnitData ud)
 	{
-		//Solider(1),Machine(2),Tank(3),Helicopter(4),Aircraft(5),Titan(6)
-		GameObject go = null;
-		switch (td.Type) {
-		case 1: //Soldier
-			go = GameObject.Instantiate (SoldierPrefab);
-			break;
-		case 2: //Motor
-			go = GameObject.Instantiate (MotorPrefab);
-			break;
-		case 3: //Tank
-			go = GameObject.Instantiate (TankPrefab);
-			break;
-		case 4: //Helicopter
-			go = GameObject.Instantiate (HelicopterPrefab);
-			break;
-		case 5: //Aircraft
-			go = GameObject.Instantiate (AircraftPrefab);
-			break;
-		case 6: //Titan
-			go = GameObject.Instantiate (TitanPrefab);
-			break;
-		}
-		if (go == null) {
-			Debug.LogError ("not found type of unit.");
+		GameObject go = GetUnitPrefabByType(ud.Type);
+		if (go == null)
 			return null;
-		}
+		var unit = go.GetComponent<Unit> ();
+		unit.unitData = ud;
 
-		SetUnitInfo (go, td, tile);
 		return go;
 	}
-
-	public void SetUnitInfo (GameObject go, UnitData td, Tile parentTile)
-	{
-		var unit = go.GetComponent<Unit> ();
-		if (unit == null)
-			return;
-
-		Location unitLocation = new Location ((float)(td.Lat), (float)(td.Lon));
-		var pos = GeoUtils.LocationToXYZ (parentTile, unitLocation);
-
-		go.transform.position = pos;
-		go.transform.parent = parentTile.transform;
-
-		parentTile.AddUnit (go);
-
-		unit.playerKey = td.PlayerKey;
-		unit.id = td.Id;
-		unit.type = td.Type;
-		unit.level = td.Level;
-		unit.currentHitPoint = (float)td.CurrentHitPoint;
-		unit.location = unitLocation;
-		unit.isAttacking = td.IsAttacking;
-		unit.isUpgrading = td.IsUpgrading;
-		unit.isMoving = td.IsMoving;
-		unit.parentTile = parentTile;
-	}
-
 	public UnitConfigData GetUnitConfig (int type, int level)
 	{
 		foreach (var unit in UnitsConfigList) {
 			if (unit.Level == level && unit.Type == type) {
 				return unit;
 			}
+		}
+		return null;
+	}
+	public GameObject GetUnitPrefabByType(int unitType){
+		switch (unitType) {
+		case 1: //Soldier
+			return GameObject.Instantiate (SoldierPrefab);
+		case 2: //Motor
+			return GameObject.Instantiate (MotorPrefab);
+		case 3: //Tank
+			return GameObject.Instantiate (TankPrefab);
+		case 4: //Helicopter
+			return GameObject.Instantiate (HelicopterPrefab);
+		case 5: //Aircraft
+			return GameObject.Instantiate (AircraftPrefab);
+		case 6: //Titan
+			return GameObject.Instantiate (TitanPrefab);
+		}
+			return null;
+	}
+	public GameObject GetUnitGhostPrefabByType(int unitType){
+		switch (unitType) {
+		case 1: //Soldier
+			return GameObject.Instantiate (SoldierPrefab);
+		case 2: //Motor
+			return GameObject.Instantiate (MotorPrefab);
+		case 3: //Tank
+			return GameObject.Instantiate (TankPrefab);
+		case 4: //Helicopter
+			return GameObject.Instantiate (HelicopterPrefab);
+		case 5: //Aircraft
+			return GameObject.Instantiate (AircraftPrefab);
+		case 6: //Titan
+			return GameObject.Instantiate (TitanPrefab);
 		}
 		return null;
 	}

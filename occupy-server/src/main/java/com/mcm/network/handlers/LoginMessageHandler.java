@@ -1,14 +1,12 @@
 package com.mcm.network.handlers;
 
 import com.google.gson.Gson;
-import com.mcm.network.messages.*;
 import com.mcm.network.BaseMessageHandler;
+import com.mcm.network.messages.*;
 import com.mcm.util.SharedPreference;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Created by Mehrdad on 16/12/11.
@@ -24,7 +22,7 @@ public class LoginMessageHandler extends BaseMessageHandler {
 
         message.Params.clear();
 
-        if(configVersion < Integer.parseInt(SharedPreference.get("game_config_version"))){
+        if(configVersion != Integer.parseInt(SharedPreference.get("game_config_version"))){
             message.Params.add(String.valueOf(false));
 
             ConfigData config = new ConfigData();

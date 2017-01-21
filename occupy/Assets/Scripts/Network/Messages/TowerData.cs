@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 [Serializable]
 public class TowerData : BaseObjectData{
@@ -17,4 +18,6 @@ public class TowerData : BaseObjectData{
 	public bool IsUpgrading = false;
 
 	public int OccupiedSpace = 0;
+
+	public List<UnitData> Units = new List<UnitData>();
 }

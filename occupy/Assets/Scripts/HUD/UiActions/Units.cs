@@ -24,7 +24,7 @@ public class Units : EventAction {
 		if (UnitsPanelActivated) {
 			UnitsPanel.gameObject.SetActive (false);
 		} else {
-			var pos = gameObject.transform.position;
+//			var pos = gameObject.transform.position;
 
 			UnitsPanel.gameObject.SetActive (true);
 //			UnitsPanel.gameObject.transform.position = 

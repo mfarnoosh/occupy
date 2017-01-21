@@ -5,9 +5,7 @@ import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IPlayerDao;
 import com.mcm.entities.mongo.Player;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
-import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.enums.TowerType;
-import com.mcm.enums.UnitType;
 import com.mcm.network.BaseMessageHandler;
 import com.mcm.network.messages.SocketMessage;
 import com.mcm.network.messages.TowerData;
@@ -62,7 +60,7 @@ public class CreateTowerMessageHandler extends BaseMessageHandler {
         gameObjectDao.save(tower);
 
         //this was first tower of player
-        if(count <= 0){
+        /*if(count <= 0){
             Unit unit1 = new Unit(UnitType.SOLDIER,player,tower);
             gameObjectDao.save(unit1);
             Unit unit2 = new Unit(UnitType.MOTOR,player,tower);
@@ -73,10 +71,10 @@ public class CreateTowerMessageHandler extends BaseMessageHandler {
             gameObjectDao.save(unit4);
             Unit unit5 = new Unit(UnitType.AIRCRAFT,player,tower);
             gameObjectDao.save(unit5);
-        }
+        }*/
 
 
-        message.Params.add(new Gson().toJson(new TowerData(tower)));
+        message.Params.add(new Gson().toJson(new TowerData(tower,null)));
 
         return message;
     }

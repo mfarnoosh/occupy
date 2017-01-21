@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000012700643696}
   - 33: {fileID: 33000011432069808}
   - 23: {fileID: 23000010430245078}
+  - 114: {fileID: 114000013458640938}
   m_Layer: 0
   m_Name: Helicopter 1
   m_TagString: Untagged
@@ -77,3 +78,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011495471054}
   m_Mesh: {fileID: 4300000, guid: 843b78b36ff486047af243a2eec0cc5f, type: 3}
+--- !u!114 &114000013458640938
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011495471054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3fb71555010eea4d8d2e20908148f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  playerKey: 
+  id: 
+  level: 0
+  currentHitPoint: 0
+  isMoving: 0
+  isAttacking: 0
+  isUpgrading: 0
+  parentTile: {fileID: 0}

@@ -3,12 +3,10 @@ package com.mcm.network.handlers;
 import com.google.gson.Gson;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
-import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
-import com.mcm.network.messages.SocketMessage;
 import com.mcm.network.BaseMessageHandler;
+import com.mcm.network.messages.SocketMessage;
 import com.mcm.network.messages.TileData;
 import com.mcm.network.messages.TowerData;
-import com.mcm.network.messages.UnitData;
 import com.mcm.service.Tile;
 import org.apache.axis.encoding.Base64;
 import org.apache.log4j.Logger;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Mehrdad on 16/12/11.
@@ -57,17 +54,20 @@ public class GetTileMessageHandler extends BaseMessageHandler {
                 new double[]{tile.getBoundingBox().north, tile.getBoundingBox().east});
 
         List<TowerData> towersData = new LinkedList<>();
-        towersData.addAll(towers.stream().map(TowerData::new).collect(Collectors.toList()));
+        for(Tower tower : towers) {
+            towersData.add(new TowerData(tower,gameObjectDao.findUnitByOwnerTower(tower)));
+        }
 
         tileData.towers = towersData;
 
+        /* TODO: Farnoosh - see the todo description in GetTileByNoMessageHandler class
         List<Unit> units = gameObjectDao.getAllUnitsInBox(
                 new double[]{tile.getBoundingBox().south, tile.getBoundingBox().west},
                 new double[]{tile.getBoundingBox().north, tile.getBoundingBox().east});
 
         List<UnitData> unitsData = new LinkedList<>();
         unitsData.addAll(units.stream().map(UnitData::new).collect(Collectors.toList()));
-        tileData.units = unitsData;
+        tileData.units = unitsData;*/
 
         message.Params.clear();
         message.Params.add(new Gson().toJson(tileData));

@@ -7,7 +7,7 @@ public class Interactive : MonoBehaviour {
 	private bool _selected = false;
 	public bool Selected{ get { return _selected; } }
 
-	public bool Swap = false;
+//	public bool Swap = false;
 	public bool Collisioned{ get; set; }
 
 	public void Select(){
@@ -17,9 +17,11 @@ public class Interactive : MonoBehaviour {
 		}
 	}
 	public void SecondSelect(){
-		_selected = true;
-		foreach (var selection in GetComponents<TouchAction>()) {
-			selection.SecondSelect ();
+		if (!_selected) {
+			_selected = true;
+			foreach (var selection in GetComponents<TouchAction>()) {
+				selection.SecondSelect ();
+			}
 		}
 	}
 	public void Deselect(){
@@ -30,13 +32,13 @@ public class Interactive : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Swap) {
-			Swap = false;
-			if (_selected)
-				Deselect ();
-			else
-				Select ();
-		}
+//		if (Swap) {
+//			Swap = false;
+//			if (_selected)
+//				Deselect ();
+//			else
+//				Select ();
+//		}
 	}
 
 	//TODO: Farnoosh: 951003 - sometimes when a tower is very exactly between two others, collision detection not working well.

@@ -30,7 +30,7 @@ public class GetTowerDataMessageHandler extends BaseMessageHandler {
 
         Tower t = gameObjectDao.findTowerById(id);
         if (t != null) {
-            message.Params.add(new Gson().toJson(new TowerData(t)));
+            message.Params.add(new Gson().toJson(new TowerData(t,gameObjectDao.findUnitByOwnerTower(t))));
         }else{
             message.ExceptionMessage = "Invalid tower.";
         }

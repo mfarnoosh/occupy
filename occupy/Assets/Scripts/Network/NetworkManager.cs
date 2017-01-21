@@ -46,4 +46,14 @@ public class NetworkManager : MonoBehaviour{
 		return future;	
 	}
 
+	public void SendLogToServer(string log){
+		SocketMessage sm = new SocketMessage ();
+		sm.Cmd = "log";
+		sm.Params.Add (log);
+
+		NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+
+		});
+	}
+
 }

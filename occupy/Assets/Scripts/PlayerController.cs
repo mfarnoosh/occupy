@@ -81,10 +81,12 @@ public class PlayerController : MonoBehaviour
 			ManagerGameObject.SetActive (true);
 
 			if(configData != null){
+				PlayerPrefs.DeleteAll();
 				MapManager.Current.SaveMapConfig (configData.mapConfig);
 				TowerManager.Current.SaveTowersConfig (configData.towers);
 				UnitManager.Current.SaveUnitsConfig (configData.units);
 
+				PlayerPrefs.SetString ("player-key", key);
 				PlayerPrefs.SetString ("config-version", configData.version);
 				PlayerPrefs.Save ();
 			}
