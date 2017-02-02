@@ -6,12 +6,16 @@ public class SendUnit : EventAction
 	private GameObject ghostObject;
 	private Renderer ghostRend;
 
-	public UnitData unit { get;	set;}
+	private UnitDataKeeper dataKeeper;
+	private Progressbar progressbar;
 
-	void Start ()
-	{
+	void Start(){
+		dataKeeper = GetComponent<UnitDataKeeper> ();
+		progressbar = GetComponent<Progressbar> ();
+		if (dataKeeper != null && progressbar != null) {
+			progressbar.SetProgressAmount ((float)(dataKeeper.CurrentUnitData.CurrentHitPoint / dataKeeper.CurrentUnitConfigData.HitPoint * 100));
+		}
 	}
-
 	public override void PointerDown (Vector2 position)
 	{
 	}
@@ -19,10 +23,10 @@ public class SendUnit : EventAction
 	public override void PointerUp (Vector2 position)
 	{
 		var targetTower = GetTargetTower (position);
-		if (targetTower != null) {
+		if (targetTower != null && dataKeeper != null) {
 			SocketMessage sm = new SocketMessage ();
 			sm.Cmd = "sendUnit";
-			sm.Params.Add (unit.Type.ToString ());
+			sm.Params.Add (dataKeeper.CurrentUnitData.Type.ToString ());
 			sm.Params.Add (targetTower.id);
 
 			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
@@ -34,8 +38,8 @@ public class SendUnit : EventAction
 
 	public override void PointerDragging (Vector2 position, Vector2 delta)
 	{
-		if (this.ghostObject == null && this.unit != null) {
-			ghostObject = UnitManager.Current.GetUnitGhostPrefabByType (this.unit.Type);
+		if (this.ghostObject == null && this.dataKeeper != null) {
+			ghostObject = UnitManager.Current.GetUnitGhostPrefabByType (dataKeeper.CurrentUnitData.Type);
 			ghostRend = ghostObject.GetComponent<Renderer> ();
 		}
 		MoveGhost (position);

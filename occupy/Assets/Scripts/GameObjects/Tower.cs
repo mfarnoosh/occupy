@@ -41,16 +41,16 @@ public class Tower : MonoBehaviour
 		message.Cmd = "getTowerData";
 		message.Params.Add (id);
 		NetworkManager.Current.SendToServer (message).OnSuccess ((data) => {
-			string towersStr = data.value.Params[0];
-			var towerData = JsonUtility.FromJson<TowerData>(towersStr);
+			if(data.value != null && data.value.Params.Count > 0){
+				string towersStr = data.value.Params[0];
+				var towerData = JsonUtility.FromJson<TowerData>(towersStr);
 
-			TowerManager.Current.SetTowerInfo(this.gameObject,towerData,parentTile);
+				TowerManager.Current.SetTowerInfo(this.gameObject,towerData,parentTile);
+			}
 		});
 	}
 
 	private void UpdateUnitObjects(){
-		Debug.Log ("units in towers: " + towerUnits.Count);
-		return;
 		foreach (var unit in towerUnits) {
 			bool showUnitObject = UnitManager.Current.ShowUnitObject (this, unit);
 			if (showUnitObject) {

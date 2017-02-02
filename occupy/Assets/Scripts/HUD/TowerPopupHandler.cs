@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class TowerPopupHandler : MonoBehaviour {
+	public Image HitpointProgressImage;
 	private Tower _selectedTower = null;
 	public Tower SelectedTower{ get { return _selectedTower; } }
 
 	public void Start(){
 		//TowerDeselect ();
+	}
+
+	public void Update(){
+		if (HitpointProgressImage != null && SelectedTower != null)
+			HitpointProgressImage.fillAmount = SelectedTower.currentHitPoint / SelectedTower.Config.HitPoint;
 	}
 	public void TowerSelect(Tower tower){
 		if (tower == null) {

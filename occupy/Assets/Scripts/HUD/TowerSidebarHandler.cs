@@ -49,10 +49,14 @@ public class TowerSidebarHandler : MonoBehaviour {
 		GameObject buttonGO = GameObject.Instantiate (ButtonPrefab);
 		buttonGO.name = UnitManager.Current.GetUnitNameByType (unitData.Type);
 		buttonGO.transform.localScale = new Vector3 (1, 1, 1);
-		var sendUnit = buttonGO.GetComponent<SendUnit> ();
-		if (sendUnit == null)
-			return null;
-		sendUnit.unit = unitData;
+
+		var unitDataKeeper = buttonGO.GetComponent<UnitDataKeeper> ();
+		unitDataKeeper.CurrentUnitData = unitData;
+
+//		var sendUnit = buttonGO.GetComponent<SendUnit> ();
+//		if (sendUnit == null)
+//			return null;
+//		sendUnit.unit = unitData;
 
 		var button = buttonGO.GetComponent<Button> ();
 		if (button != null) {

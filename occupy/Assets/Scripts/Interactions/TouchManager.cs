@@ -6,6 +6,12 @@ using Lean.Touch;
 
 public class TouchManager : MonoBehaviour
 {
+	enum ObjectType{
+		Interactive,
+		UI,
+		Tile
+	}
+
 	[Tooltip ("The minimum field of view angle we want to zoom to")]
 	public float MinimumCameraFOV = 10.0f;
 
@@ -17,9 +23,9 @@ public class TouchManager : MonoBehaviour
 
 	private Interactive Selected;
 	private Vector3 targetInteractivePosition = Vector3.zero;
+	private ObjectType fingerDownObjectType;
 
 	public static TouchManager Current;
-
 	public TouchManager ()
 	{
 		Current = this;
@@ -33,8 +39,20 @@ public class TouchManager : MonoBehaviour
 		var interact = hit.transform.GetComponent<Interactive> ();
 		if (interact != null) {
 			targetInteractivePosition = interact.transform.position;
+			fingerDownObjectType = ObjectType.Interactive;
 		}
 
+		var rect = hit.transform.GetComponent<RectTransform> ();
+		if (rect != null) {
+			fingerDownObjectType = ObjectType.UI;
+		}
+
+		var tile = hit.transform.GetComponent<Tile> ();
+		if (tile != null) {
+			fingerDownObjectType = ObjectType.Tile;
+		}
+
+		Debug.Log (fingerDownObjectType);
 	}
 
 	public void OnFingerUp (LeanFinger finger)
