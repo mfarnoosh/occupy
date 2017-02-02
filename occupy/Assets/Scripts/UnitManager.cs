@@ -85,6 +85,24 @@ public class UnitManager :MonoBehaviour
 		return null;
 	}
 
+	public string GetUnitNameByType(int unitType){
+		switch (unitType) {
+		case 1: //Soldier
+			return "Soldier";
+		case 2: //Motor
+			return "Motor";
+		case 3: //Tank
+			return "Tank";
+		case 4: //Helicopter
+			return "Helicopter";
+		case 5: //Aircraft
+			return "Aircraft";
+		case 6: //Titan
+			return "Titan";
+		}
+		return "";
+	}
+
 	public void SaveUnitsConfig (List<UnitConfigData> units)
 	{
 		foreach (var unit in units) {

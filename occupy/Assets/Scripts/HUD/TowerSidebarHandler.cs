@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class TowerSidebarHandler : MonoBehaviour {
 	public GameObject ButtonPrefab;
 	public RectTransform Content;
+	public List<Sprite> UnitButtonSprites;
 	private Tower _selectedTower = null;
 
 	private List<GameObject> contentChildren = new List<GameObject>();
@@ -46,14 +47,17 @@ public class TowerSidebarHandler : MonoBehaviour {
 		if (ButtonPrefab == null)
 			return null;
 		GameObject buttonGO = GameObject.Instantiate (ButtonPrefab);
-		buttonGO.name = "";
+		buttonGO.name = UnitManager.Current.GetUnitNameByType (unitData.Type);
 		buttonGO.transform.localScale = new Vector3 (1, 1, 1);
-
 		var sendUnit = buttonGO.GetComponent<SendUnit> ();
 		if (sendUnit == null)
 			return null;
 		sendUnit.unit = unitData;
 
+		var button = buttonGO.GetComponent<Button> ();
+		if (button != null) {
+			button.image.sprite = UnitButtonSprites [unitData.Type - 1];
+		}
 		//Image image = buttonGO.AddComponent<Image> ();
 
 		//Button buttonBU = buttonGO.AddComponent<Button>();
