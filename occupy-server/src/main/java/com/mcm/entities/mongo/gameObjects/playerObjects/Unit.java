@@ -116,8 +116,10 @@ public class Unit extends BasePlayerObject {
         LinkedHashSet<Tower> attackedTowers = new LinkedHashSet<>();
         if (canAttack()) {
             Tower targetTower = World.getNearestTowerInUnitRange(this);
-            targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
-            attackedTowers.add(targetTower);
+            if (targetTower != null) {
+                targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
+                attackedTowers.add(targetTower);
+            }
 
         }
         return attackedTowers;

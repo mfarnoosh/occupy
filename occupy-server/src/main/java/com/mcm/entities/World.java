@@ -55,17 +55,17 @@ public class World {
     }
 
     public static LinkedHashSet<Unit> getAllUnitsNearTower(Tower tower) {
-        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
         return gameObjectDao.getAllUnitsInTowerRange(tower);
     }
 
     public static Tower getNearestTowerInUnitRange(Unit unit) {
-        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
         return gameObjectDao.getNearestTowerInUnitRange(unit);
     }
 
     public static List<Unit> findUnitByOwnerTower(Tower tower) {
-        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
         return gameObjectDao.findUnitByOwnerTower(tower);
     }
 }

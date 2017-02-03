@@ -117,12 +117,14 @@ public class Tower extends BasePlayerObject {
                 splashAttack(others);
                 units.addAll(others);
             } else {
-                Unit unit = others.iterator().next();
-                attackTo(unit);
-                for (Unit u: unitsInTower) {
-                    u.attackTo(unit);
+                if (others.size() > 0) {
+                    Unit unit = others.iterator().next();
+                    attackTo(unit);
+                    for (Unit u : unitsInTower) {
+                        u.attackTo(unit);
+                    }
+                    units.add(unit);
                 }
-                units.add(unit);
             }
 
 

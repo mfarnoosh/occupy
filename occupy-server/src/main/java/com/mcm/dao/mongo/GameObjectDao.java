@@ -115,7 +115,10 @@ public class GameObjectDao implements IGameObjectDao {
     }
 
     public Tower getNearestTowerInUnitRange(Unit unit){
-        return getAllTowersInUnitRange(unit).iterator().next();
+        LinkedHashSet<Tower> set = getAllTowersInUnitRange(unit);
+        if (set.size() > 0)
+            return set.iterator().next();
+        else return null;
     }
 
     public List<Tower> getPlayerTowers(String playerId){

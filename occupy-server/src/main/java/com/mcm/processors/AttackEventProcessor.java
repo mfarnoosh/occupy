@@ -48,7 +48,7 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                                 }
                             }
                             int newSize = underAttackUnits.size();
-                            if (oldSize != 0 && newSize == 0) {
+                            if (oldSize == 0 || newSize == 0) {
                                 finishAttack = true;
                             }
                             if (tower.getCurrentHitPoint() <= 0) {
