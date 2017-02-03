@@ -25,8 +25,8 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
     @Override
     void doJob(List<MoveEvent> batch) {
         for (MoveEvent moveEvent : batch) {
+            Unit unit = (Unit) gameObjectDao.findUnitById(moveEvent.getGameObjectId());
             try {
-                Unit unit = (Unit) gameObjectDao.findUnitById(moveEvent.getGameObjectId());
                 long t = (new Date().getTime() - moveEvent.getCreated().getTime()) / 1000; //time in seccond
                 double v = unit.getSpeed();
                 double x = v * t; // distance in meter if velocity is m/s
@@ -37,6 +37,7 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                     unit.setMoving(true);
                     if (gameObjectDao.isArrived(unit, moveEvent.getTargetTowerLocation(), 0.05, Unit.class)) {
                         unit.setMoving(false);
+                        unit.setKeepingTowerId(moveEvent.getTargetTowerId());
                         moveEventDao.delete(moveEvent);
                     }
                     gameObjectDao.save(unit);
@@ -46,6 +47,8 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
+                unit.setMoving(false);
+                gameObjectDao.save(unit);
                 moveEventDao.delete(moveEvent);
             }
         }

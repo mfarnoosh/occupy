@@ -43,9 +43,9 @@ public class GameObjectDao implements IGameObjectDao {
         query.addCriteria(Criteria.where("location")
                 .within(new Circle(new Point(destination[0], destination[1])
                         , new Distance(maxRadiusInKilometer, Metrics.KILOMETERS))));
-        final List<GeoResult<BaseGameObject>> results = getMongoOperations().find(query, clazz);
-        for (GeoResult<BaseGameObject> geoResult : results) {
-            res.add(geoResult.getContent());
+        final List<BaseGameObject> results = getMongoOperations().find(query, clazz);
+        for (BaseGameObject gameObject: results) {
+            res.add(gameObject);
         }
         return res.contains(playerObject);
     }
