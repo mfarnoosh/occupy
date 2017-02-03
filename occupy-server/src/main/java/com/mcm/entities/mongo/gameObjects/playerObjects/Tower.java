@@ -6,7 +6,9 @@ import com.mcm.enums.TowerPropertyType;
 import com.mcm.enums.TowerType;
 import com.mcm.util.GameConfig;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -105,15 +107,27 @@ public class Tower extends BasePlayerObject {
      * if any enemy unit is in range, start to attack to them.
      * determine if splash attack or single attack should apply
      */
-    public void attack(){
+    public Collection<Unit> attack(){
+        LinkedHashSet<Unit> units = new LinkedHashSet<>();
         if(canAttack()) {
             LinkedHashSet<Unit> others = World.getAllUnitsNearTower(this);
+            List<Unit> unitsInTower = World.findUnitByOwnerTower(this);
+
             if (getType() == TowerType.STEALTH) {
                 splashAttack(others);
+                units.addAll(others);
             } else {
-                attackTo(others.iterator().next());
+                Unit unit = others.iterator().next();
+                attackTo(unit);
+                for (Unit u: unitsInTower) {
+                    u.attackTo(unit);
+                }
+                units.add(unit);
             }
+
+
         }
+        return units;
     }
     /**
      * splash attack means all units in tower range will be damaged.
@@ -131,7 +145,7 @@ public class Tower extends BasePlayerObject {
      * @param enemy target enemy unit
      */
     private void attackTo(Unit enemy) {
-        //TODO: Farnoosh
+        enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage()));
     }
     //endregion
 

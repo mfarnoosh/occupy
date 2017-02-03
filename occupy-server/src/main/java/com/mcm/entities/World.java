@@ -9,6 +9,7 @@ import com.mcm.util.GeoUtil;
 import com.mcm.util.Spring;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Created by alirezaghias on 10/18/2016 AD.
@@ -61,5 +62,10 @@ public class World {
     public static Tower getNearestTowerInUnitRange(Unit unit) {
         IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
         return gameObjectDao.getNearestTowerInUnitRange(unit);
+    }
+
+    public static List<Unit> findUnitByOwnerTower(Tower tower) {
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean("IGameObjectDao");
+        return gameObjectDao.findUnitByOwnerTower(tower);
     }
 }

@@ -1,6 +1,10 @@
 package com.mcm.network.handlers;
 
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
+import com.mcm.dao.mongo.interfaces.IMoveEventDao;
+import com.mcm.entities.Line;
+import com.mcm.entities.Path;
+import com.mcm.entities.mongo.events.MoveEvent;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.network.BaseMessageHandler;
@@ -19,7 +23,8 @@ public class AttackMessageHandler extends BaseMessageHandler {
     private Logger logger = Logger.getLogger(AttackMessageHandler.class);
     @Autowired
     IGameObjectDao gameObjectDao;
-
+    @Autowired
+    IMoveEventDao moveEventDao;
     @Override
     public SocketMessage handle(SocketMessage message) {
         logger.info("attack msg: " + message);
@@ -29,11 +34,24 @@ public class AttackMessageHandler extends BaseMessageHandler {
         message.Params.clear();
 
         Unit unit = gameObjectDao.findUnitById(unitId);
+        Tower keepingTower = gameObjectDao.findTowerById(unit.getKeepingTowerId());
         Tower targetTower = gameObjectDao.findTowerById(towerId);
         if(targetTower == null) {
             message.ExceptionMessage = "Invalid tower id.";
             return message;
         }
+        MoveEvent me = new MoveEvent();
+        me.setGameObjectId(unit.getId());
+        me.setTargetTowerId(targetTower.getId());
+        me.setTargetTowerLocation(targetTower.getLocation());
+        Path path = new Path();
+        Line line = new Line(keepingTower.getLocation(), targetTower.getLocation());
+        path.lines.add(line);
+        me.setPath(path);
+        me.setAttackMode(true);
+        moveEventDao.save(me);
+        unit.setMoving(true);
+        gameObjectDao.save(unit);
 
 
 

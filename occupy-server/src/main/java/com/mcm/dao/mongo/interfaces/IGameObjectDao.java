@@ -5,6 +5,7 @@ import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -32,4 +33,7 @@ public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
 
 
     List<Unit> findUnitByOwnerTower(Tower tower);
+
+    void saveAllTowers(Collection<Tower> objects);
+    void saveAllUnits(Collection<Unit> objects);
 }

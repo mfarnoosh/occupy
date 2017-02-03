@@ -23,7 +23,7 @@ public class GetTowerDataMessageHandler extends BaseMessageHandler {
 
     @Override
     public SocketMessage handle(SocketMessage message) {
-        logger.info("Get Tower Data msg: " + message);
+//        logger.info("Get Tower Data msg: " + message);
 
         String id = String.valueOf(message.Params.get(0));
         message.Params.clear();

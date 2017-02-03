@@ -9,6 +9,7 @@ public class MoveEvent extends BaseEvent {
     private String targetTowerId;
     private double[] targetTowerLocation; //move destination
     private Path path;
+    private boolean attackMode;
 
     public Path getPath() {
         return path;
@@ -32,5 +33,13 @@ public class MoveEvent extends BaseEvent {
 
     public void setTargetTowerLocation(double[] targetTowerLocation) {
         this.targetTowerLocation = targetTowerLocation;
+    }
+
+    public void setAttackMode(boolean attackMode) {
+        this.attackMode = attackMode;
+    }
+
+    public boolean isAttackMode() {
+        return attackMode;
     }
 }

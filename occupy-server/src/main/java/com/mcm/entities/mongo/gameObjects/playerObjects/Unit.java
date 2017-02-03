@@ -6,6 +6,9 @@ import com.mcm.enums.UnitPropertyType;
 import com.mcm.enums.UnitType;
 import com.mcm.util.GameConfig;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
+
 /**
  * Created by Mehrdad on 16/12/04.
  */
@@ -109,11 +112,18 @@ public class Unit extends BasePlayerObject {
      * attack to any enemy target in it's range
      * CONSIDER that for unit there is no splash attack and just one target can be attacked.
      */
-    public void attack() {
+    public Collection<Tower> attack() {
+        LinkedHashSet<Tower> attackedTowers = new LinkedHashSet<>();
         if (canAttack()) {
             Tower targetTower = World.getNearestTowerInUnitRange(this);
-            //TODO: Farnoosh
+            targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
+            attackedTowers.add(targetTower);
+
         }
+        return attackedTowers;
+    }
+    public void attackTo(Unit enemy) {
+        enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (getDefenceDamage()));
     }
     //endregion
     //region Override Functions
@@ -193,6 +203,12 @@ public class Unit extends BasePlayerObject {
     public int getHouseSpace(){
         return Integer.parseInt(GameConfig.getUnitProperty(getType(), getLevel(), UnitPropertyType.HOUSE_SPACE));
     }
+
+    public boolean isLandType() {
+        return type == UnitType.SOLDIER || type == UnitType.MOTOR || type == UnitType.TANK || type == UnitType.TITAN;
+    }
+
+
 
     //endregion
 }

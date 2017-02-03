@@ -40,7 +40,7 @@ public class SendUnitMessageHandler extends BaseMessageHandler {
             message.ExceptionMessage = "Invalid tower id.";
             return message;
         }
-        //TODO: we should send different message for attack
+
         MoveEvent me = new MoveEvent();
         me.setGameObjectId(unit.getId());
         me.setTargetTowerId(targetTower.getId());

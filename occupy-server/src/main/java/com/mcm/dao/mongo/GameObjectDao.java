@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.*;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -88,11 +88,13 @@ public class GameObjectDao implements IGameObjectDao {
         if (tower.getLocation() == null || tower.getLocation().length != 2) {
             return res;
         }
-        final List<GeoResult<Unit>> results =
-                getMongoOperations().geoNear(NearQuery.near(tower.getLocation()[0], tower.getLocation()[1])
-                .inKilometers().maxDistance(tower.getRange()), Unit.class).getContent();
-        for (GeoResult<Unit> geoResult : results) {
-            res.add(geoResult.getContent());
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location")
+                .within(new Circle(new Point(tower.getLocation()[0], tower.getLocation()[1])
+                        , new Distance(tower.getRange(), Metrics.KILOMETERS))));
+        final List<Unit> results = getMongoOperations().find(query, Unit.class);
+        for (Unit unit : results) {
+            res.add(unit);
         }
         return res;
     }
@@ -101,11 +103,13 @@ public class GameObjectDao implements IGameObjectDao {
         if (unit.getLocation() == null || unit.getLocation().length != 2) {
             return res;
         }
-        final List<GeoResult<Tower>> results =
-                getMongoOperations().geoNear(NearQuery.near(unit.getLocation()[0], unit.getLocation()[1])
-                        .inKilometers().maxDistance(unit.getRange()), Tower.class).getContent();
-        for (GeoResult<Tower> geoResult : results) {
-            res.add(geoResult.getContent());
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location")
+                .within(new Circle(new Point(unit.getLocation()[0], unit.getLocation()[1])
+                        , new Distance(unit.getRange(), Metrics.KILOMETERS))));
+        final List<Tower> results = getMongoOperations().find(query, Tower.class);
+        for (Tower tower : results) {
+            res.add(tower);
         }
         return res;
     }
@@ -132,6 +136,19 @@ public class GameObjectDao implements IGameObjectDao {
         query.addCriteria(Criteria.where("keepingTowerId").is(tower.getId()));
         final List<Unit> result = getMongoOperations().find(query,Unit.class);
         return result;
+    }
+
+    @Override
+    public void saveAllTowers(Collection<Tower> towers) {
+        for (Tower tower: towers) {
+            save(tower);
+        }
+    }
+    @Override
+    public void saveAllUnits(Collection<Unit> units) {
+        for (Unit unit: units) {
+            save(unit);
+        }
     }
 
 }
