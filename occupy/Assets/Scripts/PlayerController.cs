@@ -10,14 +10,16 @@ public class PlayerController : MonoBehaviour
 
 	//public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
 
+	private string email = "m.h.farnoosh88@gmail.com2";
+	private string name = "mehrdad2";
+	private string lastName = "farnoosh2";
+
 	public string PlayerKey;
 
 	private bool _loggedIn = false;
-
 	public bool LoggedIn{ get { return _loggedIn; } }
 
 	public static PlayerController Current;
-
 	public PlayerController ()
 	{
 		Current = this;
@@ -25,8 +27,9 @@ public class PlayerController : MonoBehaviour
 
 	void Start ()
 	{
+		
 		//PlayerPrefs.DeleteKey ("config-version");
-
+		
 		string key = PlayerPrefs.GetString ("player-key");
 		if (string.IsNullOrEmpty (key)) {
 			signup ();
@@ -38,9 +41,6 @@ public class PlayerController : MonoBehaviour
 	private void signup ()
 	{
 		//TODO: Farnoosh - Sign up process
-		string email = "m.h.farnoosh88@gmail.com";
-		string name = "mehrdad";
-		string lastName = "farnoosh";
 
 		SocketMessage sm = new SocketMessage ();
 		sm.Cmd = "signup";
