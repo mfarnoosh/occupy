@@ -18,6 +18,12 @@ public class GeoUtil {
         double[] dest = null;
         double tmp = dist;
         for (Line line: path.lines) {
+            if (source == null)
+                source = line.getStart();
+            if (dest == null)
+                dest = line.getEnd();
+            if (tmp > line.getDistance())
+                return line.getEnd();
             if (line.getDistance() >= tmp) {
                 source = line.getStart();
                 dest = line.getEnd();
@@ -29,6 +35,7 @@ public class GeoUtil {
         if (source == null || dest == null) {
             throw new NotValidPathException();
         }
+
         double lat1 = deg2rad(source[0]);
         double lon1 = deg2rad(source[1]);
 

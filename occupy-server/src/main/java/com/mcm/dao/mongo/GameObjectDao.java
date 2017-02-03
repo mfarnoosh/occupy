@@ -35,13 +35,13 @@ public class GameObjectDao implements IGameObjectDao {
     }
 
 
-    public boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer) {
+    public boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer, Class clazz) {
         final LinkedHashSet<BaseGameObject> res = new LinkedHashSet<>();
         if (playerObject.getLocation() == null || playerObject.getLocation().length != 2) {
             return false;
         }
         final List<GeoResult<BaseGameObject>> results = getMongoOperations().geoNear(NearQuery.near(destination[0], destination[1])
-                .inKilometers().maxDistance(maxRadiusInKilometer), BaseGameObject.class).getContent();
+                .inKilometers().maxDistance(maxRadiusInKilometer), clazz).getContent();
         for (GeoResult<BaseGameObject> geoResult : results) {
             res.add(geoResult.getContent());
         }
