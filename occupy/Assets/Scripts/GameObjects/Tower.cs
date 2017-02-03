@@ -59,11 +59,11 @@ public class Tower : MonoBehaviour
 				GameObject go = null;
 				if (this.UnitGOs.ContainsKey (unit.Id)) {
 					//game object created before
-					go = this.UnitGOs[unit.Id];
+					go = this.UnitGOs [unit.Id];
 				} else {
 					//game object not created before
-					go = UnitManager.Current.GetUnitGameObject (this,unit);
-					go.transform.SetParent (gameObject.transform,true);
+					go = UnitManager.Current.GetUnitGameObject (this, unit);
+					go.transform.SetParent (gameObject.transform, true);
 					this.UnitGOs.Add (unit.Id, go);
 				}
 
@@ -71,6 +71,11 @@ public class Tower : MonoBehaviour
 					Location unitLocation = new Location ((float)(unit.Lat), (float)(unit.Lon));
 					var pos = GeoUtils.LocationToXYZ (parentTile, unitLocation);
 					go.transform.position = pos;
+				}
+			} else {
+				if (this.UnitGOs.ContainsKey (unit.Id)) {
+					Destroy (UnitGOs [unit.Id]);
+					UnitGOs.Remove (unit.Id);
 				}
 			}
 		}
