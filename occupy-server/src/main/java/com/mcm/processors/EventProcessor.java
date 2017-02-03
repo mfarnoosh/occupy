@@ -23,4 +23,5 @@ abstract class EventProcessor<T extends BaseEvent> implements Callable<Void> {
         doJob(batch);
         return null;
     }
+
 }

@@ -20,7 +20,7 @@ public interface IGameObjectDao extends IBaseMongoDao<BaseGameObject> {
     Unit findUnitById(String unitId);
 
     boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2);
-    boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer);
+    boolean isArrived(BasePlayerObject playerObject, double[] destination, double maxRadiusInKilometer, Class clazz);
 
     LinkedHashSet<Unit> getAllUnitsInTowerRange(Tower tower);
     LinkedHashSet<Tower> getAllTowersInUnitRange(Unit unit);
