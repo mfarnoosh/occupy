@@ -25,6 +25,8 @@ public class Tower : MonoBehaviour
 	public Tile parentTile;
 	public List<UnitData> towerUnits = new List<UnitData> ();
 
+	private Dictionary<string,GameObject> UnitGOs = new Dictionary<string,GameObject>();
+
 	public void AddUnit(List<UnitData> units){
 		this.towerUnits.Clear();
 		this.towerUnits.AddRange (units);
@@ -54,14 +56,21 @@ public class Tower : MonoBehaviour
 		foreach (var unit in towerUnits) {
 			bool showUnitObject = UnitManager.Current.ShowUnitObject (this, unit);
 			if (showUnitObject) {
-				var go = UnitManager.Current.GetUnitGameObject (this,unit);
-				if (go != null) {
+				GameObject go = null;
+				if (this.UnitGOs.ContainsKey (unit.Id)) {
+					//game object created before
+					go = this.UnitGOs[unit.Id];
+				} else {
+					//game object not created before
+					go = UnitManager.Current.GetUnitGameObject (this,unit);
+					go.transform.SetParent (gameObject.transform,true);
+					this.UnitGOs.Add (unit.Id, go);
+				}
+
+				if (go != null && parentTile != null) {
 					Location unitLocation = new Location ((float)(unit.Lat), (float)(unit.Lon));
 					var pos = GeoUtils.LocationToXYZ (parentTile, unitLocation);
-
 					go.transform.position = pos;
-
-					go.transform.SetParent (gameObject.transform,true);
 				}
 			}
 		}

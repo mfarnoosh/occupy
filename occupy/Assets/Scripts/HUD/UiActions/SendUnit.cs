@@ -24,14 +24,27 @@ public class SendUnit : EventAction
 	{
 		var targetTower = GetTargetTower (position);
 		if (targetTower != null && dataKeeper != null) {
-			SocketMessage sm = new SocketMessage ();
-			sm.Cmd = "sendUnit";
-			sm.Params.Add (dataKeeper.CurrentUnitData.Type.ToString ());
-			sm.Params.Add (targetTower.id);
+			if (targetTower.playerKey.Equals (PlayerController.Current.PlayerKey)) {
+				//Move Action
+				SocketMessage sm = new SocketMessage ();
+				sm.Cmd = "sendUnit";
+				sm.Params.Add (dataKeeper.CurrentUnitData.Id.ToString ());
+				sm.Params.Add (targetTower.id);
 
-			NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+				NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
 
-			});
+				});
+			} else {
+				//Attack Action
+				SocketMessage sm = new SocketMessage ();
+				sm.Cmd = "attack";
+				sm.Params.Add (dataKeeper.CurrentUnitData.Id.ToString ());
+				sm.Params.Add (targetTower.id);
+
+				NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+
+				});
+			}
 		}
 		Destroy (ghostObject);
 	}

@@ -38,6 +38,7 @@ public class UnitManager :MonoBehaviour
 			return null;
 		var unit = go.GetComponent<Unit> ();
 		unit.unitData = ud;
+		unit.parentTower = ownerTower;
 
 		return go;
 	}
