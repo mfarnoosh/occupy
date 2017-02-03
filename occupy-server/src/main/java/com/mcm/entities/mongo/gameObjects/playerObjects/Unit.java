@@ -143,6 +143,9 @@ public class Unit extends BasePlayerObject {
         if (keepingTower != null)
             this.keepingTowerId = keepingTower.getId();
     }
+    public void setKeepingTowerId(String keepingTowerId) {
+        this.keepingTowerId = keepingTowerId;
+    }
 
     //endregion
 

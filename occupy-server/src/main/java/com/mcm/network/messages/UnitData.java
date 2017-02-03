@@ -10,6 +10,7 @@ public class UnitData {
     public String Id;
     public int Type = -1;
     public int Level = 0;
+    public String towerId = "";
 
     public double CurrentHitPoint = 0.0;
 
@@ -32,5 +33,7 @@ public class UnitData {
         IsAttacking = unit.isAttacking();
         IsUpgrading = unit.isUpgrading();
         IsMoving = unit.isMoving();
+        towerId = unit.getKeepingTowerId();
+
     }
 }

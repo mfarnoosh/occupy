@@ -6,8 +6,7 @@ import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Box;
-import org.springframework.data.geo.GeoResult;
+import org.springframework.data.geo.*;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.NearQuery;
@@ -40,10 +39,13 @@ public class GameObjectDao implements IGameObjectDao {
         if (playerObject.getLocation() == null || playerObject.getLocation().length != 2) {
             return false;
         }
-        final List<GeoResult<BaseGameObject>> results = getMongoOperations().geoNear(NearQuery.near(destination[0], destination[1])
-                .inKilometers().maxDistance(maxRadiusInKilometer), clazz).getContent();
-        for (GeoResult<BaseGameObject> geoResult : results) {
-            res.add(geoResult.getContent());
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location")
+                .within(new Circle(new Point(destination[0], destination[1])
+                        , new Distance(maxRadiusInKilometer, Metrics.KILOMETERS))));
+        final List<BaseGameObject> results = getMongoOperations().find(query, clazz);
+        for (BaseGameObject gameObject: results) {
+            res.add(gameObject);
         }
         return res.contains(playerObject);
     }
