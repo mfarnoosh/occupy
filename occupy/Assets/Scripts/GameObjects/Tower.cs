@@ -53,6 +53,23 @@ public class Tower : MonoBehaviour
 	}
 
 	private void UpdateUnitObjects(){
+		List<string> removedKey = new List<string> ();
+		foreach(var unitGo in UnitGOs){
+			bool shouldRemove = true;
+			foreach(var unitData in towerUnits){
+				if (unitGo.Key.Equals (unitData.Id)) {
+					shouldRemove = false;
+					break;
+				}
+			}
+			if (shouldRemove) {
+				Destroy (unitGo.Value);
+				removedKey.Add (unitGo.Key);
+			}
+		}
+		foreach (var key in removedKey)
+			this.UnitGOs.Remove (key);
+
 		foreach (var unit in towerUnits) {
 			bool showUnitObject = UnitManager.Current.ShowUnitObject (this, unit);
 			if (showUnitObject) {

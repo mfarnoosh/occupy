@@ -7,6 +7,7 @@ public class UnitData : BaseObjectData{
 	public String Id;
 	public int Type = -1;
 	public int Level = 0;
+	public String towerId = "";
 
 	public double CurrentHitPoint = 0.0;
 
