@@ -18,7 +18,7 @@
                     <defence-damage>2</defence-damage>
                     <fire-rate>5</fire-rate>
                     <range>3</range>
-                    <speed>10</speed>
+                    <speed>3</speed>
                     <upgrade-price>312.5</upgrade-price>
                     <upgrade-time>6.25</upgrade-time>
                     <house-space>1</house-space>
