@@ -105,10 +105,7 @@ public class TowerManager : MonoBehaviour
 		tower.isAttacking = td.IsAttacking;
 		tower.isUpgrading = td.IsUpgrading;
 		tower.occupiedSpace = td.OccupiedSpace;
-		if (td.Units != null && td.Units.Count > 0) {
-			tower.AddUnit (td.Units);
-		}
-		tower.parentTile = parentTile;
+		tower.AddOrUpdateUnits (td.Units);
 	}
 
 	public TowerConfigData GetTowerConfig (int type, int level)

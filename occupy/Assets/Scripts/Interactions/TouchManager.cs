@@ -51,8 +51,6 @@ public class TouchManager : MonoBehaviour
 		if (tile != null) {
 			fingerDownObjectType = ObjectType.Tile;
 		}
-
-		Debug.Log (fingerDownObjectType);
 	}
 
 	public void OnFingerUp (LeanFinger finger)

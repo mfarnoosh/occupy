@@ -34,7 +34,7 @@ public class TowerSidebarHandler : MonoBehaviour {
 	private void fillData(){
 		if (_selectedTower != null && Content != null) {
 			foreach (var ud in _selectedTower.towerUnits) {
-				var go = CreateButton (ud);
+				var go = CreateButton (ud.Value.unitData);
 				if (go != null) {
 					contentChildren.Add (go);
 					go.transform.SetParent (Content, false);

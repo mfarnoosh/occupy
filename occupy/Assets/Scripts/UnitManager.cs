@@ -31,15 +31,20 @@ public class UnitManager :MonoBehaviour
 			return true;
 		return false;
 	}
-	public GameObject GetUnitGameObject (Tower ownerTower,UnitData ud)
+	public GameObject GetUnitGameObject (Tower ownerTower,UnitData ud,out Unit outUnit)
 	{
 		GameObject go = GetUnitPrefabByType(ud.Type);
-		if (go == null)
+		if (go == null) {
+			outUnit = null;
 			return null;
+		}
+		go.transform.SetParent (ownerTower.gameObject.transform, true);
+
 		var unit = go.GetComponent<Unit> ();
 		unit.unitData = ud;
 		unit.parentTower = ownerTower;
 
+		outUnit = unit;
 		return go;
 	}
 	public UnitConfigData GetUnitConfig (int type, int level)
@@ -69,21 +74,13 @@ public class UnitManager :MonoBehaviour
 			return null;
 	}
 	public GameObject GetUnitGhostPrefabByType(int unitType){
-		switch (unitType) {
-		case 1: //Soldier
-			return GameObject.Instantiate (SoldierPrefab);
-		case 2: //Motor
-			return GameObject.Instantiate (MotorPrefab);
-		case 3: //Tank
-			return GameObject.Instantiate (TankPrefab);
-		case 4: //Helicopter
-			return GameObject.Instantiate (HelicopterPrefab);
-		case 5: //Aircraft
-			return GameObject.Instantiate (AircraftPrefab);
-		case 6: //Titan
-			return GameObject.Instantiate (TitanPrefab);
+		GameObject go = GetUnitPrefabByType(unitType);
+		if (go != null) {
+			Unit unit = go.GetComponent<Unit> ();
+			if(unit != null)
+				unit.ghost = true;
 		}
-		return null;
+		return go;
 	}
 
 	public string GetUnitNameByType(int unitType){
