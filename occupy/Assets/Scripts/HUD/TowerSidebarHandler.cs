@@ -11,7 +11,7 @@ public class TowerSidebarHandler : MonoBehaviour {
 
 	private List<GameObject> contentChildren = new List<GameObject>();
 	public void Start(){
-		TowerDeselect ();
+		//TowerDeselect ();
 	}
 	public void TowerSelect(Tower tower){
 		if (tower == null) {
