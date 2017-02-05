@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by alirezaghias on 10/19/2016 AD.
@@ -137,7 +138,11 @@ public class GameObjectDao implements IGameObjectDao {
         Query query = new Query();
         query.addCriteria(Criteria.where("keepingTowerId").is(tower.getId()));
         final List<Unit> result = getMongoOperations().find(query,Unit.class);
-        return result;
+        for (Unit u: result) {
+            if (u.getCurrentHitPoint() < 0)
+                delete(u);
+        }
+        return result.stream().filter(unit -> {return unit.getCurrentHitPoint() >= 0;}).collect(Collectors.toList());
     }
 
     @Override
