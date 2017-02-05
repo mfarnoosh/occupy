@@ -122,7 +122,7 @@ public class Unit extends BasePlayerObject {
                         return o1.getAttackDamage() > o2.getAttackDamage() ? 1 : -1;
                     });
                     if (mostPowerfullUnit.isPresent()) {
-                        attackTo(mostPowerfullUnit.get());
+                        attackTo(mostPowerfullUnit.get(), false);
                         changedObjects.add(mostPowerfullUnit.get());
                     }
                 } else {
@@ -134,9 +134,10 @@ public class Unit extends BasePlayerObject {
         }
         return changedObjects;
     }
-    public void attackTo(Unit enemy) {
+    public void attackTo(Unit enemy, boolean inTower) {
+        //TODO: maybe we should set land damage and air damage for unit
         if (canAttack() && !Objects.equals(enemy.playerId, playerId))
-            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (getDefenceDamage()));
+            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (inTower ? getDefenceDamage() : getAttackDamage()));
     }
     //endregion
     //region Override Functions

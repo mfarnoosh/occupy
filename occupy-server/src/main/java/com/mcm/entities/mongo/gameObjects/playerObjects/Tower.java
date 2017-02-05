@@ -122,6 +122,7 @@ public class Tower extends BasePlayerObject {
                     changedObjects.add(first);
                 }
             }
+
             if (unitsInTower.size() > 0) {
                 if (others.size() > 0) {
                     Optional<Unit> mostPowerfullUnit = unitsInTower.stream().max((o1, o2) -> {
@@ -129,7 +130,7 @@ public class Tower extends BasePlayerObject {
                     });
                     Optional<Unit> aliveUnit = others.stream().filter(unit -> {return unit.currentHitPoint > 0;}).findFirst();
                     if (mostPowerfullUnit.isPresent() && aliveUnit.isPresent()) {
-                        mostPowerfullUnit.get().attackTo(aliveUnit.get());
+                        mostPowerfullUnit.get().attackTo(aliveUnit.get(), true);
                         changedObjects.add(aliveUnit.get());
                     }
                 }
