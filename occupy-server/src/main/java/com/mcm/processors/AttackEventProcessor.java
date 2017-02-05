@@ -2,7 +2,12 @@ package com.mcm.processors;
 
 import com.mcm.dao.mongo.interfaces.IAttackEventDao;
 import com.mcm.dao.mongo.interfaces.IGameObjectDao;
+import com.mcm.dao.mongo.interfaces.IMoveEventDao;
+import com.mcm.entities.Line;
+import com.mcm.entities.Path;
 import com.mcm.entities.mongo.events.AttackEvent;
+import com.mcm.entities.mongo.events.MoveEvent;
+import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
 import com.mcm.util.Spring;
@@ -16,14 +21,18 @@ import java.util.*;
 public class AttackEventProcessor extends EventProcessor<AttackEvent> {
     private IGameObjectDao gameObjectDao = Spring.context.getBean(IGameObjectDao.class);
     private IAttackEventDao attackEventDao = Spring.context.getBean(IAttackEventDao.class);
+    private IMoveEventDao moveEventDao = Spring.context.getBean(IMoveEventDao.class);
+
     public AttackEventProcessor(List<AttackEvent> batch) {
         super(batch);
     }
+
     private static Logger logger = Logger.getLogger(AttackEventProcessor.class);
+
     @Override
     void doJob(List<AttackEvent> batch) {
-        final Set<String> attackedSet =  new LinkedHashSet<>(batch.size());
-        for (AttackEvent attackEvent: batch) {
+        final Set<String> attackedSet = new LinkedHashSet<>(batch.size());
+        for (AttackEvent attackEvent : batch) {
             Unit unit = (Unit) gameObjectDao.findUnitById(attackEvent.getGameObjectId());
             if (unit != null) {
                 Tower tower = gameObjectDao.findTowerById(attackEvent.getUnderAttackTowerId());
@@ -32,16 +41,16 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                     if (!attackedSet.contains(attackId)) {
                         attackedSet.add(attackId);
                         if (gameObjectDao.isInRangeEachOther(tower, unit)) {
-                            gameObjectDao.saveAllTowers(unit.attack());
-                            Collection<Unit> underAttackUnits = tower.attack();
-                            gameObjectDao.saveAllUnits(underAttackUnits);
+                            gameObjectDao.saveAll(unit.attack());
+                            Collection<BasePlayerObject> underAttackUnits = tower.attack();
+                            gameObjectDao.saveAll(underAttackUnits);
 
 
                             boolean finishAttack = false;
-                            Iterator<Unit> iterator = underAttackUnits.iterator();
+                            Iterator<BasePlayerObject> iterator = underAttackUnits.iterator();
                             int oldSize = underAttackUnits.size();
                             while (iterator.hasNext()) {
-                                Unit u = iterator.next();
+                                BasePlayerObject u = iterator.next();
                                 if (u.getCurrentHitPoint() <= 0) {
                                     gameObjectDao.delete(u);
                                     iterator.remove();
@@ -55,8 +64,7 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                                 finishAttack = true;
                             }
                             if (finishAttack) {
-                                unit.setAttacking(false);
-                                gameObjectDao.save(unit);
+                                gameObjectDao.delete(unit);
                                 attackEventDao.delete(attackEvent);
                             }
                         }

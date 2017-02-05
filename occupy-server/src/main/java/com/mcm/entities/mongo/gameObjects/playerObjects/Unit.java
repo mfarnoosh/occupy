@@ -6,8 +6,8 @@ import com.mcm.enums.UnitPropertyType;
 import com.mcm.enums.UnitType;
 import com.mcm.util.GameConfig;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -105,27 +105,40 @@ public class Unit extends BasePlayerObject {
      * @return
      */
     public boolean canAttack() {
-        return true;
+        return currentHitPoint > 0;
     }
 
     /**
      * attack to any enemy target in it's range
      * CONSIDER that for unit there is no splash attack and just one target can be attacked.
      */
-    public Collection<Tower> attack() {
-        LinkedHashSet<Tower> attackedTowers = new LinkedHashSet<>();
+    public Collection<BasePlayerObject> attack() {
+        LinkedHashSet<BasePlayerObject> changedObjects = new LinkedHashSet<>();
         if (canAttack()) {
-            Tower targetTower = World.getNearestTowerInUnitRange(this);
+            Tower targetTower = World.getNearestTowerInUnitRange(this, playerId);
             if (targetTower != null) {
-                targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
-                attackedTowers.add(targetTower);
+                List<Unit> unitsInTower = World.findUnitByOwnerTower(targetTower).stream().filter(unit -> {return unit.getCurrentHitPoint() > 0;}).collect(Collectors.toList());
+                if (unitsInTower.size() > 0) {
+                    Optional<Unit> mostPowerfullUnit = unitsInTower.stream().max((o1, o2) -> {
+                        return o1.getAttackDamage() > o2.getAttackDamage() ? 1 : -1;
+                    });
+                    if (mostPowerfullUnit.isPresent()) {
+                        attackTo(mostPowerfullUnit.get(), false);
+                        changedObjects.add(mostPowerfullUnit.get());
+                    }
+                } else {
+                    targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
+                    changedObjects.add(targetTower);
+                }
             }
 
         }
-        return attackedTowers;
+        return changedObjects;
     }
-    public void attackTo(Unit enemy) {
-        enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (getDefenceDamage()));
+    public void attackTo(Unit enemy, boolean inTower) {
+        //TODO: maybe we should set land damage and air damage for unit
+        if (canAttack() && !Objects.equals(enemy.playerId, playerId))
+            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (inTower ? getDefenceDamage() : getAttackDamage()));
     }
     //endregion
     //region Override Functions

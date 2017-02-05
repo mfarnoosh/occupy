@@ -68,4 +68,14 @@ public class World {
         IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
         return gameObjectDao.findUnitByOwnerTower(tower);
     }
+
+    public static Tower getNearestTowerInUnitRange(Unit unit, String exceptPlayerId) {
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
+        return gameObjectDao.getNearestTowerInUnitRange(unit, exceptPlayerId);
+    }
+
+    public static LinkedHashSet<Unit> getAllUnitsNearTower(Tower tower, String playerId) {
+        IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
+        return gameObjectDao.getAllUnitsInTowerRange(tower, playerId);
+    }
 }

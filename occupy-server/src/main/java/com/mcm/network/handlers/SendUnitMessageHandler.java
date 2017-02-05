@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * Created by Mehrdad on 16/12/11.
  */
@@ -40,7 +42,17 @@ public class SendUnitMessageHandler extends BaseMessageHandler {
             message.ExceptionMessage = "Invalid tower id.";
             return message;
         }
-
+        if (!Objects.equals(targetTower.getPlayerId(), unit.getPlayerId())) {
+            message.ExceptionMessage = "unit cant move to another player tower";
+            logger.error(message.ExceptionMessage);
+            return message;
+        }
+        if (unit.isAttacking() || unit.isMoving()) {
+            message.ExceptionMessage = "unit should not be on attacking or moving";
+            logger.error(message.ExceptionMessage);
+            return message;
+        }
+        moveEventDao.delete(unit.getId(), targetTower.getId());
         MoveEvent me = new MoveEvent();
         me.setGameObjectId(unit.getId());
         me.setTargetTowerId(targetTower.getId());
