@@ -7,6 +7,7 @@ import com.mcm.enums.TowerType;
 import com.mcm.util.GameConfig;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -109,7 +110,7 @@ public class Tower extends BasePlayerObject {
         LinkedHashSet<BasePlayerObject> changedObjects = new LinkedHashSet<>();
         if(canAttack()) {
             LinkedHashSet<Unit> others = World.getAllUnitsNearTower(this, playerId);
-            List<Unit> unitsInTower = World.findUnitByOwnerTower(this);
+            List<Unit> unitsInTower = World.findUnitByOwnerTower(this).stream().filter(unit -> {return unit.getCurrentHitPoint() > 0;}).collect(Collectors.toList());
             if (getType() == TowerType.STEALTH) {
                 for (Unit u: others) {
                     attackTo(u);

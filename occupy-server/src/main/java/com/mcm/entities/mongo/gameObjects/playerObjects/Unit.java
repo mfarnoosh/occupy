@@ -7,6 +7,7 @@ import com.mcm.enums.UnitType;
 import com.mcm.util.GameConfig;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -116,7 +117,7 @@ public class Unit extends BasePlayerObject {
         if (canAttack()) {
             Tower targetTower = World.getNearestTowerInUnitRange(this, playerId);
             if (targetTower != null) {
-                List<Unit> unitsInTower = World.findUnitByOwnerTower(targetTower);
+                List<Unit> unitsInTower = World.findUnitByOwnerTower(targetTower).stream().filter(unit -> {return unit.getCurrentHitPoint() > 0;}).collect(Collectors.toList());
                 if (unitsInTower.size() > 0) {
                     Optional<Unit> mostPowerfullUnit = unitsInTower.stream().max((o1, o2) -> {
                         return o1.getAttackDamage() > o2.getAttackDamage() ? 1 : -1;
