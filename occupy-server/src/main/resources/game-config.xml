@@ -17,7 +17,7 @@
                     <attack-damage>2</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>5</fire-rate>
-                    <range>3</range>
+                    <range>0.003</range>
                     <speed>3</speed>
                     <upgrade-price>312.5</upgrade-price>
                     <upgrade-time>6.25</upgrade-time>
@@ -32,7 +32,7 @@
                     <attack-damage>2</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>8</fire-rate>
-                    <range>0.02</range>
+                    <range>0.003</range>
                     <speed>27</speed>
                     <upgrade-price>1250</upgrade-price>
                     <upgrade-time>25</upgrade-time>
@@ -47,7 +47,7 @@
                     <attack-damage>15</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>1</fire-rate>
-                    <range>0.1</range>
+                    <range>0.004</range>
                     <speed>9</speed>
                     <upgrade-price>5000</upgrade-price>
                     <upgrade-time>100</upgrade-time>
@@ -62,7 +62,7 @@
                     <attack-damage>10</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>5</fire-rate>
-                    <range>10</range>
+                    <range>0.010</range>
                     <speed>35</speed>
                     <upgrade-price>5000</upgrade-price>
                     <upgrade-time>100</upgrade-time>
@@ -77,7 +77,7 @@
                     <attack-damage>15</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>3</fire-rate>
-                    <range>0.1</range>
+                    <range>0.021</range>
                     <speed>60</speed>
                     <upgrade-price>11250</upgrade-price>
                     <upgrade-time>225</upgrade-time>
@@ -109,7 +109,7 @@
                     <air-damage>0</air-damage>
                     <land-damage>10</land-damage>
                     <fire-rate>20</fire-rate>
-                    <range>0.05</range>
+                    <range>0.005</range>
                     <max-capacity>50</max-capacity>
                     <upgrade-price>1250</upgrade-price>
                     <upgrade-time>25</upgrade-time>
@@ -124,7 +124,7 @@
                     <air-damage>0</air-damage>
                     <land-damage>6</land-damage>
                     <fire-rate>96</fire-rate>
-                    <range>9</range>
+                    <range>0.009</range>
                     <max-capacity>150</max-capacity>
                     <upgrade-price>11250</upgrade-price>
                     <upgrade-time>225</upgrade-time>
@@ -139,7 +139,7 @@
                     <air-damage>0</air-damage>
                     <land-damage>90</land-damage>
                     <fire-rate>6</fire-rate>
-                    <range>40</range>
+                    <range>0.040</range>
                     <max-capacity>200</max-capacity>
                     <upgrade-price>20000</upgrade-price>
                     <upgrade-time>400</upgrade-time>
@@ -154,7 +154,7 @@
                     <air-damage>200</air-damage>
                     <land-damage>0</land-damage>
                     <fire-rate>10</fire-rate>
-                    <range>200</range>
+                    <range>0.200</range>
                     <max-capacity>500</max-capacity>
                     <upgrade-price>125000</upgrade-price>
                     <upgrade-time>2500</upgrade-time>
@@ -169,7 +169,7 @@
                     <air-damage>0</air-damage>
                     <land-damage>150</land-damage>
                     <fire-rate>10</fire-rate>
-                    <range>0.1</range>
+                    <range>0.060</range>
                     <max-capacity>250</max-capacity>
                     <upgrade-price>31250</upgrade-price>
                     <upgrade-time>625</upgrade-time>

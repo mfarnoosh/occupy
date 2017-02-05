@@ -5,6 +5,7 @@ import com.mcm.entities.mongo.events.MoveEvent;
 import com.mcm.entities.mongo.gameObjects.BaseGameObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,15 @@ public class MoveEventDao implements IMoveEventDao {
     }
 
 
+    @Override
+    public void delete(String unitId, String towerId) {
+        MoveEvent me = find(unitId, towerId);
+        if (me != null)
+            delete(me);
+    }
+
+    @Override
+    public MoveEvent find(String unitId, String towerId) {
+        return getMongoOperations().findOne(Query.query(Criteria.where("targetTowerId").is(towerId).and("gameObjectId").is(unitId)), MoveEvent.class);
+    }
 }

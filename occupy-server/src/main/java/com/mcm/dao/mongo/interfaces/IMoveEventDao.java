@@ -14,4 +14,6 @@ import java.util.List;
 
 public interface IMoveEventDao extends IBaseMongoDao<MoveEvent> {
 
+    void delete(String unitId, String towerId);
+    MoveEvent find(String unitId, String towerId);
 }

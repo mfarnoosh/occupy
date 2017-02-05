@@ -44,7 +44,7 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                         double[] newLoc = GeoUtil.latLonOf(xInKilometer, moveEvent.getPath());
                         unit.setLocation(newLoc);
                         unit.setMoving(true);
-                        final double distance = moveEvent.isAttackMode() ? unit.getRange() : 0.05;
+                        final double distance = moveEvent.isAttackMode() ? unit.getRange() : 0.003;
                         if (gameObjectDao.isArrived(unit, moveEvent.getTargetTowerLocation(), distance, Unit.class)) {
                             unit.setMoving(false);
                             if (!moveEvent.isAttackMode()) {

@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour
 
 	//public Vector3 ObjectScaleMultiplier { get { return new Vector3 (4, 4, 4); } }
 
-	private string email = "m.h.farnoosh88@gmail.com2";
-	private string name = "mehrdad2";
-	private string lastName = "farnoosh2";
+	private string email = "alirezaght@gmail.com";
+	private string name = "alireza";
+	private string lastName = "ghias";
 
 	public string PlayerKey;
 
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 	void Start ()
 	{
 		
-		//PlayerPrefs.DeleteKey ("config-version");
+//		PlayerPrefs.DeleteAll ();
 		
 		string key = PlayerPrefs.GetString ("player-key");
 		if (string.IsNullOrEmpty (key)) {

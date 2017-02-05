@@ -78,9 +78,8 @@ public class GameObjectDao implements IGameObjectDao {
     }
 
     @Override
-    public boolean isInRangeEachOther(BasePlayerObject object1, BasePlayerObject object2) {
-        //TODO: Farnoosh
-        return true;
+    public boolean isInRangeEachOther(Tower tower, Unit unit) {
+        return isArrived(unit, tower.getLocation(), tower.getRange(), Unit.class) || isArrived(tower, unit.getLocation(), unit.getRange(), Tower.class);
     }
 
     public LinkedHashSet<Unit> getAllUnitsInTowerRange(Tower tower){
@@ -151,6 +150,43 @@ public class GameObjectDao implements IGameObjectDao {
     public void saveAllUnits(Collection<Unit> units) {
         for (Unit unit: units) {
             save(unit);
+        }
+    }
+
+    @Override
+    public Tower getNearestTowerInUnitRange(Unit unit, String exceptPlayerId) {
+        if (unit.getLocation() == null || unit.getLocation().length != 2) {
+            return null;
+        }
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location")
+                .within(new Circle(new Point(unit.getLocation()[0], unit.getLocation()[1])
+                        , new Distance(unit.getRange(), Metrics.KILOMETERS))).and("playerId").ne(exceptPlayerId)).limit(1);
+        final Tower result = getMongoOperations().findOne(query, Tower.class);
+        return result;
+    }
+
+    @Override
+    public LinkedHashSet<Unit> getAllUnitsInTowerRange(Tower tower, String playerId) {
+        final LinkedHashSet<Unit> res = new LinkedHashSet<>();
+        if (tower.getLocation() == null || tower.getLocation().length != 2) {
+            return res;
+        }
+        Query query = new Query();
+        query.addCriteria(Criteria.where("location")
+                .within(new Circle(new Point(tower.getLocation()[0], tower.getLocation()[1])
+                        , new Distance(tower.getRange(), Metrics.KILOMETERS))).and("playerId").ne(playerId));
+        final List<Unit> results = getMongoOperations().find(query, Unit.class);
+        for (Unit unit : results) {
+            res.add(unit);
+        }
+        return res;
+    }
+
+    @Override
+    public void saveAll(Collection<BasePlayerObject> objects) {
+        for (BasePlayerObject playerObject: objects){
+            save(playerObject);
         }
     }
 

@@ -8,5 +8,6 @@ import com.mcm.entities.mongo.events.MoveEvent;
  */
 
 public interface IAttackEventDao extends IBaseMongoDao<AttackEvent> {
-
+    AttackEvent find(String unitId, String towerId);
+    void delete(String unitId, String towerId);
 }

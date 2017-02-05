@@ -6,9 +6,7 @@ import com.mcm.enums.TowerPropertyType;
 import com.mcm.enums.TowerType;
 import com.mcm.util.GameConfig;
 
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Mehrdad on 16/12/04.
@@ -107,47 +105,51 @@ public class Tower extends BasePlayerObject {
      * if any enemy unit is in range, start to attack to them.
      * determine if splash attack or single attack should apply
      */
-    public Collection<Unit> attack(){
-        LinkedHashSet<Unit> units = new LinkedHashSet<>();
+    public Collection<BasePlayerObject> attack(){
+        LinkedHashSet<BasePlayerObject> changedObjects = new LinkedHashSet<>();
         if(canAttack()) {
-            LinkedHashSet<Unit> others = World.getAllUnitsNearTower(this);
+            LinkedHashSet<Unit> others = World.getAllUnitsNearTower(this, playerId);
             List<Unit> unitsInTower = World.findUnitByOwnerTower(this);
-
             if (getType() == TowerType.STEALTH) {
-                splashAttack(others);
-                units.addAll(others);
+                for (Unit u: others) {
+                    attackTo(u);
+                    changedObjects.add(u);
+                }
             } else {
                 if (others.size() > 0) {
-                    Unit unit = others.iterator().next();
-                    attackTo(unit);
-                    for (Unit u : unitsInTower) {
-                        u.attackTo(unit);
-                    }
-                    units.add(unit);
+                    Unit first = others.iterator().next();
+                    attackTo(first);
+                    changedObjects.add(first);
                 }
+            }
+            if (unitsInTower.size() > 0) {
+                if (others.size() > 0) {
+                    Optional<Unit> mostPowerfullUnit = unitsInTower.stream().max((o1, o2) -> {
+                        return o1.getAttackDamage() > o2.getAttackDamage() ? 1 : -1;
+                    });
+                    Optional<Unit> aliveUnit = others.stream().filter(unit -> {return unit.currentHitPoint > 0;}).findFirst();
+                    if (mostPowerfullUnit.isPresent() && aliveUnit.isPresent()) {
+                        mostPowerfullUnit.get().attackTo(aliveUnit.get());
+                        changedObjects.add(aliveUnit.get());
+                    }
+                }
+
             }
 
 
         }
-        return units;
+        return changedObjects;
     }
-    /**
-     * splash attack means all units in tower range will be damaged.
-     * splash towers start to attack when any enemy be in their range.
-     * @param others the enemies which should be attacked
-     */
-    private void splashAttack(LinkedHashSet<Unit> others) {
-        for (Unit other : others) {
-            attackTo(other);
-        }
-    }
+
 
     /**
      * attack to one enemy unit in the tower range
      * @param enemy target enemy unit
      */
     private void attackTo(Unit enemy) {
-        enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage()));
+        if (canAttack() && !Objects.equals(enemy.playerId, playerId)) {
+            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage()));
+        }
     }
     //endregion
 
