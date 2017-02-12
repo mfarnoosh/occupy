@@ -106,6 +106,7 @@ public class TowerManager : MonoBehaviour
 		tower.isUpgrading = td.IsUpgrading;
 		tower.occupiedSpace = td.OccupiedSpace;
 		tower.AddOrUpdateUnits (td.Units);
+		tower.mine = td.PlayerKey == PlayerController.Current.PlayerKey;
 	}
 
 	public TowerConfigData GetTowerConfig (int type, int level)

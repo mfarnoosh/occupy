@@ -455,8 +455,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012688169992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 125.987495, y: 93.06628, z: -200.23291}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -25.932121, y: -98, z: 149.48409}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010066433180}
@@ -826,14 +826,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  playerKey: 
-  id: 
-  level: 0
-  currentHitPoint: 0
-  isMoving: 0
-  isAttacking: 0
-  isUpgrading: 0
-  parentTile: {fileID: 0}
+  unitData:
+    PlayerKey: 
+    Id: 
+    Type: -1
+    Level: 0
+    towerId: 
+    CurrentHitPoint: 0
+    Lat: 0
+    Lon: 0
+    IsMoving: 0
+    IsAttacking: 0
+    IsUpgrading: 0
+  parentTower: {fileID: 0}
+  ghost: 0
 --- !u!137 &137000014032006570
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

@@ -8,13 +8,23 @@ public class Tower : MonoBehaviour
 	/// <summary>
 	/// Sentry(1),MachineGun(2),RocketLauncher(3),AntiAircraft(4),Stealth(5)
 	/// </summary>
-
+	public GameObject flag;
 	public int type = -1;
 	public String playerKey;
 	public String id;
 	public int level = 0;
 	public float currentHitPoint = 0.0f;
-
+	private bool _mine = false;
+	public bool mine {
+		get {
+			return _mine;	
+		}
+		set {
+			_mine = value;
+			if (flag != null)
+				flag.SetActive (_mine);
+		}
+	}
 	public Location location;
 
 	public bool isAttacking = false;

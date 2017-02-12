@@ -36,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013901556720}
   m_LocalRotation: {x: -0.0000000754979, y: -0.00000008146034, z: 1, w: -6.0888527e-15}
-  m_LocalPosition: {x: 4699, y: 2613.7, z: 8367.3}
+  m_LocalPosition: {x: -24.549904, y: -98.33886, z: 146.04924}
   m_LocalScale: {x: 1.612, y: 1.6120001, z: 1.6120001}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -56,7 +56,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: 9953acd5ac29b0b4bb039499f498ee0b, type: 2}
-  - {fileID: 2100000, guid: 422b55f7187fdcb4398ed1055c67a204, type: 2}
+  - {fileID: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -91,11 +91,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 5
-  playerKey: 
-  id: 
-  level: 0
-  currentHitPoint: 0
-  isMoving: 0
-  isAttacking: 0
-  isUpgrading: 0
-  parentTile: {fileID: 0}
+  unitData:
+    PlayerKey: 
+    Id: 
+    Type: -1
+    Level: 0
+    towerId: 
+    CurrentHitPoint: 0
+    Lat: 0
+    Lon: 0
+    IsMoving: 0
+    IsAttacking: 0
+    IsUpgrading: 0
+  parentTower: {fileID: 0}
+  ghost: 0

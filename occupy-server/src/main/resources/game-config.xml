@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <game-configs>
-    <config version="3">
+    <config version="4">
         <map>
             <zoom-level>16</zoom-level>
             <tile-size-x>0.0054931640625</tile-size-x>
@@ -17,7 +17,7 @@
                     <attack-damage>2</attack-damage>
                     <defence-damage>2</defence-damage>
                     <fire-rate>5</fire-rate>
-                    <range>0.003</range>
+                    <range>5.003</range>
                     <speed>3</speed>
                     <upgrade-price>312.5</upgrade-price>
                     <upgrade-time>6.25</upgrade-time>
