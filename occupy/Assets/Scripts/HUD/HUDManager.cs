@@ -40,7 +40,8 @@ public class HUDManager : MonoBehaviour {
 	}
 
 	public void LateUpdate(){
-		
+		if (Input.GetKey (KeyCode.Escape))
+			Application.Quit ();
 	}
 
 	public void TowerSelect(Tower tower){
