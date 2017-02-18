@@ -43,7 +43,17 @@ public class TowerPopupHandler : MonoBehaviour {
 	public void RepairNow(){
 		if (SelectedTower == null)
 			return;
-		Debug.Log ("we are here, tower id: " + SelectedTower.id);
+
+		SocketMessage sm = new SocketMessage ();
+		sm.Cmd = "repairTower";
+		sm.Params.Add (SelectedTower.id);
+
+		NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+			if(string.IsNullOrEmpty(data.value.ExceptionMessage))
+				Debug.Log("tower repaired.");
+			else
+				Debug.Log(data.value.ExceptionMessage);
+		});
 	}
 	public void Sell(){
 		if (SelectedTower == null)
@@ -53,7 +63,16 @@ public class TowerPopupHandler : MonoBehaviour {
 	public void Upgrade(){
 		if (SelectedTower == null)
 			return;
-		Debug.Log ("we are here, tower id: " + SelectedTower.id);
+		SocketMessage sm = new SocketMessage ();
+		sm.Cmd = "upgradeTower";
+		sm.Params.Add (SelectedTower.id);
+
+		NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+			if(string.IsNullOrEmpty(data.value.ExceptionMessage))
+				Debug.Log("tower upgraded.");
+			else
+				Debug.Log(data.value.ExceptionMessage);
+		});
 	}
 
 	public void CreateUnit(GameObject unitPrefab){

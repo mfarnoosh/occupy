@@ -49,6 +49,8 @@ public abstract class MessageFactory {
                 return (LogMessageHandler)Spring.context.getBean("logMessageHandler");
             case "repairTower":
                 return (RepairMessageHandler)Spring.context.getBean("repairMessageHandler");
+            case "upgradeTower":
+                return (UpgradeMessageHandler)Spring.context.getBean("upgradeMessageHandler");
             case "attack":
                 return (AttackMessageHandler)Spring.context.getBean("attackMessageHandler");
         }
