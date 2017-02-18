@@ -12,9 +12,9 @@ public class SendUnit : EventAction
 	void Start(){
 		dataKeeper = GetComponent<UnitDataKeeper> ();
 		progressbar = GetComponent<Progressbar> ();
-		if (dataKeeper != null && progressbar != null) {
-			progressbar.SetProgressAmount ((float)(dataKeeper.CurrentUnitData.CurrentHitPoint / dataKeeper.CurrentUnitConfigData.HitPoint * 100));
-		}
+//		if (dataKeeper != null && progressbar != null) {
+//			progressbar.SetProgressAmount ((float)(dataKeeper.CurrentUnitData.CurrentHitPoint / dataKeeper.CurrentUnitConfigData.HitPoint * 100));
+//		}
 	}
 	public override void PointerDown (Vector2 position)
 	{

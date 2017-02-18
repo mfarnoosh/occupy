@@ -9,9 +9,15 @@ public class TowerSidebarHandler : MonoBehaviour {
 	public List<Sprite> UnitButtonSprites;
 	private Tower _selectedTower = null;
 
-	private List<GameObject> contentChildren = new List<GameObject>();
+	private Dictionary<string,GameObject> contentChildren = new Dictionary<string,GameObject>();
 	public void Start(){
 		//TowerDeselect ();
+	}
+	public void LateUpdate(){
+		if (_selectedTower == null)
+			return;
+		fillData ();
+		
 	}
 	public void TowerSelect(Tower tower){
 		if (tower == null) {
@@ -28,16 +34,48 @@ public class TowerSidebarHandler : MonoBehaviour {
 	public void TowerDeselect(){
 		_selectedTower = null;
 		gameObject.SetActive (false);
-		foreach (var child in contentChildren)
-			Destroy (child);
+
+		List<string> shouldRemoveList = new List<string> ();
+		foreach (var child in contentChildren.Keys) {
+			shouldRemoveList.Add (child);
+		}
+		foreach (var key in shouldRemoveList)
+			DeleteContentChild (key);
+	}
+
+	private void DeleteContentChild(string key){
+		var obj = contentChildren [key];
+		contentChildren.Remove (key);
+		Destroy (obj);
 	}
 	private void fillData(){
 		if (_selectedTower != null && Content != null) {
+			List<string> shouldRemoveList = new List<string> ();
+			foreach (var child in contentChildren.Keys) {
+				if (!_selectedTower.towerUnits.ContainsKey (child)) {
+					shouldRemoveList.Add (child);
+				}
+			}
+			foreach (var key in shouldRemoveList)
+				DeleteContentChild (key);
+			
 			foreach (var ud in _selectedTower.towerUnits) {
-				var go = CreateButton (ud.Value.unitData);
-				if (go != null) {
-					contentChildren.Add (go);
-					go.transform.SetParent (Content, false);
+				var currentUnitData = ud.Value.unitData;
+				var currentKey = currentUnitData.Id;
+			
+				if (!contentChildren.ContainsKey (currentKey)) {
+					var go = CreateButton (currentUnitData);
+					if (go != null) {
+						contentChildren.Add (currentKey,go);
+						go.transform.SetParent (Content, false);
+					}
+				} else {
+					var unitDataKeeperObj = contentChildren [currentKey];
+					if (unitDataKeeperObj != null) {
+						var unitDataKeeper = unitDataKeeperObj.GetComponent<UnitDataKeeper> ();
+						if(unitDataKeeper != null)
+							unitDataKeeper.CurrentUnitData = currentUnitData;
+					}
 				}
 			}
 		}

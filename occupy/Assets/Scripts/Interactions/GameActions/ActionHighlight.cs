@@ -16,7 +16,7 @@ public class ActionHighlight : TouchAction {
 	{
 		if (HighlightObject != null) {
 			if (tower != null) {
-				HighlightObject.transform.localScale = new Vector3 ((float)(tower.Config.Range), (float)(tower.Config.Range), (float)(tower.Config.Range));
+				HighlightObject.transform.localScale = new Vector3 ((float)(tower.Config.Range) * 10000f, (float)(tower.Config.Range) * 10000f, (float)(tower.Config.Range) * 10000f);
 			}
 			HighlightObject.SetActive (true);
 		}
