@@ -5,6 +5,7 @@ import com.mcm.entities.mongo.Player;
 import com.mcm.enums.TowerPropertyType;
 import com.mcm.enums.TowerType;
 import com.mcm.util.GameConfig;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class Tower extends BasePlayerObject {
     private TowerType type;
     private int occupiedHouseSpace = 0;
+    private static Logger logger = Logger.getLogger(Tower.class);
     //region Constructors
     public Tower() {}
 
@@ -150,7 +152,9 @@ public class Tower extends BasePlayerObject {
      */
     private void attackTo(Unit enemy) {
         if (canAttack() && !Objects.equals(enemy.playerId, playerId)) {
-            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage()));
+            double health = enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage());
+            enemy.setCurrentHitPoint(health);
+            logger.info("tower attack -> " + health);
         }
     }
     //endregion

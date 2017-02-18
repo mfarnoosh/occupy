@@ -5,6 +5,7 @@ import com.mcm.entities.mongo.Player;
 import com.mcm.enums.UnitPropertyType;
 import com.mcm.enums.UnitType;
 import com.mcm.util.GameConfig;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ public class Unit extends BasePlayerObject {
     private UnitType type;
     private String keepingTowerId;
     private boolean isMoving = false;
-
+    private static Logger logger = Logger.getLogger(Unit.class);
     //region Constructors
     public Unit(){}
     public Unit(UnitType type, Player player, Tower keepingTower) {
@@ -127,7 +128,9 @@ public class Unit extends BasePlayerObject {
                         changedObjects.add(mostPowerfullUnit.get());
                     }
                 } else {
-                    targetTower.setCurrentHitPoint(targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage()));
+                    double health = targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage());
+                    logger.info("unit attack -> " + health);
+                    targetTower.setCurrentHitPoint(health);
                     changedObjects.add(targetTower);
                 }
             }
@@ -137,8 +140,11 @@ public class Unit extends BasePlayerObject {
     }
     public void attackTo(Unit enemy, boolean inTower) {
         //TODO: maybe we should set land damage and air damage for unit
-        if (canAttack() && !Objects.equals(enemy.playerId, playerId))
-            enemy.setCurrentHitPoint(enemy.getCurrentHitPoint() - getFireRate() * (inTower ? getDefenceDamage() : getAttackDamage()));
+        if (canAttack() && !Objects.equals(enemy.playerId, playerId)) {
+            double health = enemy.getCurrentHitPoint() - getFireRate() * (inTower ? getDefenceDamage() : getAttackDamage());
+            enemy.setCurrentHitPoint(health);
+            logger.info("unit attack to -> " + health);
+        }
     }
     //endregion
     //region Override Functions

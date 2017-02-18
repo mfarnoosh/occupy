@@ -57,7 +57,7 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                                 }
                             }
                             int newSize = underAttackUnits.size();
-                            if (oldSize == 0 || newSize == 0) {
+                            if (oldSize != 0 && newSize == 0) {
                                 finishAttack = true;
                             }
                             if (tower.getCurrentHitPoint() <= 0) {
@@ -67,6 +67,20 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                                 gameObjectDao.delete(unit);
                                 attackEventDao.delete(attackEvent);
                             }
+                        } else {
+                            logger.error("tower = " + attackEvent.getUnderAttackTowerId() + " is not in range deleting event");
+                            MoveEvent me = new MoveEvent();
+                            me.setAttackMode(true);
+                            me.setTargetTowerId(attackEvent.getUnderAttackTowerId());
+                            me.setTargetTowerLocation(tower.getLocation());
+                            me.setGameObjectId(attackEvent.getGameObjectId());
+                            Path path = new Path();
+                            Line line = new Line(unit.getLocation(), tower.getLocation());
+                            path.lines.add(line);
+                            me.setPath(path);
+                            attackEventDao.delete(attackEvent);
+                            moveEventDao.save(me);
+
                         }
                     } else {
                         logger.error("multiple attack event in a batch from a unit to a tower is not allowed");
