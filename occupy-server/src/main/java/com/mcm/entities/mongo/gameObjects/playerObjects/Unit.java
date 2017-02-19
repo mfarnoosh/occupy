@@ -129,8 +129,8 @@ public class Unit extends BasePlayerObject {
                     }
                 } else {
                     double health = targetTower.getCurrentHitPoint() - getFireRate() * (getAttackDamage());
-                    logger.info("unit attack -> " + health);
                     targetTower.setCurrentHitPoint(health);
+                    logger.info("unit[" + type + "] attack tower health -> " + health);
                     changedObjects.add(targetTower);
                 }
             }
@@ -143,7 +143,7 @@ public class Unit extends BasePlayerObject {
         if (canAttack() && !Objects.equals(enemy.playerId, playerId)) {
             double health = enemy.getCurrentHitPoint() - getFireRate() * (inTower ? getDefenceDamage() : getAttackDamage());
             enemy.setCurrentHitPoint(health);
-            logger.info("unit attack to -> " + health);
+            logger.info("unit[" + type + "] attack to enemy health -> " + health);
         }
     }
     //endregion

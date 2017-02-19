@@ -58,7 +58,10 @@ public class CreateUnitMessageHandler extends BaseMessageHandler {
             message.ExceptionMessage = "Invalid Tower.";
             return message;
         }
-
+        if (!tower.getPlayerId().equals(player.getId())) {
+            message.ExceptionMessage = "Tower player id is not equal to playerId";
+            return message;
+        }
         Unit newUnit = new Unit(UnitType.valueOf(unitType),player,tower);
         gameObjectDao.save(newUnit);
 

@@ -27,6 +27,10 @@ public class RepairMessageHandler extends BaseMessageHandler {
         logger.info("Repair tower request message: " + towerId);
         Tower tower = gameObjectDao.findTowerById(towerId);
         if (tower != null) {
+            if (!tower.getPlayerId().equals(message.PlayerKey)) {
+                message.ExceptionMessage = "Tower player id is not equal to playerId";
+                return message;
+            }
             tower.setCurrentHitPoint(Double.parseDouble(GameConfig.getTowerProperty(tower.getType(), tower.getLevel(), TowerPropertyType.HIT_POINT)));
             gameObjectDao.save(tower);
         }

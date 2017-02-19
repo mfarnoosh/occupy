@@ -36,10 +36,10 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                 final String moveId = unit.getId() + moveEvent.getTargetTowerId();
                 if (!movedSet.contains(moveId)) {
                     movedSet.add(moveId);
-                    long t = (new Date().getTime() - moveEvent.getCreated().getTime()) / 1000; //time in seccond
-                    double v = unit.getSpeed();
-                    double x = v * t; // distance in meter if velocity is m/s
-                    double xInKilometer = x / 1000;
+                    long t = (new Date().getTime() - moveEvent.getCreated().getTime()) * 1000 / 3600; // t is in hour
+                    double v = unit.getSpeed(); // v in km/H
+                    double x = v * t; // x in km
+                    double xInKilometer = x;
                     try {
                         double[] newLoc = GeoUtil.latLonOf(xInKilometer, moveEvent.getPath());
                         unit.setLocation(newLoc);

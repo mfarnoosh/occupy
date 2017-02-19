@@ -154,7 +154,7 @@ public class Tower extends BasePlayerObject {
         if (canAttack() && !Objects.equals(enemy.playerId, playerId)) {
             double health = enemy.getCurrentHitPoint() - getFireRate() * (enemy.isLandType() ? getLandDamage() : getAirDamage());
             enemy.setCurrentHitPoint(health);
-            logger.info("tower attack -> " + health);
+            logger.info("tower[" + type + "] attack enemy[" + enemy.getType() + "] health -> " + health);
         }
     }
     //endregion

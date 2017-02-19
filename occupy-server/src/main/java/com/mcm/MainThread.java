@@ -59,28 +59,28 @@ public class MainThread extends Thread {
         while (!interrupted()) {
             long time = System.currentTimeMillis();
             cycle++;
-            logger.info("--- cycle = " + cycle + " time -> " + time + "---");
+//            logger.info("--- cycle = " + cycle + " time -> " + time + "---");
             try {
                 // processing move events
                 final List<MoveEvent> moveEvents = moveEventDao.findAll();
                 cachedThreadPool.invokeAll(ListUtils.partition(moveEvents, batchSize)
                         .stream().map(MoveEventProcessor::new).collect(Collectors.toList()));
                 long moveEventTime = System.currentTimeMillis();
-                logger.info("--- move events (" + moveEvents.size() + ") processed in -> " + (moveEventTime - time) + "ms ---");
+//                logger.info("--- move events (" + moveEvents.size() + ") processed in -> " + (moveEventTime - time) + "ms ---");
                 // processing attack events
                 final List<AttackEvent> attackEvents = attackEventDao.findAll();
                 cachedThreadPool.invokeAll(ListUtils.partition(attackEvents, batchSize)
                         .stream().map(AttackEventProcessor::new).collect(Collectors.toList()));
                 long attackEventTime = System.currentTimeMillis();
-                logger.info("--- attack events (" + attackEvents.size() + ") processed in -> " + (attackEventTime - moveEventTime) + "ms ---");
+//                logger.info("--- attack events (" + attackEvents.size() + ") processed in -> " + (attackEventTime - moveEventTime) + "ms ---");
                 // sleep to have a 1 second cycle
                 long elapsed = attackEventTime - time;
                 long waitTime = 1000 - elapsed;
                 if (waitTime > 0) {
                     Thread.sleep(waitTime);
                 }
-                logger.info("--- elapsed " + elapsed + "ms ---");
-                logger.info("--- waiting " + waitTime + "ms ---");
+//                logger.info("--- elapsed " + elapsed + "ms ---");
+//                logger.info("--- waiting " + waitTime + "ms ---");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

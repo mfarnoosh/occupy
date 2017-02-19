@@ -41,8 +41,11 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                     if (!attackedSet.contains(attackId)) {
                         attackedSet.add(attackId);
                         if (gameObjectDao.isInRangeEachOther(tower, unit)) {
-                            gameObjectDao.saveAll(unit.attack());
+                            Collection<BasePlayerObject> objects = unit.attack();
+                            logger.info("unit attacked objects size = " + objects.size());
+                            gameObjectDao.saveAll(objects);
                             Collection<BasePlayerObject> underAttackUnits = tower.attack();
+                            logger.info("tower attacked units size = " + underAttackUnits.size());
                             gameObjectDao.saveAll(underAttackUnits);
 
 
@@ -57,13 +60,17 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                                 }
                             }
                             int newSize = underAttackUnits.size();
+                            logger.info("dead units = " + (newSize - oldSize));
                             if (oldSize != 0 && newSize == 0) {
+                                logger.info("attacked finished by dead units");
                                 finishAttack = true;
                             }
                             if (tower.getCurrentHitPoint() <= 0) {
+                                logger.info("attacked finished by dead tower");
                                 finishAttack = true;
                             }
                             if (finishAttack) {
+                                logger.info("deleting unit and attack event");
                                 gameObjectDao.delete(unit);
                                 attackEventDao.delete(attackEvent);
                             }
