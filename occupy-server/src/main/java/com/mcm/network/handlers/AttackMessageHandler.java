@@ -4,6 +4,7 @@ import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IMoveEventDao;
 import com.mcm.entities.Line;
 import com.mcm.entities.Path;
+import com.mcm.entities.World;
 import com.mcm.entities.mongo.events.MoveEvent;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Tower;
 import com.mcm.entities.mongo.gameObjects.playerObjects.Unit;
@@ -58,9 +59,7 @@ public class AttackMessageHandler extends BaseMessageHandler {
         me.setGameObjectId(unit.getId());
         me.setTargetTowerId(targetTower.getId());
         me.setTargetTowerLocation(targetTower.getLocation());
-        Path path = new Path();
-        Line line = new Line(keepingTower.getLocation(), targetTower.getLocation());
-        path.lines.add(line);
+        Path path = World.findPath(keepingTower.getLocation(), targetTower.getLocation());
         me.setPath(path);
         me.setAttackMode(true);
         moveEventDao.save(me);

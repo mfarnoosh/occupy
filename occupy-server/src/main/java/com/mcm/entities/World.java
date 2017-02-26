@@ -116,4 +116,8 @@ public class World {
         IGameObjectDao gameObjectDao = (IGameObjectDao) Spring.context.getBean(IGameObjectDao.class);
         return gameObjectDao.getAllUnitsInTowerRange(tower, playerId);
     }
+
+    public static Path findPath(double[] location, double[] location1) {
+        return findPath(location[0], location[1], location1[0], location1[1]);
+    }
 }

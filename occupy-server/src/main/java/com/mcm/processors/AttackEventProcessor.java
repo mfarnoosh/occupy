@@ -5,6 +5,7 @@ import com.mcm.dao.mongo.interfaces.IGameObjectDao;
 import com.mcm.dao.mongo.interfaces.IMoveEventDao;
 import com.mcm.entities.Line;
 import com.mcm.entities.Path;
+import com.mcm.entities.World;
 import com.mcm.entities.mongo.events.AttackEvent;
 import com.mcm.entities.mongo.events.MoveEvent;
 import com.mcm.entities.mongo.gameObjects.playerObjects.BasePlayerObject;
@@ -81,9 +82,7 @@ public class AttackEventProcessor extends EventProcessor<AttackEvent> {
                             me.setTargetTowerId(attackEvent.getUnderAttackTowerId());
                             me.setTargetTowerLocation(tower.getLocation());
                             me.setGameObjectId(attackEvent.getGameObjectId());
-                            Path path = new Path();
-                            Line line = new Line(unit.getLocation(), tower.getLocation());
-                            path.lines.add(line);
+                            Path path = World.findPath(unit.getLocation(), tower.getLocation());
                             me.setPath(path);
                             attackEventDao.delete(attackEvent);
                             moveEventDao.save(me);
