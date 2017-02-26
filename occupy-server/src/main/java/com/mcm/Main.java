@@ -1,6 +1,7 @@
 package com.mcm;
 
 
+import com.mcm.entities.World;
 import com.mcm.enums.*;
 import com.mcm.network.NetworkManager;
 import com.mcm.util.GameConfig;
@@ -31,8 +32,8 @@ public class Main {
 //        log.info("login service is running.");
 //
 
-
         Spring.context.getBean(MainThread.class).run();
+
     }
 
     //simple function to echo data to terminal

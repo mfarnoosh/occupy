@@ -30,6 +30,17 @@
             <artifactId>tomcat-servlet-api</artifactId>
             <version>9.0.0.M9</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.geotoolkit.pending/geotk-client-osm -->
+        <!-- https://mvnrepository.com/artifact/com.graphhopper/graphhopper -->
+        <dependency>
+            <groupId>com.graphhopper</groupId>
+            <artifactId>directions-api-java-client</artifactId>
+            <version>0.8.2.1</version>
+        </dependency>
+
+
+
+
 
         <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
         <dependency>
