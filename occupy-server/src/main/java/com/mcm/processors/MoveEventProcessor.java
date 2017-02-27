@@ -36,7 +36,7 @@ public class MoveEventProcessor extends EventProcessor<MoveEvent> {
                 final String moveId = unit.getId() + moveEvent.getTargetTowerId();
                 if (!movedSet.contains(moveId)) {
                     movedSet.add(moveId);
-                    long t = (new Date().getTime() - moveEvent.getCreated().getTime()) * 1000 / 3600; // t is in hour
+                    double t = (new Date().getTime() - moveEvent.getCreated().getTime()) / 3600000.0; // t is in hour
                     double v = unit.getSpeed(); // v in km/H
                     double x = v * t; // x in km
                     double xInKilometer = x;

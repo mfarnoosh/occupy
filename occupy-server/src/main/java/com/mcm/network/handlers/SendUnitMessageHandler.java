@@ -63,8 +63,10 @@ public class SendUnitMessageHandler extends BaseMessageHandler {
         moveEventDao.save(me);
         unit.setMoving(true);
         gameObjectDao.save(unit);
-
-
+        for (Line line: path.lines) {
+            message.Params.add(String.valueOf(line.getEnd()[0]));
+            message.Params.add(String.valueOf(line.getEnd()[1]));
+        }
         return message;
     }
 }

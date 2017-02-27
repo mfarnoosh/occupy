@@ -17,16 +17,14 @@ public class GeoUtil {
         double[] source = null;
         double[] dest = null;
         double tmp = dist;
-        for (Line line: path.lines) {
-            if (source == null)
-                source = line.getStart();
-            if (dest == null)
-                dest = line.getEnd();
-            if (tmp > line.getDistance())
-                return line.getEnd();
+        boolean selected = false;
+        for (Line line : path.lines) {
+            source = line.getStart();
+            dest = line.getEnd();
             if (line.getDistance() >= tmp) {
                 source = line.getStart();
                 dest = line.getEnd();
+                selected = true;
                 break;
             } else {
                 tmp -= line.getDistance();
@@ -35,17 +33,22 @@ public class GeoUtil {
         if (source == null || dest == null) {
             throw new NotValidPathException();
         }
+        if (!selected) {
+            return dest;
+        }
 
         double lat1 = deg2rad(source[0]);
         double lon1 = deg2rad(source[1]);
 
         double lat2 = deg2rad(dest[0]);
         double lon2 = deg2rad(dest[1]);
-        double tc = Math.atan2(Math.sin(lon2-lon1) * Math.cos(lat2),
+
+        double tc = Math.atan2(Math.sin(lon2 - lon1) * Math.cos(lat2),
                 Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) % (2 * Math.PI);
 
-        return latLonOf(source, dist, tc);
+        return latLonOf(source, tmp, tc);
     }
+
     public static double[] latLonOf(double[] latLon, double dist, double tc) {
         // see http://mathforum.org/library/drmath/view/51816.html for the math
         double lat = deg2rad(latLon[0]);
@@ -57,9 +60,9 @@ public class GeoUtil {
         double resultLat, resultLon;
         resultLat = Math.asin(Math.sin(lat) * Math.cos(d) +
                 Math.cos(lat) * Math.sin(d) * Math.cos(tc));
-        double dlon = Math.atan2(Math.sin(tc) * Math.sin(d) *
-                Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(lat));
-        resultLon = ((lon + dlon + Math.PI) % (2 * Math.PI)) - Math.PI;
+        resultLon = lon + Math.atan2(Math.sin(tc) * Math.sin(d) *
+                Math.cos(lat), Math.cos(d) - Math.sin(lat) * Math.sin(resultLat));
+        resultLon = ((resultLon + (3 * Math.PI)) % (2 * Math.PI)) - Math.PI;
 
         resultLat = (resultLat * 180) / Math.PI; // back to degrees
         resultLon = (resultLon * 180) / Math.PI;
@@ -91,7 +94,7 @@ public class GeoUtil {
 
     /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     /*::	This function converts decimal degrees to radians						 :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
     public static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
