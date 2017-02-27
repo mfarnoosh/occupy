@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class SendUnit : EventAction
 {
 	private GameObject ghostObject;
@@ -32,6 +32,23 @@ public class SendUnit : EventAction
 				sm.Params.Add (targetTower.id);
 
 				NetworkManager.Current.SendToServer (sm).OnSuccess ((data) => {
+					List<Vector3> list = new List<Vector3>();
+					for (int i = 0; i < data.value.Params.Count - 1; i+=2) {
+						var tile = TowerManager.Current.SelectedTower.ParentTile;
+						var p1 = float.Parse(data.value.Params[i]);
+						var p2 = float.Parse(data.value.Params[i+1]);
+						var loc = new Location(p1, p2);
+						list.Add(GeoUtils.LocationToXYZ(tile, loc));
+					}
+					for (int i = 0; i < list.Count; i++) {
+						Vector3 source = list[i];
+						GameObject g = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+						g.transform.position = source;
+						g.transform.localScale = new Vector3(5, 5, 5);					
+						g.transform.SetParent(MapManager.Current.MapObject.transform);
+					}
+
+
 
 				});
 			} else {
