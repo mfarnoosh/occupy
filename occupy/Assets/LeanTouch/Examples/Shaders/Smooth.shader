@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Lean/Smooth"
@@ -56,7 +58,7 @@ Shader "Lean/Smooth"
 			{
 				float4 wVertex = mul(unity_ObjectToWorld, i.vertex);
 
-				o.vertex = mul(UNITY_MATRIX_MVP, i.vertex);
+				o.vertex = UnityObjectToClipPos(i.vertex);
 				o.normal = mul((float3x3)unity_ObjectToWorld, i.normal);
 				o.facing = _WorldSpaceCameraPos - wVertex.xyz;
 			}

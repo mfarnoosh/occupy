@@ -59,6 +59,11 @@ public class SendUnitMessageHandler extends BaseMessageHandler {
         me.setTargetTowerId(targetTower.getId());
         me.setTargetTowerLocation(targetTower.getLocation());
         Path path = World.findPath(keepingTower.getLocation(), targetTower.getLocation());
+        if(path == null || path.lines.isEmpty()){
+                message.ExceptionMessage = "There is no path";
+                logger.error(message.ExceptionMessage);
+                return message;
+        }
         me.setPath(path);
         moveEventDao.save(me);
         unit.setMoving(true);
