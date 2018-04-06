@@ -1,19 +1,27 @@
 package com.mcm;
 
 
+import com.mcm.entities.World;
+import com.mcm.enums.*;
 import com.mcm.network.NetworkManager;
+import com.mcm.util.GameConfig;
+import com.mcm.util.GeoUtil;
+import com.mcm.util.Spring;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
+import org.apache.axis.encoding.Base64;
+import org.w3c.dom.Element;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 
 /**
  * Created by Cross on 7/5/2015.
  */
 public class Main {
-    final static int port = 1234;
-
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException, KeyManagementException, URISyntaxException {
 //        final Logger log=Logger.getLogger(Main.class);
 //        final Factory factory = new IniSecurityManagerFactory("classpath:shiro.ini");
@@ -24,7 +32,7 @@ public class Main {
 //        log.info("login service is running.");
 //
 
-        new NetworkManager().initializeServer(4444);
+        Spring.context.getBean(MainThread.class).run();
 
     }
 

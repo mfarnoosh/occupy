@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game-configs>
+    <config version="9">
+        <map>
+            <zoom-level>16</zoom-level>
+            <tile-size-x>0.0054931640625</tile-size-x>
+            <tile-size-y>0.0044594279375402834</tile-size-y>
+            <tile-grid-width>5</tile-grid-width>
+            <move-speed>20.0</move-speed>
+        </map>
+        <units>
+            <unit name="SOLDIER" max-level="1">
+                <level level="1">
+                    <build-time>2.5</build-time>
+                    <value>25</value>
+                    <hit-point>250</hit-point>
+                    <attack-damage>60</attack-damage>
+                    <defence-damage>60</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.014</range>
+                    <speed>3.5</speed>
+                    <upgrade-price>312.5</upgrade-price>
+                    <upgrade-time>6.25</upgrade-time>
+                    <house-space>1</house-space>
+                </level>
+            </unit>
+            <unit name="MOTOR" max-level="1">
+                <level level="1">
+                    <build-time>3.5</build-time>
+                    <value>50</value>
+                    <hit-point>600</hit-point>
+                    <attack-damage>120</attack-damage>
+                    <defence-damage>120</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.015</range>
+                    <speed>8</speed>
+                    <upgrade-price>1250</upgrade-price>
+                    <upgrade-time>25</upgrade-time>
+                    <house-space>2</house-space>
+                </level>
+            </unit>
+            <unit name="TANK" max-level="1">
+                <level level="1">
+                    <build-time>7.7</build-time>
+                    <value>100</value>
+                    <hit-point>1300</hit-point>
+                    <attack-damage>96</attack-damage>
+                    <defence-damage>96</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.018</range>
+                    <speed>3</speed>
+                    <upgrade-price>5000</upgrade-price>
+                    <upgrade-time>100</upgrade-time>
+                    <house-space>3</house-space>
+                </level>
+            </unit>
+            <unit name="HELICOPTER" max-level="1">
+                <level level="1">
+                    <build-time>5.3</build-time>
+                    <value>100</value>
+                    <hit-point>1200</hit-point>
+                    <attack-damage>228</attack-damage>
+                    <defence-damage>228</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.023</range>
+                    <speed>110.1</speed>
+                    <upgrade-price>5000</upgrade-price>
+                    <upgrade-time>100</upgrade-time>
+                    <house-space>3</house-space>
+                </level>
+            </unit>
+            <unit name="AIRCRAFT" max-level="1">
+                <level level="1">
+                    <build-time>6.3</build-time>
+                    <value>150</value>
+                    <hit-point>1450</hit-point>
+                    <attack-damage>323</attack-damage>
+                    <defence-damage>323</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.023</range>
+                    <speed>13.4</speed>
+                    <upgrade-price>11250</upgrade-price>
+                    <upgrade-time>225</upgrade-time>
+                    <house-space>5</house-space>
+                </level>
+            </unit>
+            <unit name="TITAN" max-level="1">
+                <level level="1">
+                    <build-time>16</build-time>
+                    <value>0</value>
+                    <hit-point>12000</hit-point>
+                    <attack-damage>263</attack-damage>
+                    <defence-damage>263</defence-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.023</range>
+                    <speed>2</speed>
+                    <upgrade-price>0</upgrade-price>
+                    <upgrade-time>0</upgrade-time>
+                    <house-space>0</house-space>
+                </level>
+            </unit>
+        </units>
+        <towers>
+            <tower name="SENTRY" max-level="1">
+                <level level="1">
+                    <build-time>1.8</build-time>
+                    <value>50</value>
+                    <hit-point>400</hit-point>
+                    <air-damage>0</air-damage>
+                    <land-damage>199</land-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.018</range>
+                    <max-capacity>50</max-capacity>
+                    <upgrade-price>1250</upgrade-price>
+                    <upgrade-time>25</upgrade-time>
+                    <max-space>5</max-space>
+                </level>
+            </tower>
+            <tower name="MACHINE_GUN" max-level="1">
+                <level level="1">
+                    <build-time>8</build-time>
+                    <value>150</value>
+                    <hit-point>1500</hit-point>
+                    <air-damage>0</air-damage>
+                    <land-damage>577</land-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.018</range>
+                    <max-capacity>150</max-capacity>
+                    <upgrade-price>11250</upgrade-price>
+                    <upgrade-time>225</upgrade-time>
+                    <max-space>5</max-space>
+                </level>
+            </tower>
+            <tower name="ROCKET_LAUNCHER" max-level="1">
+                <level level="1">
+                    <build-time>11</build-time>
+                    <value>200</value>
+                    <hit-point>1800</hit-point>
+                    <air-damage>106</air-damage>
+                    <land-damage>173</land-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.019</range>
+                    <max-capacity>200</max-capacity>
+                    <upgrade-price>20000</upgrade-price>
+                    <upgrade-time>400</upgrade-time>
+                    <max-space>5</max-space>
+                </level>
+            </tower>
+            <tower name="ANTI_AIRCRAFT" max-level="1">
+                <level level="1">
+                    <build-time>10</build-time>
+                    <value>500</value>
+                    <hit-point>1400</hit-point>
+                    <air-damage>233</air-damage>
+                    <land-damage>0</land-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.019</range>
+                    <max-capacity>500</max-capacity>
+                    <upgrade-price>125000</upgrade-price>
+                    <upgrade-time>2500</upgrade-time>
+                    <max-space>5</max-space>
+                </level>
+            </tower>
+            <tower name="STEALTH" max-level="1">
+                <level level="1">
+                    <build-time>10</build-time>
+                    <value>250</value>
+                    <hit-point>1500</hit-point>
+                    <air-damage>0</air-damage>
+                    <land-damage>90</land-damage>
+                    <fire-rate>1</fire-rate>
+                    <range>0.013</range>
+                    <max-capacity>250</max-capacity>
+                    <upgrade-price>31250</upgrade-price>
+                    <upgrade-time>625</upgrade-time>
+                    <max-space>5</max-space>
+                </level>
+            </tower>
+        </towers>
+    </config>
+</game-configs>
