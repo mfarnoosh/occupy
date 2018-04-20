@@ -2,7 +2,6 @@ package com.mcm.network;
 
 import com.google.gson.Gson;
 import com.mcm.network.messages.SocketMessage;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -36,13 +35,13 @@ public class ClientService implements Runnable {
     private String readClientData(InputStream inputStream) throws IOException {
         DataInputStream dis = new DataInputStream(inputStream);
         byte[] data = new byte[1024];
-        ByteOutputStream bos = new ByteOutputStream();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         int count;
         int length = 0;
         while ((count = dis.read(data)) != -1) {
             bos.write(data, 0, count);
             length += count;
-            byte[] bytes = bos.getBytes();
+            byte[] bytes = bos.toByteArray();
             if (length >= 7) {
                 byte[] dest = new byte[7];
                 System.arraycopy(bytes, length - 7, dest, 0, 7);
@@ -53,7 +52,7 @@ public class ClientService implements Runnable {
         }
         String readData = "";
         if (length > 0) {
-            readData = new String(bos.getBytes(), "UTF-8").trim();
+            readData = new String(bos.toByteArray(), "UTF-8").trim();
             readData = readData.substring(0, readData.length() - 7);
         }
         return readData;

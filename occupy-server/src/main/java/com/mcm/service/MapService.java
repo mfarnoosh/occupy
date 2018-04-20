@@ -3,9 +3,9 @@ package com.mcm.service;
 import com.mcm.enums.MapConfig;
 import com.mcm.util.GameConfig;
 import com.mcm.util.SharedPreference;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.io.FileUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -40,12 +40,12 @@ public class MapService {
             DataInputStream dis = new DataInputStream(connection.getInputStream());
             int count = 0;
             byte[] data = new byte[1024];
-            ByteOutputStream bos = new ByteOutputStream();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             while ((count = dis.read(data)) != -1) {
                 bos.write(data, 0, count);
             }
             bos.flush();
-            byte[] tile = bos.getBytes();
+            byte[] tile = bos.toByteArray();
             FileUtils.writeByteArrayToFile(cache, tile);
 
             return tile;
